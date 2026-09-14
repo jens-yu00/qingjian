@@ -29,6 +29,12 @@ pub enum Setting {
     /// `[general] page_keys`，弹出菜单。
     PageKeys,
 
+    /// `[general] candidate_scale`，整体缩放档位。
+    CandidateScale,
+
+    /// `[shortcut] toggle_punctuation`，标点切换快捷键。
+    TogglePunctuationKeys,
+
     /// `[general] theme`，弹出菜单。
     Theme,
 
@@ -193,6 +199,8 @@ impl Setting {
             Self::NewPhrase => 38,
             Self::EditPhrase => 39,
             Self::CancelPhraseEdit => 40,
+            Self::CandidateScale => 41,
+            Self::TogglePunctuationKeys => 42,
             Self::Fuzzy(index) => FUZZY_TAG_BASE + index as NSInteger,
             Self::DictionaryEnabled(index) => DICTIONARY_ENABLED_TAG_BASE + index as NSInteger,
             Self::DictionaryRemove(index) => DICTIONARY_REMOVE_TAG_BASE + index as NSInteger,
@@ -241,6 +249,8 @@ impl Setting {
             38 => Self::NewPhrase,
             39 => Self::EditPhrase,
             40 => Self::CancelPhraseEdit,
+            41 => Self::CandidateScale,
+            42 => Self::TogglePunctuationKeys,
             _ if tag >= DICTIONARY_REMOVE_TAG_BASE => {
                 let index = usize::try_from(tag - DICTIONARY_REMOVE_TAG_BASE).ok()?;
                 (index < MAX_DICTIONARIES).then_some(Self::DictionaryRemove(index))?
@@ -268,6 +278,8 @@ mod tests {
             Setting::PageSize,
             Setting::PageKeys,
             Setting::Theme,
+            Setting::CandidateScale,
+            Setting::TogglePunctuationKeys,
             Setting::ExpressionKey,
             Setting::QuestionKey,
             Setting::CloudEnabled,

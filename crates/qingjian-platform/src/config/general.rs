@@ -1,7 +1,7 @@
 use qingjian_core::ShuangpinScheme;
 use serde::{Deserialize, Serialize};
 
-use super::{LayoutMode, LogLevel, PreeditMode, ThemeMode};
+use super::{CandidateScale, LayoutMode, LogLevel, PreeditMode, ThemeMode};
 
 /// 每页最多几个候选：数字键只有 1–9。
 pub const MAX_PAGE_SIZE: usize = 9;
@@ -29,6 +29,9 @@ pub struct GeneralConfig {
 
     /// 候选窗口外观。
     pub theme: ThemeMode,
+
+    /// macOS 候选窗口整体缩放，字体、图标与间距一起变化。
+    pub candidate_scale: CandidateScale,
 
     /// 候选窗口竖排 / 横排。
     pub layout: LayoutMode,
@@ -67,6 +70,7 @@ impl Default for GeneralConfig {
             page_size: MAX_PAGE_SIZE,
             page_keys: PAGE_KEY_OPTIONS[0].to_owned(),
             theme: ThemeMode::default(),
+            candidate_scale: CandidateScale::default(),
             layout: LayoutMode::default(),
             preedit: PreeditMode::default(),
             english_candidates: true,

@@ -1,4 +1,5 @@
 mod apps;
+mod candidate_scale;
 mod dictionaries;
 mod general;
 mod key_combo;
@@ -24,6 +25,7 @@ pub use apps::{
     AppsConfig, DEFAULT_ENGLISH_CANDIDATES_OFF, DEFAULT_ENGLISH_CANDIDATES_OFF_MACOS,
     DEFAULT_ENGLISH_CANDIDATES_OFF_WINDOWS,
 };
+pub use candidate_scale::CandidateScale;
 pub use dictionaries::{DEFAULT_DOMAINS, DictionariesConfig};
 pub use general::{DEFAULT_PAGE_KEYS, GeneralConfig, MAX_PAGE_SIZE, PAGE_KEY_OPTIONS};
 pub use key_combo::KeyCombo;
@@ -125,6 +127,8 @@ translation_second = "shift+option"
 # 把应用里选中的文字译成学习语言（要开着云服务）：译文先出现在候选窗口，回车替换选中的文字，Esc 保留原文
 # 修饰键 + 一个字母或数字，任意组合；避开 ⌘T 这类应用常用键
 translate_selection = "control+option+t"
+# 中文模式下切换英文／中文标点；状态保存到 general.full_width_punctuation，不改变组句
+toggle_punctuation = "shift+option+."
 # 数字键配这些修饰键删掉候选：用户词（云端选过的、自动造的）整个删掉，词库里的词清掉对它的学习记录。组句中要打感叹号先把词上屏
 delete_candidate = "shift"
 "#
@@ -161,6 +165,8 @@ page_size = 9
 page_keys = "[]"
 # 候选窗口外观：system 跟随系统 / light 浅色 / dark 深色
 theme = "system"
+# macOS 候选窗口整体缩放百分比：100 到 250，每档 25；缺省 150。字体、图标和间距一起缩放
+candidate_scale = 150
 # 候选窗口排布：vertical 竖排 / horizontal 横排（横排只给高亮候选显示译文）
 layout = "vertical"
 # 组句中的拼音显示在哪：both 行内和候选窗口 / inline 只在行内 / window 只在候选窗口（应用里不放 marked text）

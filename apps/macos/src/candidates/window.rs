@@ -8,7 +8,7 @@ use objc2_app_kit::{
     NSWindowLevel, NSWindowStyleMask,
 };
 use objc2_foundation::{NSPoint, NSRect, NSSize};
-use qingjian_platform::{LayoutMode, ThemeMode};
+use qingjian_platform::{CandidateScale, LayoutMode, ThemeMode};
 
 use super::frame::Frame;
 use super::theme::Theme;
@@ -33,6 +33,12 @@ pub struct CandidateWindow {
     /// 当前外观（跟随系统时为 `None`）；换面板时要重设。
     appearance: Option<Retained<NSAppearance>>,
 
+    /// 用户选择的整体缩放。
+    scale: CandidateScale,
+
+    /// 最近一帧及其光标位置，用于设置热加载时重新定位。
+    last_frame: Option<(Frame, NSRect)>,
+
     /// 用来取屏幕尺寸。
     mtm: MainThreadMarker,
 }
@@ -45,6 +51,8 @@ impl CandidateWindow {
             panel,
             view,
             appearance: None,
+            scale: CandidateScale::default(),
+            last_frame: None,
             mtm,
         }
     }
@@ -55,10 +63,17 @@ impl CandidateWindow {
             self.hide();
             return;
         }
-        let size = self.view.set_frame(&frame);
+        self.last_frame = Some((frame.clone(), anchor));
+        let logical_size = self.view.set_frame(&frame);
+        let factor = self.scale.factor();
+        let size = NSSize::new(logical_size.width * factor, logical_size.height * factor);
         let origin = self.place(size, anchor);
         self.panel.setFrame_display(NSRect::new(origin, size), true);
         self.order_front_on_active_space();
+        // 统一缩放坐标系，字体、光标、云图标和间距不会因漏乘某个常量而失去比例。
+        self.view.setFrameSize(size);
+        self.view.setBoundsSize(logical_size);
+        self.view.setNeedsDisplay(true);
         if !self.panel.isVisible() {
             tracing::warn!(?anchor, ?origin, "候选窗口 orderFront 之后仍不可见");
         } else {
@@ -68,6 +83,18 @@ impl CandidateWindow {
                 on_active_space = self.panel.isOnActiveSpace(),
                 "候选窗口已显示"
             );
+        }
+    }
+
+    pub fn set_scale(&mut self, scale: CandidateScale) {
+        if self.scale == scale {
+            return;
+        }
+        self.scale = scale;
+        if self.panel.isVisible()
+            && let Some((frame, anchor)) = self.last_frame.clone()
+        {
+            self.show(frame, anchor);
         }
     }
 

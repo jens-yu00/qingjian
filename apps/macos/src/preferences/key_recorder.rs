@@ -79,9 +79,9 @@ define_class!(
                 Some((modifiers.key(), modifiers.label()))
             } else {
                 event
-                    .charactersIgnoringModifiers()
+                    .charactersByApplyingModifiers(NSEventModifierFlags::empty())
                     .and_then(|c| c.to_string().chars().next())
-                    .filter(|c| c.is_ascii_alphanumeric())
+                    .filter(|c| c.is_ascii_alphanumeric() || *c == '.')
                     .map(|c| {
                         let combo = KeyCombo {
                             modifiers,

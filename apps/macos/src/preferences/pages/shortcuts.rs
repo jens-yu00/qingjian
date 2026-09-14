@@ -33,6 +33,9 @@ pub struct ShortcutsPage {
     /// 删除候选的修饰键。
     delete_candidate: Retained<KeyRecorder>,
 
+    /// 中文模式下切换标点的组合键。
+    toggle_punctuation: Retained<KeyRecorder>,
+
     /// 翻译选中文字的组合键。
     translate_selection: Retained<KeyRecorder>,
 }
@@ -115,6 +118,20 @@ impl ShortcutsPage {
             "按住修饰键再按候选序号：自己造的词、云端选过的词整个删掉；词库里的词清掉对它的学习记录，回到原来的排序。组句中要打感叹号先把词上屏。",
         );
         layout.space(GROUP_GAP);
+        let toggle_punctuation = row_recorder(
+            layout,
+            mtm,
+            "切换英文／中文标点",
+            Setting::TogglePunctuationKeys,
+            false,
+            target,
+        );
+        note(
+            layout,
+            mtm,
+            "中文模式下切换并保存标点偏好，适用于各应用；不确认或清空正在输入的拼音。",
+        );
+        layout.space(GROUP_GAP);
         let translate_selection = row_recorder(
             layout,
             mtm,
@@ -153,6 +170,7 @@ impl ShortcutsPage {
             translation_second,
             delete_candidate,
             translate_selection,
+            toggle_punctuation,
         }
     }
 
@@ -181,6 +199,9 @@ impl ShortcutsPage {
         self.translation_second.show(&second.key(), &second.label());
         let delete = config.shortcut.delete_keys();
         self.delete_candidate.show(&delete.key(), &delete.label());
+        let punctuation = config.shortcut.toggle_punctuation;
+        self.toggle_punctuation
+            .show(&punctuation.key_string(), &punctuation.label());
         let translate = config.shortcut.translate_selection;
         self.translate_selection
             .show(&translate.key_string(), &translate.label());

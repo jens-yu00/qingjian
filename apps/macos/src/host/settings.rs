@@ -178,6 +178,15 @@ impl Host {
                     self.settings.set_value("general", "page_keys", *pair);
                 }
             }
+            (Setting::CandidateScale, SettingValue::Index(index)) => {
+                if let Some(scale) = qingjian_platform::CandidateScale::ALL.get(index) {
+                    self.settings.set_value(
+                        "general",
+                        "candidate_scale",
+                        i64::from(scale.percent()),
+                    );
+                }
+            }
             (Setting::Theme, SettingValue::Index(index)) => {
                 if let Some(theme) = ThemeMode::ALL.get(index) {
                     self.settings.set_value("general", "theme", theme.key());
@@ -243,20 +252,46 @@ impl Host {
                     Err(error) => tracing::warn!(%error, "修饰键组合不合法，未改"),
                 }
             }
+            (Setting::TogglePunctuationKeys, SettingValue::Text(text)) => {
+                match text.parse::<KeyCombo>() {
+                    Ok(combo) if combo != config.shortcut.translate_selection => {
+                        self.settings.set_value(
+                            "shortcut",
+                            "toggle_punctuation",
+                            combo.key_string(),
+                        );
+                    }
+                    _ => {
+                        self.preferences
+                            .set_status("标点切换快捷键无效，或与翻译选中文字快捷键重复。");
+                        return;
+                    }
+                }
+            }
             (Setting::TranslateSelectionKeys, SettingValue::Text(text)) => {
                 match text.parse::<KeyCombo>() {
-                    Ok(combo) => {
+                    Ok(combo) if combo != config.shortcut.toggle_punctuation => {
                         self.settings.set_value(
                             "shortcut",
                             "translate_selection",
                             combo.key_string(),
                         );
                     }
+                    Ok(_) => {
+                        self.preferences
+                            .set_status("翻译快捷键不能与标点切换快捷键重复。");
+                        return;
+                    }
                     Err(error) => tracing::warn!(%error, "快捷键不合法，未改"),
                 }
             }
             (Setting::ResetShortcuts, _) => {
                 let defaults = ShortcutConfig::default();
+                self.settings.set_value(
+                    "shortcut",
+                    "toggle_punctuation",
+                    defaults.toggle_punctuation.key_string(),
+                );
                 self.settings
                     .set_value("general", "page_keys", PAGE_KEY_OPTIONS[0]);
                 self.settings.set_value(

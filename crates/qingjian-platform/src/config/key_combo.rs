@@ -5,18 +5,23 @@ use serde::{Deserialize, Serialize};
 
 use super::modifiers::Modifiers;
 
-/// 修饰键 + 一个字母键的组合，配置里写成 `control+option+t`。
+/// 修饰键 + 一个字母、数字或句号键的组合，配置里写成 `control+option+t`。
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(try_from = "String", into = "String")]
 pub struct KeyCombo {
     /// 修饰键，至少一个。
     pub modifiers: Modifiers,
 
-    /// 字母或数字键（小写）。
+    /// 字母、数字或句号键（字母小写）。
     pub key: char,
 }
 
 impl KeyCombo {
+    pub const PUNCTUATION_DEFAULT: Self = Self {
+        modifiers: Modifiers::SHIFT_OPTION,
+        key: '.',
+    };
+
     pub const TRANSLATE_DEFAULT: Self = Self {
         modifiers: Modifiers {
             option: true,
@@ -60,8 +65,8 @@ impl FromStr for KeyCombo {
         let (Some(key), None) = (chars.next(), chars.next()) else {
             return Err(format!("key must be a single character: {key:?}"));
         };
-        if !key.is_ascii_alphanumeric() {
-            return Err(format!("key must be a letter or digit: {key:?}"));
+        if !key.is_ascii_alphanumeric() && key != '.' {
+            return Err(format!("key must be a letter, digit or period: {key:?}"));
         }
         Ok(Self {
             modifiers: modifiers.parse()?,

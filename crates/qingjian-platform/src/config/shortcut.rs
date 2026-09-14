@@ -21,6 +21,9 @@ pub struct ShortcutConfig {
     /// 把应用里选中的文字译成学习语言（需要云服务开着）。
     pub translate_selection: KeyCombo,
 
+    /// macOS 切换中文模式的英文／中文标点，不切换输入语言。
+    pub toggle_punctuation: KeyCombo,
+
     /// 数字键配这些修饰键：删掉候选（用户词整个删掉，词库词清掉对它的学习）。
     pub delete_candidate: Modifiers,
 }
@@ -37,6 +40,7 @@ impl Default for ShortcutConfig {
             translation,
             translation_second,
             translate_selection: KeyCombo::TRANSLATE_DEFAULT,
+            toggle_punctuation: KeyCombo::PUNCTUATION_DEFAULT,
             delete_candidate: Modifiers::SHIFT,
         }
     }

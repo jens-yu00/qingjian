@@ -152,3 +152,10 @@ IMK 输入法，源码按 `app / host / imk / candidates / menubar / preferences
 - `phrases`：挖短语层（两遍扫语料：相邻两词、两段二元都够频的相邻三词，总次数与对话语料次数都 ≥ 2000 + 边界规则，读音由成分词拼出；我的 / 不知道 / 有没有 这类常用词表不收的组合，
   `assets/lexicon/phrases.tsv`；词库已并入过短语时重跑加 `--refresh`）。
 - `pack dict|lm|glossary`：打 `.qj`（释义表也进容器）。
+
+## macOS 个人定制：缩放与标点
+
+- `general.candidate_scale` 使用 `CandidateScale`，100–250 的 25 步进整数，缺省 150；非法值走既有配置解析失败流程。`CandidateWindow` 以缩放后的物理尺寸定位面板，内容视图 bounds 保持原绘制单位，统一缩放字体、图标和间距。设置变化时用上一帧及光标位置重新布局。
+- `shortcut.toggle_punctuation` 缺省 `shift+option+.`，中文模式在普通事件分发前处理，长按重复事件吞掉但不再次切换；仅修改并保存 `general.full_width_punctuation`，不修改引擎输入缓冲区或候选高亮。
+- macOS 快捷键录制及标点匹配使用 `charactersByApplyingModifiers(empty)` 读取基础字符；`charactersIgnoringModifiers` 仍保留 Shift，无法把 `>` 正确识别为用户指定的句号键。`KeyCombo` 增加句号支持。
+- 控制器位于 `imk/controller/mod.rs`；事件分发与标点快捷键分别位于同目录的 `dispatch.rs` 和 `punctuation.rs`。
