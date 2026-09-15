@@ -9,6 +9,7 @@ impl Host {
     pub fn apply_config(&mut self, force: bool) {
         let config = self.settings.config().clone();
         self.engine.set_fuzzy(config.fuzzy);
+        self.engine.set_strict_pinyin(config.general.strict_pinyin);
         self.engine
             .set_full_width_punctuation(config.general.full_width_punctuation);
         if let Err(error) = self

@@ -26,6 +26,9 @@ pub struct GeneralPage {
     /// 英文模式也给候选。
     english: Retained<NSButton>,
 
+    /// 严格全拼匹配。
+    strict_pinyin: Retained<NSButton>,
+
     /// 终端 / 编辑器里不给英文候选。
     english_off_in_apps: Retained<NSButton>,
 
@@ -86,6 +89,13 @@ impl GeneralPage {
             mtm,
             "开双拼后 v、u、i 是音节键，表达式与问字模式只能用 ? 开头进；微软、搜狗方案的 ; 键是 ing。",
         );
+        let strict_pinyin = checkbox(mtm, "严格全拼匹配", Setting::StrictPinyin, target);
+        row_checkbox(layout, &strict_pinyin);
+        note(
+            layout,
+            mtm,
+            "完整拼音不补长、不改成近似读音；未打完的拼音仍可补全。仅全拼生效。",
+        );
         let punctuation = row_popup(
             layout,
             mtm,
@@ -128,6 +138,7 @@ impl GeneralPage {
             page_size,
             shuangpin,
             english,
+            strict_pinyin,
             english_off_in_apps,
             languages: languages.to_vec(),
             punctuation,
@@ -157,6 +168,7 @@ impl GeneralPage {
             })),
         );
         set_checked(&self.english, general.english_candidates);
+        set_checked(&self.strict_pinyin, general.strict_pinyin);
         set_checked(
             &self.english_off_in_apps,
             config.apps.has_english_candidates_off(),

@@ -15,6 +15,7 @@ mod input_log;
 mod learning;
 mod marked;
 mod mode_keys;
+mod pinyin;
 mod prediction;
 mod privacy;
 mod query;
@@ -223,6 +224,9 @@ pub struct Engine {
     /// 模糊音开关，缺省全关。
     fuzzy: FuzzyRules,
 
+    /// 全拼严格匹配开关；保留原有行为时为 false。
+    strict_pinyin: bool,
+
     /// 双拼方案，`None` 为全拼。开着时缓冲区里是双拼键，查词前先解成全拼（见 [`crate::shuangpin`]）。
     shuangpin: Option<Scheme>,
 
@@ -355,6 +359,7 @@ impl Engine {
             last_question_guess: String::new(),
             chain: CommitChain::default(),
             fuzzy: FuzzyRules::default(),
+            strict_pinyin: false,
             shuangpin: None,
             zhuyin: false,
             emoji: None,

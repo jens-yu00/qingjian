@@ -159,3 +159,12 @@ IMK 输入法，源码按 `app / host / imk / candidates / menubar / preferences
 - `shortcut.toggle_punctuation` 缺省 `shift+option+.`，中文模式在普通事件分发前处理，长按重复事件吞掉但不再次切换；仅修改并保存 `general.full_width_punctuation`，不修改引擎输入缓冲区或候选高亮。
 - macOS 快捷键录制及标点匹配使用 `charactersByApplyingModifiers(empty)` 读取基础字符；`charactersIgnoringModifiers` 仍保留 Shift，无法把 `>` 正确识别为用户指定的句号键。`KeyCombo` 增加句号支持。
 - 控制器位于 `imk/controller/mod.rs`；事件分发与标点快捷键分别位于同目录的 `dispatch.rs` 和 `punctuation.rs`。
+
+## 个人 fork 的严格全拼匹配
+
+`Engine::set_strict_pinyin` 与 `engine/pinyin.rs` 统一匹配策略。存在完整全拼切法时舍弃简拼另解；完整末音节不改成前缀，完整全拼用精确音节数查词，仍保留逐段上屏需要的前缀词。词级、整句、英文尾段与上屏重算共用切分策略。
+
+严格模式停止整段纠错与音节级敲错边，覆盖模糊音扩展，云端词按相同音节边界验证；切换时清纠错和词图缓存并取消旧云请求。本地模型仍可重排符合输入的路径。
+`general.strict_pinyin` 由 macOS 设置/热加载和 CLI 传给 Core，旧配置默认 false；本机个人配置显式 true。Windows 壳尚未接入这个个人定制入口。
+
+需求边界与回归证据见 [个人定制](../plan/personal-macos-customization.md) 与 [验证记录](personal-macos-validation.md)。

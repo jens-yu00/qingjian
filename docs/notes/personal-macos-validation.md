@@ -1,4 +1,10 @@
-# macOS 个人定制验证（2026-09-15）
+# macOS 个人定制验证
+
+## 当前状态（2026-09-15）
+
+用户已提供青简实际候选截图并反馈 `liuchu` 过度扩展，说明已进入实际使用阶段。下文首次注册失败属于历史诊断，不再作为当前阻塞；截图不能证明所有快捷键与跨应用验收均已完成。
+
+匹配修复与本轮交付结果见文末。
 
 ## 已实现
 
@@ -15,16 +21,38 @@
 - 上游词库数据包和模型通过上游 SHA256SUMS 校验：词库 `e045d0f28236d0193087cf11cf35584327ebf85388310a5e2ceb885c0f7a6438`；模型 `eed5bd0bda0c7bd8b43d1acb2dc4678d4bbe295bd47b2b0d4eeace0af9daff4d`。
 - 应用打包及 ad-hoc 签名验证通过，已复制到用户级 `~/Library/Input Methods/Qingjian.app`。安装前两个系统认可目录均不存在青简，也不存在青简用户配置，因此没有覆盖旧应用或配置。
 
-## 未完成的系统验收
+## 首次安装时的系统验收缺口（历史）
 
 `qingjian-macos --register` 返回“输入源启用没有生效（等了 30 秒）：app.qingjian.inputmethod”。独立新进程查询 TIS：该输入源存在，支持启用和选择，但 `IsEnabled = false`。重开系统设置后，添加输入源页面仍搜索不到青简。原有微信输入法仍是当前输入源。
 
-因此尚不能宣称快捷键在真实输入会话中的来回切换、跨应用持久化、重启后恢复、组句高亮保持和全屏显示已经实机通过。原生窗口预览不能代替这些检查。
+该轮尚不能宣称快捷键在真实输入会话中的来回切换、跨应用持久化、重启后恢复、组句高亮保持和全屏显示已经实机通过。原生窗口预览不能代替这些检查。
 
-上游开发安装文档给出的下一步是注销并重新登录，再到“系统设置 → 键盘 → 文本输入 → 编辑 → +”添加青简。本次没有自动注销会话；重新登录后需继续完成上述验收。若仍无法添加，继续诊断注册流程，不改系统安全设置或直接篡改系统输入源偏好。
+上游开发安装文档给出的下一步是注销并重新登录，再到“系统设置 → 键盘 → 文本输入 → 编辑 → +”添加青简。该轮没有自动注销会话；重新登录后需继续完成上述验收。若仍无法添加，继续诊断注册流程，不改系统安全设置或直接篡改系统输入源偏好。
 
 ## 回退与继续验证
 
 - Git：`main` 跟踪 `upstream/main`，个人改动在 `codex/macos-personal-customization`，`origin` 指向个人 fork。用独立分支同步上游与回退，不改写 main 历史。
 - 安装：切回原输入法即可停止使用定制版；如要卸载，先在系统输入源中移除青简，再将用户级 Qingjian.app 移至废纸篓。保留 `~/Library/Application Support/Qingjian/` 可保留配置和学习数据。
 - 实机测试只使用新建的测试文档，不向聊天、邮件或其他外部系统发送内容。
+
+
+## 严格全拼匹配（2026-09-15）
+
+### 问题证据与改动
+
+用户截图：[liuchu 修复前候选](../file-4dc0ce536551b745a6e1ff0f5caa6703.png)。产品 CLI 也复现了流传、留长、流畅等候选：完整 chu 被放宽成前缀，并额外采用 liu + c + hu 的简拼切法。此问题不仅是自动纠错。
+
+新增“通用 → 严格全拼匹配”，Core 在候选生成阶段收紧匹配，保留同音词、完整拼音歧义与逐段选词；具体契约见 [需求入口](../plan/personal-macos-customization.md)。
+
+### 自动化证据
+
+- 第一轮 7 项真实引擎测试：接入空开关时 5 失败 / 2 通过，实现后 7 通过；日志 `target/verification/strict-before.log`、`strict-after.log`。失败分别覆盖完整音节补长与简拼另解、合法音节纠错、整段纠错缓存、模糊音、云端词。补全和歧义/分段确认是原本已通过的保护项。
+- 再补充其他输入方案与英文模式保护、配置旧值与持久化契约；全仓库最终 404 通过 / 0 失败 / 1 上游模型延迟测试忽略。日志 `target/verification/strict-workspace-tests.log`。
+- `cargo fmt --all --check`、`cargo clippy --all-targets --locked -- -D warnings`、`git diff --check` 通过。
+- 产品词库 CLI（无个人学习数据）：liuchu → 流出、六畜和较短前缀词，无流传/留长/流畅；liuchuan → 流传；liuch 仍补全；meiganxi → 没敢洗，不再变成没关系。截图中的“留出”来自用户数据等差异，固定回归词库另行覆盖了它；不要求冷启动排序等同个人排序。
+- 加载随包本地模型重复验证 liuchu、liuchuan、meiganxi，候选仍符合相同拼音范围。日志 `strict-product.log`、`strict-neural.log` 位于 `target/verification/`。此为同步 CLI 检查，不代表 IMK 延迟。
+- 复现命令：`cargo run -p qingjian-cli --locked -- --config target/verification/strict-config.toml --limit 12 liuchu liuchuan liuch meiganxi`；配置仅含 `general.strict_pinyin = true` 与 `predict.enabled = false`。加 `--neural data/model/model.qjm` 验证本地模型。
+
+### 系统交付
+
+代码与自动化检查已完成，本轮安装和真实输入会话验证结果在交付后追加；上述 CLI 结果不代替 macOS 实机验收。

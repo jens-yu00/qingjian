@@ -95,9 +95,9 @@ impl Engine {
                 .map(|s| (vec![s], d.tail()))
                 .ok_or(ParseError::NoSegmentation),
             (None, Some(tail)) if head_wins => {
-                parser::segment(&keys[..tail.head_len]).map(|s| (s, ""))
+                self.segment_pinyin(&keys[..tail.head_len]).map(|s| (s, ""))
             }
-            _ => segment_longest_prefix(keys),
+            _ => self.segment_pinyin_prefix(keys),
         };
         // 连第一个字母都切不动（`impor`）：拼音这边没戏，但英文词 / 补全、快捷候选还可以有
         let (segmentations, tail) = match parsed {
@@ -150,16 +150,24 @@ impl Engine {
             let count = patterns.len();
             let last = &segmentation.syllables[count - 1];
             // 最后一个音节即使打完了也可能还没打完（`xia` 可能是 `xiang` 的前缀），按前缀查；双拼两键就是定局
-            if last.complete && decoded.is_none() && parser::is_syllable_prefix(&last.text) {
+            if last.complete
+                && decoded.is_none()
+                && !self.strict_pinyin_active()
+                && parser::is_syllable_prefix(&last.text)
+            {
                 patterns[count - 1].complete = false;
             }
             // 词级候选只按敲的原样与模糊音查，敲错变体只进整句词图（它的候选从那边插进来）：
             // 词级排序把音节数对得上的排最前，敲错命中的词（`kaif` → 咖啡）会把更长的原样词挤到后面
-            let expanded = self.fuzzy.expand(&patterns);
+            let expanded = self.pinyin_fuzzy().expand(&patterns);
             let positions = expanded.positions();
             let abbreviated = abbreviated_count(&patterns);
             // 没有替代写法时每条命中都是敲的原音节，`penalty` 直接给 0（单字母简拼能命中几万条）
-            let hits = self.lookup_all(&positions);
+            let hits = if self.strict_pinyin_active() && segmentation.incomplete_count() == 0 {
+                self.lookup_exact_all(&positions)
+            } else {
+                self.lookup_all(&positions)
+            };
             scored.reserve(hits.len());
             for hit in hits {
                 let full_last =
@@ -176,7 +184,7 @@ impl Engine {
             // 输入的前缀也出候选（`kaifazhe` → 开发、开），否则长句没法逐词上屏。
             // 只收音节数正好等于前缀长度的词，更长的词会与输入后面的音节冲突。
             let patterns = segmentation.patterns();
-            let expanded = self.fuzzy.expand(&patterns);
+            let expanded = self.pinyin_fuzzy().expand(&patterns);
             let positions = expanded.positions();
             for prefix_len in (1..count).rev() {
                 let prefix = &patterns[..prefix_len];
@@ -428,7 +436,7 @@ impl Engine {
             return;
         };
         let keys = self.composition.scope();
-        let first_segmentation = |text: &str| parser::segment(text).ok()?.into_iter().next();
+        let first_segmentation = |text: &str| self.segment_pinyin(text).ok()?.into_iter().next();
         match english_tail {
             Some(tail) if head_wins => {
                 if let Some(mixed) = self.mixed_sentence(best, tail, typos) {
@@ -560,8 +568,8 @@ impl Engine {
         patterns: &[qingjian_dictionary::SyllablePattern<'_>],
         typos: bool,
     ) -> Expanded {
-        let mut expanded = self.fuzzy.expand(patterns);
-        if !typos {
+        let mut expanded = self.pinyin_fuzzy().expand(patterns);
+        if !typos || self.strict_pinyin_active() {
             return expanded;
         }
         let letters: usize = patterns.iter().map(|p| p.text.len()).sum();

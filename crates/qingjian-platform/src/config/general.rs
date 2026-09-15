@@ -42,6 +42,9 @@ pub struct GeneralConfig {
     /// 英文模式（Caps Lock 亮着）是否给英文候选（补全与拼错纠正）。关掉就是纯直通。
     pub english_candidates: bool,
 
+    /// 全拼严格匹配，禁用拼写纠错、模糊音与完整音节补长；macOS / CLI 使用。
+    pub strict_pinyin: bool,
+
     /// 中文模式下不在组句时敲的标点转成全角（`，。？！` 等，数字后的 `.` 保持半角）。
     /// Windows 悬浮状态条上可点切换；macOS 在偏好设置中选择默认模式。
     pub full_width_punctuation: bool,
@@ -74,6 +77,7 @@ impl Default for GeneralConfig {
             layout: LayoutMode::default(),
             preedit: PreeditMode::default(),
             english_candidates: true,
+            strict_pinyin: false,
             full_width_punctuation: true,
             english_full_width_punctuation: false,
             shuangpin: String::new(),

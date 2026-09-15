@@ -41,3 +41,13 @@ fn period_shortcut_round_trips_with_both_modifiers() {
     assert_eq!(combo.key, '.');
     assert_eq!(combo.key_string().parse::<KeyCombo>().unwrap(), combo);
 }
+
+#[test]
+fn strict_pinyin_persists_and_legacy_configs_keep_their_behavior() {
+    let old: Config = toml::from_str("[general]\ncandidate_scale = 150\n").unwrap();
+    assert!(!old.general.strict_pinyin);
+    let mut enabled = old;
+    enabled.general.strict_pinyin = true;
+    let saved = toml::to_string(&enabled).unwrap();
+    assert_eq!(toml::from_str::<Config>(&saved).unwrap(), enabled);
+}

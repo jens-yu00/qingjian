@@ -220,7 +220,11 @@ impl Engine {
             let fits = !word.syllables.is_empty()
                 && word.text.chars().count() == word.syllables.len()
                 && word.syllables.iter().all(|s| parser::is_syllable(s))
-                && mismatch_count(typed, &word.syllables) <= allowed;
+                && if self.strict_pinyin_active() {
+                    self.strict_cloud_matches(typed, &word.syllables)
+                } else {
+                    mismatch_count(typed, &word.syllables) <= allowed
+                };
             if !fits {
                 tracing::debug!(text = %word.text, syllables = ?word.syllables, "云端词与拼音不符，丢弃");
             }

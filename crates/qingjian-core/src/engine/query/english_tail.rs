@@ -53,7 +53,7 @@ impl Engine {
         if lists.iter().any(|words| words.get(scope).is_some()) {
             return None;
         }
-        let full = parser::segment(scope).ok();
+        let full = self.segment_pinyin(scope).ok();
         let unlikely = correction::unlikely_pinyin(full.as_ref().and_then(|s| s.first()), "")
             || correction::trailing_single_letter(full.as_ref().and_then(|s| s.first()));
         if full.is_none() || unlikely {
@@ -102,7 +102,7 @@ impl Engine {
     /// `taida`：太大 赢过 他 + Ida；`huoz`：或者 赢过 和 + Oz。
     pub(super) fn mixed_beats_plain(&self, scope: &str, tail: &EnglishTail) -> bool {
         let convert = |text: &str, whole: bool| {
-            let segmentations = parser::segment(text).ok()?;
+            let segmentations = self.segment_pinyin(text).ok()?;
             self.convert_sentence_with(&segmentations.first()?.patterns(), true, whole)
         };
         let (Some(head), Some(plain)) = (

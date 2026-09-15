@@ -16,6 +16,8 @@ README.md 只介绍项目，所有技术内容放在这里，分四类：前三�
 | [design/architecture.md](design/architecture.md) | Core 与平台层的划分、crate 结构、必须遵守的架构约束、`.qj` 数据容器 |
 | [design/candidate-ui.md](design/candidate-ui.md) | 候选窗口、按键约定与翻译 annotation 的设计 |
 | [design/landscape.md](design/landscape.md) | 同类项目（水杉、Rime）、可用数据源及其许可 |
+| [plan/personal-macos-customization.md](plan/personal-macos-customization.md) | 个人 fork 定制需求入口：候选缩放、标点、严格全拼与微信迁移范围 |
+| [notes/personal-macos-validation.md](notes/personal-macos-validation.md) | 个人定制的回归、产品词库、本机安装与实机验收证据 |
 | [plan/roadmap.md](plan/roadmap.md) | 分阶段路线图、各阶段的依赖关系与已完成项 |
 | [plan/zh_tw_support_plan.md](plan/zh_tw_support_plan.md) | 繁体输出与台湾注音支持的分析与方案（贡献者 pinchiu，#22）：读音标准差异、台湾用语、简转繁一对多；两条路线 |
 | [plan/todo.md](plan/todo.md) | 待办清单，按「从自用到能给别人用」排 |

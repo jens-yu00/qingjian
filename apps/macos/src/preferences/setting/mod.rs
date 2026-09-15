@@ -98,6 +98,9 @@ pub enum Setting {
     /// `[general] english_candidates`，勾选框。
     EnglishCandidates,
 
+    /// `[general] strict_pinyin`，严格全拼匹配。
+    StrictPinyin,
+
     /// `[shortcut] translation`，快捷键录制按钮（只记修饰键）。
     TranslationKeys,
 
@@ -201,6 +204,7 @@ impl Setting {
             Self::CancelPhraseEdit => 40,
             Self::CandidateScale => 41,
             Self::TogglePunctuationKeys => 42,
+            Self::StrictPinyin => 43,
             Self::Fuzzy(index) => FUZZY_TAG_BASE + index as NSInteger,
             Self::DictionaryEnabled(index) => DICTIONARY_ENABLED_TAG_BASE + index as NSInteger,
             Self::DictionaryRemove(index) => DICTIONARY_REMOVE_TAG_BASE + index as NSInteger,
@@ -251,6 +255,7 @@ impl Setting {
             40 => Self::CancelPhraseEdit,
             41 => Self::CandidateScale,
             42 => Self::TogglePunctuationKeys,
+            43 => Self::StrictPinyin,
             _ if tag >= DICTIONARY_REMOVE_TAG_BASE => {
                 let index = usize::try_from(tag - DICTIONARY_REMOVE_TAG_BASE).ok()?;
                 (index < MAX_DICTIONARIES).then_some(Self::DictionaryRemove(index))?
@@ -291,6 +296,7 @@ mod tests {
             Setting::Layout,
             Setting::Preedit,
             Setting::EnglishCandidates,
+            Setting::StrictPinyin,
             Setting::TranslationKeys,
             Setting::TranslationSecondKeys,
             Setting::TranslateSelectionKeys,
