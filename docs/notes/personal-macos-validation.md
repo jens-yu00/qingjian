@@ -55,4 +55,10 @@
 
 ### 系统交付
 
-代码与自动化检查已完成，本轮安装和真实输入会话验证结果在交付后追加；上述 CLI 结果不代替 macOS 实机验收。
+- 已从代码提交 `1c43beb` 构建 `0.1.3-dev` / build 67，沿用原来的 debug 开发构建；安装到 `~/Library/Input Methods/Qingjian.app`。
+- 应用与配置的安装前备份：`~/Library/Application Support/Qingjian/backups/strict-pinyin-20260915-133556/`，分别为 `Qingjian.app` 和 `config.toml`。备份不进入仓库。
+- 本机配置启用 `general.strict_pinyin = true`；解析比较确认其他配置值未变。缩放、标点、行内显示、模型与云服务配置保留。
+- 打包产物与安装二进制 SHA256 均为 `6ccb07564723d6f29a779f065e331aa082f2477d218784495e1bed07f88ecafc`；ad-hoc 签名深度严格检查通过。
+- 旧进程退出后新版已启动，日志确认产品词库、本地模型加载完成。原生 TIS 选择 ABC 再选择青简均返回成功，最终输入源为 `app.qingjian.inputmethod`。
+- 自动化 TextEdit 按键只产生字母，未能可靠触发候选窗口；不能据此确认真实键盘输入效果，也不能仅凭此判定新版无法输入。已请求用户用实体键盘核验 liuchu；这仍是本轮系统验收证据缺口。测试文档保存到 `target/verification/strict-input-automation.rtf` 并关闭，原有文档保留。
+- 如需恢复匹配，取消“通用 → 严格全拼匹配”；如需恢复旧应用，先切换其他输入法，再用备份替换用户级应用并重新切回青简。仅回退匹配无须替换词库或学习数据。
