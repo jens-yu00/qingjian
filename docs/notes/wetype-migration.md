@@ -38,3 +38,13 @@ WordItemV2 的构造、Serialize/Deserialize 和 Reduce 操作共同确认首字
 - 应用二进制未更换。青简恢复为当前输入源 `app.qingjian.inputmethod`，新进程 53356 的启动日志显示 `learned=25567`（含青简既有词频记录），产品词库、附加词库及本地模型加载完成。用户对迁移后日常候选体验的实体键盘验收尚待反馈。
 
 本机私有目录：`~/Library/Application Support/Qingjian/migrations/wetype-20260915-134419/`。源副本在 `source/`，最终计划在 `prepared-final/plan.json`，导入前备份在 `prepared-final/backup/`。收据在青简数据目录的 `wetype-migration-receipt.json`。这些文件不提交 Git，回退按工具说明执行。
+
+## 微信输入法卸载与完整备份（同日）
+
+用户要求把微信输入法数据备份到当前仓库目录后卸载。先切换到青简、停用微信输入源并正常退出微信输入法及设置进程，再备份应用、整个 WeType 用户数据目录、两个偏好文件及三个缓存目录。
+
+备份位于仓库根目录的 `private-backups/wetype-20260915-141015/`，共 7 个来源、778 个文件及符号链接、848,946,363 字节。`files/` 保留原路径层次，`manifest.json` 记录每个文件的 SHA256 或符号链接目标；复制前、复制后源文件与备份一致。目录仅当前用户可访问，整个 `private-backups/` 已加入 Git 忽略。
+
+管理员授权移除系统级 `/Library/Input Methods/WeType.app` 后，删除已备份的原用户数据、偏好和缓存。复核原路径均不存在、相关进程退出，系统输入源列表不再返回微信输入法，当前输入源为青简。卸载后再次校验全部 778 项备份通过；青简已迁入的个人学习数据保留。
+
+需要恢复微信输入法时，先退出相关输入法进程，再把清单列出的内容复制回原路径；系统级应用恢复需要管理员权限，之后重新启用微信输入源。备份内的 `README.txt` 与 `uninstall-result.json` 提供恢复提示和卸载结果。此前的迁移副本及青简导入前备份也保留。

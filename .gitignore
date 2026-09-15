@@ -6,3 +6,6 @@
 /logs
 /data
 .playwright-mcp/
+
+# 本机输入法私人数据备份
+/private-backups/
