@@ -1,4 +1,4 @@
-//! 神经重打分：整句转换的前几条路径交给字级模型（[`SentenceScorer`]）再排一次。
+//! 神经重打分：整句转换的前几条路径交给字级模型（[`crate::sentence::SentenceScorer`]）再排一次。
 //!
 //! 打分有两种接法：同步的（[`Engine::with_sentence_scorer`]，查询里当场打，CLI 评测用）和异步的
 //! （[`Engine::with_async_sentence_scorer`]，后台线程；壳里用）。两种都经过一张「前文 + 文本 → 神经分」的缓存
@@ -7,12 +7,16 @@
 //! 按键回调永远不等模型：先按词级模型出候选，模型的意见晚几十毫秒到。
 
 mod cache;
+mod words;
 mod worker;
 
 #[cfg(test)]
+mod context_tests;
+#[cfg(test)]
 mod tests;
 
-use super::*;
+use super::{Engine, take_last_chars};
+use crate::sentence::Conversion;
 
 pub(crate) use cache::NeuralCache;
 pub(crate) use worker::RescoreWorker;
@@ -39,6 +43,13 @@ impl Engine {
     /// 壳告知应用里光标前的文本（每次查询前给；应用给不出就 `None`，退回本会话历史）。
     pub fn set_rescoring_context(&mut self, before: Option<String>) {
         self.rescoring_before = before;
+        let context = self.rescoring_context();
+        tracing::debug!(
+            application_context = self.rescoring_before.is_some(),
+            chars = context.chars().count(),
+            "本地模型上文"
+        );
+        self.neural_cache.borrow_mut().ensure_context(&context);
     }
 
     /// 把几条整句路径按「路径分 + λ·(神经分 − 静态分)」重排。缓存里缺分的：同步打分器当场补，异步的先记下等壳来取；
@@ -47,38 +58,12 @@ impl Engine {
         if paths.len() < 2 || !self.has_sentence_scorer() {
             return;
         }
-        let context = self.rescoring_context();
-        let mut cache = self.neural_cache.borrow_mut();
-        cache.ensure_context(&context);
-        let mut missing: Vec<String> = Vec::new();
-        for path in paths.iter() {
-            if cache.get(&path.text).is_none() && !missing.contains(&path.text) {
-                missing.push(path.text.clone());
-            }
-        }
-        if !missing.is_empty() {
-            match &self.sentence_scorer {
-                Some(scorer) => {
-                    let texts: Vec<&str> = missing.iter().map(String::as_str).collect();
-                    let scores = scorer.score(&context, &texts);
-                    if scores.len() != texts.len() {
-                        return;
-                    }
-                    for (text, score) in texts.iter().zip(scores) {
-                        cache.insert(text, score);
-                    }
-                }
-                None => {
-                    for text in &missing {
-                        cache.want(text);
-                    }
-                    return;
-                }
-            }
-        }
+        let texts: Vec<&str> = paths.iter().map(|p| p.text.as_str()).collect();
+        let Some(scores) = self.neural_scores(&texts) else {
+            return;
+        };
         let lambda = self.neural_weight;
-        for path in paths.iter_mut() {
-            let neural = cache.get(&path.text).expect("filled above");
+        for (path, neural) in paths.iter_mut().zip(scores) {
             path.score += lambda * (neural - path.static_score);
         }
         paths.sort_by(|a, b| {
@@ -89,7 +74,41 @@ impl Engine {
         self.last_rescored.set(true);
     }
 
-    /// 最近一次查询里有整句路径还没拿到神经分：壳该在用户停顿后调 [`Self::request_rescoring`]。
+    /// 整批分数齐全才可比较；异步查询只登记缺项，不等待模型。
+    fn neural_scores(&self, texts: &[&str]) -> Option<Vec<f64>> {
+        let context = self.rescoring_context();
+        let mut cache = self.neural_cache.borrow_mut();
+        cache.ensure_context(&context);
+        let mut missing: Vec<String> = Vec::new();
+        for text in texts {
+            if cache.get(text).is_none() && !missing.iter().any(|m| m == text) {
+                missing.push((*text).to_owned());
+            }
+        }
+        if !missing.is_empty() {
+            match &self.sentence_scorer {
+                Some(scorer) => {
+                    let texts: Vec<&str> = missing.iter().map(String::as_str).collect();
+                    let scores = scorer.score(&context, &texts);
+                    if scores.len() != texts.len() || scores.iter().any(|s| !s.is_finite()) {
+                        return None;
+                    }
+                    for (text, score) in texts.iter().zip(scores) {
+                        cache.insert(text, score);
+                    }
+                }
+                None => {
+                    for text in &missing {
+                        cache.want(text);
+                    }
+                    return None;
+                }
+            }
+        }
+        texts.iter().map(|text| cache.get(text)).collect()
+    }
+
+    /// 最近一次查询里有候选还没拿到神经分：壳该在用户停顿后调 [`Self::request_rescoring`]。
     pub fn rescoring_pending(&self) -> bool {
         self.rescorer.is_some() && self.neural_cache.borrow().has_wanted()
     }
@@ -117,7 +136,10 @@ impl Engine {
         let mut updated = false;
         while let Some(scored) = worker.poll() {
             let mut cache = self.neural_cache.borrow_mut();
-            if scored.context != cache.context() || scored.scores.len() != scored.texts.len() {
+            if scored.context != cache.context()
+                || scored.scores.len() != scored.texts.len()
+                || scored.scores.iter().any(|s| !s.is_finite())
+            {
                 continue;
             }
             for (text, score) in scored.texts.iter().zip(scored.scores) {

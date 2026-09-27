@@ -107,6 +107,8 @@ TSV 解析、查询与生成工具把 `lue` / `nue` 统一成 `lve` / `nve`。
 Engine 侧在 `engine/rescoring/`：接了打分器就取 Viterbi 前 `RESCORE_PATHS` = 6 条路径按 `路径分 + λ·(神经分 − 静态二元分)` 重排（λ `NEURAL_WEIGHT` 0.5，
 个人 n-gram / 用户加分 / 代价不动），分走「前文 + 文本 → 神经分」缓存 `NeuralCache`；同步打分器（`with_sentence_scorer`，CLI 评测）当场补分，
 异步的（`with_async_sentence_scorer`，后台线程 `RescoreWorker`）查询不等模型：缺分的记下来，壳停键后 `request_rescoring`、`poll_rescoring` 到了再 `query` 一次。
+个人 fork 的词级扩展在 `engine/rescoring/words.rs`：同读音完整候选最多 12 条，个人词频与选词次数取较大者做一次封顶加分，领先第二名 1 nat 才提升；复用同一缓存和异步线程。集合不变、固定短语后插、无上文不提升。查询清理旧待评分项，换上文立即清缓存，非有限／缺项评分整批舍弃；`break_chain` 同时清空历史与神经上下文。契约见 [同音词重排](../design/contextual-homophones.md)。
+
 前文优先用壳给的应用光标前文（`set_rescoring_context`），没有用本会话最近 64 个上屏字符。CLI `--neural <导出目录>`（`--neural-weight` / `--neural-context` / `--neural-async`）。
 
 ## crates/qingjian-lm

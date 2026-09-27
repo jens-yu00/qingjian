@@ -35,3 +35,5 @@ README.md 只介绍项目，所有技术内容放在这里，分四类：前三�
 | [notes/windows-win10.md](notes/windows-win10.md) | Windows 10 与设置程序（2026-09-13）：Reactor 早期绑定 Windows 11 才有的 AppModel API 导致加载期失败，改自包含部署 + 延迟加载 |
 
 约定：文档写中文，代码标识符一律英文。实现与文档产生分歧时以代码为准，并同步更新文档。
+
+个人定制的 [同音词上下文重排](design/contextual-homophones.md) 说明候选边界、评分、失败回退和验证要求。

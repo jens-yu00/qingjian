@@ -1,4 +1,11 @@
-use super::*;
+//! 中英混输的英文尾段识别与比较。
+use crate::candidate::{Candidate, CandidateKind};
+use crate::correction;
+use crate::engine::{
+    ENGLISH_SWITCH_PENALTY, ENGLISH_ZIPF_FLOOR, Engine, Learner, MIN_COMPLETION_LETTERS,
+    MIN_ENGLISH_TAIL_HEAD_LETTERS, MIN_ENGLISH_TAIL_LETTERS, MIN_PINYIN_LIKE_TAIL_LETTERS,
+};
+use crate::parser::{self, Segmentation};
 
 /// 「拼音头 + 英文尾」的切法：`woxiangxuehaorust` 切成头 `woxiangxuehao` 与尾 rust。
 /// 见 [`Engine::split_english_tail`]。

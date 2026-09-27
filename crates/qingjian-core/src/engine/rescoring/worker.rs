@@ -66,6 +66,13 @@ impl RescoreWorker {
         }
     }
 
+    #[cfg(test)]
+    pub(super) fn finish_for_test(&mut self) {
+        let (closed, _) = channel();
+        drop(std::mem::replace(&mut self.jobs, closed));
+        self.handle.take().unwrap().join().unwrap();
+    }
+
     pub fn is_alive(&self) -> bool {
         self.handle.is_some()
     }

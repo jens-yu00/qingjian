@@ -62,6 +62,10 @@ impl Engine {
         self.chain.reset();
         self.recent_commits.clear();
         self.flush_passthrough();
+        // 失焦或光标移动后，会话历史不再代表当前插入点。
+        self.history.clear();
+        self.rescoring_before = None;
+        *self.neural_cache.borrow_mut() = Default::default();
         if self.committed_since_break {
             self.committed_since_break = false;
             self.logger.record(InputLogEntry::Break {

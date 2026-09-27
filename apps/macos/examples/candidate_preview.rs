@@ -13,7 +13,7 @@ use objc2_app_kit::{
 };
 use objc2_foundation::{NSDictionary, NSPoint, NSRect, NSSize, NSString};
 use qingjian_core::{Candidate, CandidateKind, Language, PartOfSpeech, Sense, Translation};
-use qingjian_platform::{CandidateScale, LayoutMode};
+use qingjian_platform::{CandidateRenderer, CandidateScale, LayoutMode};
 
 fn sample() -> Frame {
     let rows = [
@@ -79,52 +79,67 @@ fn main() {
     );
     let mut window = CandidateWindow::new(mtm);
     let frame = sample();
-    for (label, layout) in [
-        ("vertical", LayoutMode::Vertical),
-        ("horizontal", LayoutMode::Horizontal),
-    ] {
-        window.set_layout(layout);
-        window.set_scale(CandidateScale::try_from(100).unwrap());
-        window.show(frame.clone(), anchor);
-        let panel = app.windows().objectAtIndex(0);
-        let view = panel.contentView().unwrap();
-        let logical = view.bounds().size;
-        for scale in CandidateScale::ALL {
-            window.set_scale(scale);
-            let physical = panel.frame();
-            close(physical.size.width, logical.width * scale.factor());
-            close(physical.size.height, logical.height * scale.factor());
-            close(view.bounds().size.width, logical.width);
-            close(view.bounds().size.height, logical.height);
-            assert!(physical.origin.x >= screen.origin.x);
-            assert!(physical.origin.y >= screen.origin.y);
-            assert!(
-                physical.origin.x + physical.size.width
-                    <= screen.origin.x + screen.size.width + 0.1
-            );
-            assert!(
-                physical.origin.y + physical.size.height
-                    <= screen.origin.y + screen.size.height + 0.1
-            );
-            let bounds = view.bounds();
-            let bitmap = view.bitmapImageRepForCachingDisplayInRect(bounds).unwrap();
-            view.cacheDisplayInRect_toBitmapImageRep(bounds, &bitmap);
-            // SAFETY: PNG 使用默认编码参数，空字典没有不匹配的属性值。
-            let png = unsafe {
-                bitmap.representationUsingType_properties(
-                    NSBitmapImageFileType::PNG,
-                    &NSDictionary::new(),
-                )
+    for renderer in CandidateRenderer::ALL {
+        window.set_renderer(renderer);
+        for (label, layout) in [
+            ("vertical", LayoutMode::Vertical),
+            ("horizontal", LayoutMode::Horizontal),
+        ] {
+            window.set_layout(layout);
+            window.set_scale(CandidateScale::try_from(100).unwrap());
+            window.show(frame.clone(), anchor);
+            let panel = app.windows().objectAtIndex(0);
+            let view = panel.contentView().unwrap();
+            let logical = view.bounds().size;
+            for scale in CandidateScale::ALL {
+                window.set_scale(scale);
+                let physical = panel.frame();
+                close(
+                    physical.size.width,
+                    view.bounds().size.width * scale.factor(),
+                );
+                close(
+                    physical.size.height,
+                    view.bounds().size.height * scale.factor(),
+                );
+                close(view.bounds().size.width, logical.width);
+                close(view.bounds().size.height, logical.height);
+                assert!(physical.origin.x >= screen.origin.x);
+                assert!(physical.origin.y >= screen.origin.y);
+                assert!(
+                    physical.origin.x + physical.size.width
+                        <= screen.origin.x + screen.size.width + 0.1
+                );
+                assert!(
+                    physical.origin.y + physical.size.height
+                        <= screen.origin.y + screen.size.height + 0.1
+                );
+                let bounds = view.bounds();
+                let bitmap = view.bitmapImageRepForCachingDisplayInRect(bounds).unwrap();
+                view.cacheDisplayInRect_toBitmapImageRep(bounds, &bitmap);
+                // SAFETY: PNG 使用默认编码参数，空字典没有不匹配的属性值。
+                let png = unsafe {
+                    bitmap.representationUsingType_properties(
+                        NSBitmapImageFileType::PNG,
+                        &NSDictionary::new(),
+                    )
+                }
+                .unwrap();
+                let path = output.join(format!(
+                    "candidate-{}-{}-{label}.png",
+                    renderer.key(),
+                    scale.percent()
+                ));
+                assert!(
+                    png.writeToFile_atomically(&NSString::from_str(&path.to_string_lossy()), true)
+                );
+                println!(
+                    "{label} {}%: {:?}, bounds {:?}; edge placement OK",
+                    scale.percent(),
+                    physical,
+                    view.bounds()
+                );
             }
-            .unwrap();
-            let path = output.join(format!("candidate-{}-{label}.png", scale.percent()));
-            assert!(png.writeToFile_atomically(&NSString::from_str(&path.to_string_lossy()), true));
-            println!(
-                "{label} {}%: {:?}, bounds {:?}; edge placement OK",
-                scale.percent(),
-                physical,
-                view.bounds()
-            );
         }
     }
     window.hide();

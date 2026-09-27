@@ -68,3 +68,39 @@
 ## 微信输入法学习迁移（2026-09-15）
 
 已完成个人词频与精确全拼选词偏好迁移，并重启加载；来源、字段证据、数量、引擎验证及回退路径统一维护在 [微信迁移记录](wetype-migration.md)。本轮仅更新学习数据，应用仍为严格全拼交付的 `1c43beb` 构建。
+
+## 上游 0.1.4 与同音词上下文重排（2026-09-27）
+
+### Git 与实现范围
+
+- 原定制提交 `03defb1` 保留；新分支 `codex/context-ranking-v014` 以非快进合并官方 `v0.1.4`（`f7abaef`），合并提交 `5047e51`。未追入标签之后的两项上游文档／版本提交。
+- 合并后基线 workspace 657 项通过 / 0 失败 / 1 忽略，原有严格全拼、缩放与 Option+Shift+. 标点切换保留。处理了上游与定制设置项编号冲突。
+- 同音词重排的候选范围、偏好封顶、上文生命周期及失败回退只维护在 [设计契约](../design/contextual-homophones.md)。复用现有随包模型与开关，未增加云请求。
+- 适配上游位图渲染器：候选放大时同步提高渲染像素密度，避免把低密度位图直接拉大。两种绘制方式均支持原有字号范围。
+
+### 自动化证据
+
+- 新增 11 个行为测试。第一批 8 项在实现前 5 失败 / 3 通过（`context-red.log`）；最终 Core 317 项通过。另以较小但明确的语境优势复现了词频与选词偏好重复加权问题（`context-habit-red.log`），取较大次数仅加一次后通过。
+- 最终 workspace 668 项通过 / 0 失败 / 1 上游模型耗时测试忽略；fmt、workspace/all-targets Clippy、diff 检查通过。日志在 `target/verification/context-{green,workspace,clippy}.log`。
+- 产品 CLI 的 `liuchu`、`liuchuan`、`liuch`、`meiganxi` 范围回归通过，`liuchu` 仍无流传／流畅（`v014-strict-product.log`）。
+- AppKit 真实窗口预览：两种绘制方式 × 横竖排 × 7 个缩放档共 28 组窗口尺寸／屏幕边界检查通过；Option+Shift+句号原生事件归一化通过。截图与日志在 `target/verification/v014-preview-sharp/` 和同名 `.log`，检查了 150% 位图的清晰度。位图像素取整可带来不足一个逻辑点的尺寸差异。
+
+### 随包真实模型
+
+模型为 `small-155478`（27,950,272 参数），SHA256 `eed5bd0bda0c7bd8b43d1acb2dc4678d4bbe295bd47b2b0d4eeace0af9daff4d`。release + Metal，完整产品词库与 bigram；公开合成语境结果：
+
+| 上文 + 拼音 | 修改前冷启动首选 | 修改后首选 |
+|---|---|---|
+| 我明天坐高铁去 + shanghai | 上海 | 上海 |
+| 这种行为会对孩子造成 + shanghai | 上海 | 伤害 |
+| 每个公民都享有平等的 + quanli | 权力 | 权利 |
+| 他掌握着至高无上的 + quanli | 权力 | 权力（模型优势不足，不提升） |
+
+- 命令：`cargo run --release -p qingjian-cli --features qingjian-neural/metal --example context_probe -- data/model/model.qjm`。可选第二路径参数只读 `user.tsv` 及其同目录学习表，不调用上屏或保存；本机读取现有迁移数据后，四项断言也全部通过，仅输出是否匹配，未输出私人候选。
+- 最后一轮 40 次同步热态查询 p50 13.43 ms / p95 13.81 ms；20 次异步首轮查询 p95 0.13 ms，收到结果再查询的总耗时 p95 10.28 ms。后者不含壳的 80 ms 防抖和绘制；这些合成短词的采样不能推算所有输入的 p95。
+- 首次 GPU 推理另有约 10 秒冷启动；应用沿用上游后台加载与预热，期间正常显示词库结果。未把冷启动混入热态数字。
+- 日志 `target/verification/context-real-model-personal.log`；基线调研证据见 [调研记录](context-ranking-research-20260927.md)。四例均是工程样例，不能据此宣称整体选词准确率或真实应用验收通过。
+
+### 系统验收范围
+
+本节的 Core、模型和窗口预览均已验证；安装版本、备份、输入源与实体键盘结果在交付后补记。真实应用可能不提供前文，此时使用本次连续输入历史；用户尚未提供其实际误选样例。

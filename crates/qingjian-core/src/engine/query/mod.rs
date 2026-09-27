@@ -1,6 +1,21 @@
 //! 候选生成：按模式分派查询，整句转换与词级查找，位置展开。
 
-use super::*;
+use super::{
+    Engine, MAX_CANDIDATES, RESCORE_PATHS, Timings, abbreviated_count, choice_key, is_raw,
+    pattern_key,
+};
+use crate::candidate::{Candidate, CandidateKind, CandidateList};
+use crate::correction::{self, typo};
+use crate::engine::{ENGLISH_MODE_CANDIDATES, Learner};
+use crate::english;
+use crate::fuzzy::Expanded;
+use crate::parser::{self, ParseError, Segmentation};
+use crate::ranking::{self, Scored};
+use crate::sentence::{self, Conversion};
+use crate::shortcut;
+use qingjian_dictionary::Match;
+use std::collections::HashMap;
+use std::time::{Duration, Instant};
 
 mod code;
 mod english_tail;
@@ -17,9 +32,10 @@ impl Engine {
     /// 解析当前缓冲区并生成排好序的候选。**不带译文**，译文由 [`Self::annotate`] 补。
     ///
     /// 光标停在拼音中间时只按光标前的那段算候选（`ni|hao` 出 你），光标后的拼音留着，
-    /// 上屏之后接着组句；见 [`Composition::scope`]。
+    /// 上屏之后接着组句；见 [`crate::composition::Composition::scope`]。
     pub fn query(&self) -> Result<Query, ParseError> {
         self.last_rescored.set(false);
+        self.neural_cache.borrow_mut().take_wanted();
         let mut query = match self.query_inner() {
             Ok(query) => query,
             Err(error) => {
@@ -278,6 +294,9 @@ impl Engine {
             );
             (choice, log_prob)
         });
+        if correction.is_none() && self.aux_filter().is_none() && self.code.is_none() {
+            self.rescore_words(&mut scored, &letters);
+        }
         // 辅码态：词库候选按码段**反向**过滤（逐个问「有没有以码段开头的码」），无码词直接隐藏；
         // 命中的按「完全匹配码 > 码长降序 > 原词频序」重排（stable sort 保住 rank 排好的原序）。
         // 码段为空（刚敲下触发键）时不过滤，候选与纯拼音态一模一样。

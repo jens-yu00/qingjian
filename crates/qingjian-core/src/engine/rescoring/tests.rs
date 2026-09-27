@@ -1,3 +1,5 @@
+use crate::sentence::SentenceScorer;
+use qingjian_dictionary::Dictionary;
 use std::time::{Duration, Instant};
 
 use super::*;

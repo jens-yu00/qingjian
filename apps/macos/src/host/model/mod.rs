@@ -1,6 +1,6 @@
-//! 本地整句模型：后台加载、停顿后请求重排、结果到了重画当前页。
+//! 本地模型：后台加载、停顿后重排整句与同音词、结果到了重画当前页。
 //!
-//! 按键回调里永远只跑词级模型；模型的意见在停键 80 毫秒后请求、二三十毫秒后到，只换候选窗口里的整句候选，
+//! 按键回调不等待神经模型；停键 80 毫秒后请求，结果齐全再刷新候选，
 //! 用户翻过页或动过高亮就不打扰。前文优先用应用里光标前的文字（`refresh` 每次查询前给 Engine），应用给不出退回本会话历史。
 
 use std::sync::mpsc::{TryRecvError, channel};
@@ -11,7 +11,9 @@ mod rescore_monitor;
 
 pub(super) use rescore_monitor::RescoreMonitor;
 
-use super::*;
+use super::Host;
+use crate::app::paths;
+use crate::candidates::Preedit;
 
 impl Host {
     /// 在后台线程加载模型并预热（第一次前向要编译 Metal 内核，几百毫秒），加载完由 [`Self::attach_loaded_model`] 接上。
@@ -110,14 +112,14 @@ impl Host {
         self.rescore.stop();
     }
 
-    /// 每次查询之后：有整句路径等着打分就起防抖计时。
+    /// 每次查询之后：有候选等着打分就起防抖计时。
     pub fn schedule_rescoring(&mut self) {
         if self.engine.rescoring_pending() {
             self.rescore.schedule();
         }
     }
 
-    /// 防抖到点：把攒着的整句路径送去后台，开始轮询。
+    /// 防抖到点：把攒着的候选送去后台，开始轮询。
     pub fn start_rescoring(&mut self) {
         if self.engine.composition().is_empty() {
             self.rescore.stop();

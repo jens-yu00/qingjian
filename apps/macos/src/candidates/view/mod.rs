@@ -169,10 +169,17 @@ impl CandidateView {
         matched.is_some_and(|name| unsafe { name.isEqualToString(NSAppearanceNameDarkAqua) })
     }
 
-    /// 所在屏幕的倍数；还没进窗口时按 Retina 算。
+    /// 位图同时匹配屏幕密度与候选缩放，避免视力辅助放大后字形模糊。
     fn backing_scale(&self) -> f32 {
+        let width = self.bounds().size.width;
+        let zoom = if width > 0.0 {
+            self.frame().size.width / width
+        } else {
+            1.0
+        };
         self.window()
             .map_or(2.0, |window| window.backingScaleFactor() as f32)
+            * zoom as f32
     }
 
     pub fn theme(&self) -> &Theme {
