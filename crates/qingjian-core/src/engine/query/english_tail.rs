@@ -108,14 +108,35 @@ impl Engine {
     /// `wodedatabase`：我的 + database 赢过 我的大塔巴瑟；`womenqubeijing`：我们去北京 赢过 我们去 + Beijing；
     /// `taida`：太大 赢过 他 + Ida；`huoz`：或者 赢过 和 + Oz。
     pub(super) fn mixed_beats_plain(&self, scope: &str, tail: &EnglishTail) -> bool {
-        let convert = |text: &str, whole: bool| {
-            let segmentations = self.segment_pinyin(text).ok()?;
-            self.convert_sentence_with(&segmentations.first()?.patterns(), true, whole)
-        };
-        let (Some(head), Some(plain)) = (
-            convert(&scope[..tail.head_len], false),
-            convert(scope, true),
+        let (Ok(heads), Ok(segmentations)) = (
+            self.segment_pinyin(&scope[..tail.head_len]),
+            self.segment_pinyin(scope),
         ) else {
+            return false;
+        };
+        // 英文尾段一旦胜出就会缩短中文查询范围；严格全拼已命中的整词不能因此消失。
+        if self.strict_pinyin_active() {
+            let dictionaries = self.all_dictionaries();
+            if segmentations.iter().any(|segmentation| {
+                segmentation.incomplete_count() == 0
+                    && dictionaries.iter().any(|dictionary| {
+                        !dictionary.lookup_exact(&segmentation.patterns()).is_empty()
+                    })
+            }) {
+                return false;
+            }
+        }
+        // 混输候选实际使用头段的首个切分；纯中文则必须考虑其他合法切法（ken eng / ke neng）。
+        let head = heads
+            .first()
+            .and_then(|head| self.convert_sentence_with(&head.patterns(), true, false));
+        let plain = segmentations
+            .iter()
+            .filter_map(|segmentation| {
+                self.convert_sentence_with(&segmentation.patterns(), true, true)
+            })
+            .max_by(|a, b| a.score.total_cmp(&b.score));
+        let (Some(head), Some(plain)) = (head, plain) else {
             return false;
         };
         if head.has_placeholder() {

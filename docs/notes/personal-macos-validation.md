@@ -113,3 +113,23 @@
 首次切换由用户手动完成，未注销或修改系统输入源偏好。若以后需要完整回退，先切到 ABC 并退出青简，用备份的 `Qingjian.app` 替换安装目录的应用，再运行该应用的 `--register`。本次未改学习数据，通常不需要恢复 `data/`；如之后确需恢复，须另行备份安装后的新增学习。
 
 真实应用可能不提供前文，此时使用本次连续输入历史；用户尚未提供其实际误选样例。
+
+
+## 严格全拼与英文尾段冲突（2026-09-27）
+
+### 根因与修复边界
+
+`keneng` 的合法切分有 `ken eng` 和 `ke neng`。原有中英混输比分只看第一种，遇到已学习的英文尾段 `ng` 会改查 `kene + ng`，导致完整的“可能”从查询范围消失；`jineng` 的技能、`heneng` 的核能同样受影响。产品词库本身包含这些词，关闭本地模型也能复现。严格全拼禁用纠错后暴露了这个原有切分比较缺陷；此前未覆盖个人英文与拼音冲突，并非本轮上下文重排造成。
+
+修复按解析器给出的各个切分比较中文得分；严格模式另保护完整命中的中文整词，防止低频中文被高频英文排除。具体规则归 [个人定制计划](../plan/personal-macos-customization.md)，实现边界归 [crate 说明](crate-notes.md)。不清空学习数据，不特判“可能”或 `ng`。
+
+### 回归证据
+
+- 新增 `engine/tests/mixed.rs` 四组测试：个人英文与完整全拼冲突、无整词时的多切分比分、低频整词保护、真实混输的整段上屏。使用合成数据，没有提交私人学习表。
+- 修复前 3 失败 / 1 通过，修复后 4 通过；日志 `target/verification/mixed-tail-{red,green}.log`。红灯均为行为断言失败。
+- 完整 workspace 672 通过 / 0 失败 / 1 个既有模型耗时测试忽略；日志 `mixed-tail-workspace.log`。
+- 产品词库复现只需空的 `user.tsv` 和同目录合成 `user-english.tsv`（内容为 `ng\t7`），配置 `general.strict_pinyin = true`、`predict.enabled = false`。修复后 `keneng`、`jineng`、`heneng` 首选分别为可能、技能、核能；`wokeneng` 首选我可能；`kaifarust` 首选开发rust。日志 `mixed-tail-product.log`。
+- 同轮 `liuchu` 仍不含流传／流畅，`liuchuan` 可出流传，未完成的 `liuch` 仍可补全，`meiganxi` 不改成没关系。上述 CLI 结果不等同于实体键盘的系统输入会话验收。
+- 逐键 release CLI 对照使用同一组 53 次按键：修复后全部低于 2.34 ms；多切分比较会增加部分英文混输的计算，例如 `kaifarust` 末键从约 0.37 ms 增至 0.66 ms，仍低于 10 ms 目标。日志 `mixed-tail-{baseline-typing,typing}.log`，仅代表本轮公开样例、无神经模型的 Core 查询，不是所有输入或 IMK 的延迟上限。
+- 随包真实模型的四个上下文同音词用例全部通过（上海／伤害、权力／权利）；40 次同步热态查询 p95 14.28 ms，20 次异步初始查询 p95 0.13 ms、收到结果再查询 p95 10.40 ms（不含壳防抖和绘制）。日志 `mixed-tail-context-model.log`。
+- 随包模型 + 合成个人英文表的产品 CLI 也通过：可能／技能／核能首选恢复，开发rust 正常；导出全部候选确认 liuchu 无流传／流畅。日志 `mixed-tail-neural-product.log`。
