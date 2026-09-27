@@ -6,26 +6,35 @@
 
 CHANGELOG.md 的格式（一个版本一节，日期与发布渠道写在标题里，正文是一行一条的列表）：
 
-  ## 0.1.0 · 2026-09-07 · beta
+  ## 0.1.3 · 2026-09-18 · stable
+
+  网盘：[夸克网盘](https://pan.quark.cn/s/…)
+
   - 整句输入……
   - 候选旁有词性和译词……
 
-渠道只能是 alpha / beta / rc / stable。api-json 是 `gh api repos/<repo>/releases --paginate` 的输出（数组）。
+「网盘：」一行可选，放 GitHub 下载不方便时的镜像（Markdown 链接，多个用空格隔开）：不进 notes，单独输出成 mirrors，
+官网单独渲染成按钮；--notes-for 把它放在更新日志前面，GitHub Release 页照样看得到。
+
+渠道只能是 alpha / beta / rc / stable，是**更新渠道**：定期发的版本标 stable，中间放给测试者的版本标 alpha / beta / rc，
+版本号带对应的预发布后缀（`0.1.4-beta.1`）。api-json 是 `gh api repos/<repo>/releases --paginate` 的输出（数组）。
 只取 tag 形如 [平台-]v<版本> 的非草稿发布（平台前缀可选：macos- / windows- / linux-，各平台壳版本号独立），安装包按文件名识别平台与架构，其他附件（SHA256SUMS、build-info.json、releases.json 本身）不列。
 meta-dir 下每个 tag 一个目录，放那次发布的 SHA256SUMS（每个包的 sha256）与 build-info.json（提交哈希、构建时间、工具链），
 没有就对应字段留空。输出结构与官网 src/lib/releases.ts 的 Release / Asset 类型对应：
 
   {
+    "schema_version": 1,
     "generated": "2026-09-07T12:00:00Z",
     "repository": "owner/name",
     "latest": "0.1.0",
     "releases": [
       {
-        "version": "0.1.0", "date": "2026-09-07", "channel": "beta", "notes": ["…"],
+        "version": "0.1.3", "date": "2026-09-18", "channel": "stable", "notes": ["…"],
+        "mirrors": [{"name": "夸克网盘", "url": "https://pan.quark.cn/s/…"}],
         "commit": "869ad00…（40 位）", "built_at": "2026-09-07T08:38:12Z", "toolchain": "rustc 1.96.0 (…)",
         "assets": [
-          {"platform": "macos", "arch": "Apple Silicon", "file": "Qingjian-0.1.0-arm64.pkg",
-           "url": "https://github.com/…/releases/download/v0.1.0/Qingjian-0.1.0-arm64.pkg", "size": 123456, "sha256": "…"}
+          {"platform": "macos", "arch": "Apple Silicon", "cpu": "arm64", "file": "qingjian-0.1.3-macos-arm64.pkg",
+           "url": "https://github.com/…/releases/download/macos-v0.1.3/qingjian-0.1.3-macos-arm64.pkg", "size": 123456, "sha256": "…"}
         ]
       }
     ]
@@ -42,14 +51,23 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 HEADING = re.compile(r"^##\s+(?P<version>\d+\.\d+\.\d+(?:-[0-9A-Za-z.]+)?)\s*·\s*(?P<date>\d{4}-\d{2}-\d{2})\s*·\s*(?P<channel>\S+)\s*$")
+MIRROR_LINE = re.compile(r"^网盘[：:]")
+MIRROR_LINK = re.compile(r"\[(?P<name>[^\]]+)\]\((?P<url>https?://[^)\s]+)\)")
 TAG = re.compile(r"^(?:(?:macos|windows|linux)-)?v(\d+\.\d+\.\d+(?:-[0-9A-Za-z.]+)?)$")
 CHANNELS = ("alpha", "beta", "rc", "stable")
+# 只加字段不用动；改了已有字段的含义或结构才加一，旧客户端见到不认识的号就不读
+SCHEMA_VERSION = 1
 
-# 安装包文件名 → 平台与架构说明；不匹配的附件不进列表
+# 安装包文件名 → 平台、架构说明（给人看）、CPU（给程序比对）；不匹配的附件不进列表。
+# 0.1.3 起文件名是 qingjian-<版本>-<平台>-<cpu>[-setup].<扩展名>，后三条认 0.1.2 及更早的旧名。
 ASSET_KINDS = [
-    (re.compile(r"^Qingjian-.+-arm64\.pkg$"), "macos", "Apple Silicon"),
-    (re.compile(r"^Qingjian-.+-x86_64\.pkg$"), "macos", "Intel"),
-    (re.compile(r"^Qingjian-.+-Setup\.exe$"), "windows", "x64"),
+    (re.compile(r"^qingjian-.+-macos-arm64\.pkg$"), "macos", "Apple Silicon", "arm64"),
+    (re.compile(r"^qingjian-.+-macos-x86_64\.pkg$"), "macos", "Intel", "x86_64"),
+    (re.compile(r"^qingjian-.+-windows-x86_64-setup\.exe$"), "windows", "x64", "x86_64"),
+    (re.compile(r"^qingjian-.+-linux-x86_64\.tar\.gz$"), "linux", "x64", "x86_64"),
+    (re.compile(r"^Qingjian-.+-arm64\.pkg$"), "macos", "Apple Silicon", "arm64"),
+    (re.compile(r"^Qingjian-.+-x86_64\.pkg$"), "macos", "Intel", "x86_64"),
+    (re.compile(r"^Qingjian-.+-Setup\.exe$"), "windows", "x64", "x86_64"),
 ]
 
 
@@ -65,10 +83,12 @@ def parse_changelog(path: Path) -> dict[str, dict]:
                 sys.exit(f"CHANGELOG 标题格式不对，应为「## 版本 · YYYY-MM-DD · 渠道」：{line}")
             if m["channel"] not in CHANNELS:
                 sys.exit(f"渠道只能是 {' / '.join(CHANNELS)}：{line}")
-            current = {"date": m["date"], "channel": m["channel"], "notes": []}
+            current = {"date": m["date"], "channel": m["channel"], "notes": [], "mirrors": []}
             entries[m["version"]] = current
         elif current is not None and line.startswith("- "):
             current["notes"].append(line[2:].strip())
+        elif current is not None and MIRROR_LINE.match(line):
+            current["mirrors"] += [{"name": m["name"], "url": m["url"]} for m in MIRROR_LINK.finditer(line)]
     return entries
 
 
@@ -79,10 +99,10 @@ def semver_key(version: str) -> tuple:
     return (*nums, 0 if pre else 1, pre)
 
 
-def classify(name: str) -> tuple[str, str] | None:
-    for pattern, platform, arch in ASSET_KINDS:
+def classify(name: str) -> tuple[str, str, str] | None:
+    for pattern, platform, arch, cpu in ASSET_KINDS:
         if pattern.match(name):
-            return platform, arch
+            return platform, arch, cpu
     return None
 
 
@@ -128,7 +148,7 @@ def build(changelog: dict[str, dict], api: list[dict], repo: str, meta_dir: Path
         log = changelog.get(version)
         if log is None:
             print(f"警告：CHANGELOG 里没有 {version}，更新日志留空", file=sys.stderr)
-            log = {"date": item.get("published_at", "")[:10], "channel": "beta", "notes": []}
+            log = {"date": item.get("published_at", "")[:10], "channel": "beta", "notes": [], "mirrors": []}
         sums, info = read_meta(meta_dir, item["tag_name"])
         assets = []
         for asset in item.get("assets", []):
@@ -138,6 +158,7 @@ def build(changelog: dict[str, dict], api: list[dict], repo: str, meta_dir: Path
             assets.append({
                 "platform": kind[0],
                 "arch": kind[1],
+                "cpu": kind[2],
                 "file": asset["name"],
                 "url": asset["browser_download_url"],
                 "size": asset.get("size", 0),
@@ -149,6 +170,7 @@ def build(changelog: dict[str, dict], api: list[dict], repo: str, meta_dir: Path
             "date": log["date"],
             "channel": log["channel"],
             "notes": log["notes"],
+            "mirrors": log["mirrors"],
             "commit": info.get("commit", ""),
             "built_at": info.get("built_at", ""),
             "toolchain": info.get("toolchain", ""),
@@ -156,6 +178,7 @@ def build(changelog: dict[str, dict], api: list[dict], repo: str, meta_dir: Path
         })
     releases.sort(key=lambda r: semver_key(r["version"]), reverse=True)
     return {
+        "schema_version": SCHEMA_VERSION,
         "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "repository": repo,
         "latest": releases[0]["version"] if releases else None,
@@ -180,6 +203,9 @@ def main() -> None:
         log = changelog.get(args.notes_for)
         if log is None:
             sys.exit(f"CHANGELOG 里没有 {args.notes_for}")
+        if log["mirrors"]:
+            links = " · ".join(f"[{m['name']}]({m['url']})" for m in log["mirrors"])
+            print(f"**GitHub 下载慢可以用网盘：** {links}\n")
         print("\n".join(f"- {n}" for n in log["notes"]))
         return
 

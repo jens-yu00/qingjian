@@ -1,4 +1,6 @@
 mod apps;
+mod aux_code;
+mod candidate_renderer;
 mod candidate_scale;
 mod dictionaries;
 mod general;
@@ -8,9 +10,13 @@ mod log_level;
 mod model;
 mod modifiers;
 mod preedit_mode;
+mod scheme;
+mod shift_letter;
 mod shortcut;
 mod status_bar;
+mod switch_key;
 mod theme_mode;
+mod update;
 
 use std::path::Path;
 
@@ -22,21 +28,29 @@ use toml_edit::DocumentMut;
 use crate::error::ConfigError;
 
 pub use apps::{
-    AppsConfig, DEFAULT_ENGLISH_CANDIDATES_OFF, DEFAULT_ENGLISH_CANDIDATES_OFF_MACOS,
-    DEFAULT_ENGLISH_CANDIDATES_OFF_WINDOWS,
+    AppsConfig, DEFAULT_ENGLISH_CANDIDATES_OFF, DEFAULT_ENGLISH_CANDIDATES_OFF_LINUX,
+    DEFAULT_ENGLISH_CANDIDATES_OFF_MACOS, DEFAULT_ENGLISH_CANDIDATES_OFF_WINDOWS,
 };
+pub use aux_code::AuxCodeConfig;
+pub use candidate_renderer::CandidateRenderer;
 pub use candidate_scale::CandidateScale;
 pub use dictionaries::{DEFAULT_DOMAINS, DictionariesConfig};
-pub use general::{DEFAULT_PAGE_KEYS, GeneralConfig, MAX_PAGE_SIZE, PAGE_KEY_OPTIONS};
+pub use general::{
+    DEFAULT_PAGE_KEYS, GeneralConfig, LEARNING_LANGUAGE_OFF, MAX_PAGE_SIZE, PAGE_KEY_OPTIONS,
+};
 pub use key_combo::KeyCombo;
 pub use layout_mode::LayoutMode;
 pub use log_level::LogLevel;
 pub use model::LocalModelConfig;
 pub use modifiers::Modifiers;
 pub use preedit_mode::PreeditMode;
+pub use scheme::{Scheme, scheme_label};
+pub use shift_letter::ShiftLetter;
 pub use shortcut::ShortcutConfig;
 pub use status_bar::StatusBarConfig;
+pub use switch_key::{SwitchKey, SwitchKeys};
 pub use theme_mode::ThemeMode;
+pub use update::{UpdateChannel, UpdateConfig};
 
 /// 用户配置文件（TOML）。所有平台同一份格式，缺省值全部在各分节的 `Default` 里。
 ///
@@ -60,6 +74,9 @@ pub struct Config {
     /// 附加词库开关。
     pub dictionaries: DictionariesConfig,
 
+    /// 辅码码表开关。
+    pub aux_code: AuxCodeConfig,
+
     /// 按应用改行为（哪些应用里英文模式不给候选）。
     pub apps: AppsConfig,
 
@@ -71,6 +88,9 @@ pub struct Config {
 
     /// 本地整句模型。
     pub model: LocalModelConfig,
+
+    /// 检查更新。
+    pub update: UpdateConfig,
 }
 
 fn deserialize_phrases<'de, D: serde::Deserializer<'de>>(
@@ -81,9 +101,26 @@ fn deserialize_phrases<'de, D: serde::Deserializer<'de>>(
     Ok(phrases)
 }
 
+/// 模板的 `[apps]` 一节（Linux）：应用按 fcitx5 认到的名字（X11 是 WM_CLASS，Wayland 是 app_id）。
+/// 名单要与 [`DEFAULT_ENGLISH_CANDIDATES_OFF`] 一致，测试 `template_parses_to_defaults` 会核对。
+#[cfg(not(any(windows, target_os = "macos")))]
+macro_rules! template_apps {
+    () => {
+        r#"[apps]
+# 按应用改行为，条目是 fcitx5 认到的应用名（X11 是 WM_CLASS，Wayland 是 app_id；`*` 结尾按前缀匹配，不区分大小写）
+# 英文模式下不给候选的应用：终端与代码编辑器里候选窗口会挡住应用自己的补全，vim 里 Tab 和方向键也另有含义。设成 [] 就处处都给
+english_candidates_off = [
+  "konsole", "org.kde.konsole", "yakuake", "gnome-terminal-server", "org.gnome.terminal", "xterm",
+  "alacritty", "kitty", "foot", "wezterm", "org.wezfurlong.wezterm", "com.mitchellh.ghostty", "tilix", "xfce4-terminal",
+  "code", "code-oss", "codium", "code-url-handler", "cursor", "jetbrains-*", "dev.zed.zed", "sublime_text", "neovide",
+]
+"#
+    };
+}
+
 /// 模板的 `[apps]` 一节（macOS）：应用按 bundle identifier 认。名单要与 [`DEFAULT_ENGLISH_CANDIDATES_OFF`] 一致，
 /// 测试 `template_parses_to_defaults` 会核对。用宏而不是常量，是因为 `concat!` 只收字面量。
-#[cfg(not(windows))]
+#[cfg(target_os = "macos")]
 macro_rules! template_apps {
     () => {
         r#"[apps]
@@ -120,7 +157,10 @@ english_candidates_off = [
 #[cfg(not(windows))]
 macro_rules! template_shortcut_keys {
     () => {
-        r#"# 数字键配这些修饰键上屏候选的译词：translation 第一个译词，translation_second 第二个（候选右侧有两个译词时）
+        r#"# 中 / 英模式切换键（Windows 用），可多选：shift 单击（缺省）/ control 单击 / ctrl+alt+space 组合键；[] 不用键切换。
+# macOS 的切换键是 Caps Lock（系统级），本项不生效
+switch_mode = ["shift"]
+# 数字键配这些修饰键上屏候选的译词：translation 第一个译词，translation_second 第二个（候选右侧有两个译词时）
 # 任意修饰键组合（option / shift / control / command 用 + 连），偏好设置里点按钮录制；别用 control+数字（系统切桌面）和 command+数字（应用切标签页）
 translation = "option"
 translation_second = "shift+option"
@@ -139,11 +179,14 @@ delete_candidate = "shift"
 #[cfg(windows)]
 macro_rules! template_shortcut_keys {
     () => {
-        r#"# 数字键配这些修饰键上屏候选的译词：translation 第一个译词，translation_second 第二个（候选右侧有两个译词时）
+        r#"# 中 / 英模式切换键，可多选：shift 单击（缺省，与微软拼音一致）/ control 单击 / ctrl+alt+space 组合键；[] 不用键切换，只剩按钮。
+# 不提供 Ctrl + Space：中文 Windows 把它绑成系统的「输入法/非输入法切换」，系统先截走
+switch_mode = ["shift"]
+# 数字键配这些修饰键上屏候选的译词：translation 第一个译词，translation_second 第二个（候选右侧有两个译词时）
 # 任意修饰键组合（alt / shift / ctrl / win 用 + 连）。Alt+数字会被 Windows 当菜单快捷键截走，缺省用 Ctrl；组句时才拦，不打字时照常放行给应用
 translation = "ctrl"
 translation_second = "shift+ctrl"
-# 把应用里选中的文字译成学习语言（要开着云服务）：Windows 上还没接
+# 把应用里选中的文字译成学习语言（要开着云服务）：译文先出现在候选窗口，回车替换选中的文字，Esc 保留原文
 translate_selection = "ctrl+alt+t"
 # 数字键配这些修饰键删掉候选：用户词（云端选过的、自动造的）整个删掉，词库里的词清掉对它的学习记录。组句中要打感叹号先把词上屏
 delete_candidate = "shift"
@@ -157,7 +200,7 @@ pub const TEMPLATE: &str = concat!(
     r#"# 青简输入法配置。保存后自动生效；也可以在菜单栏的输入法菜单里改。
 
 [general]
-# 学习语言（en 英语 / ja 日语）：候选旁显示哪种语言的译文，要有对应的释义表才生效
+# 学习语言（en 英语 / ja 日语 / es 西班牙语 / off 不显示译文）：候选旁显示哪种语言的译文，要有对应的释义表才生效
 learning_language = "en"
 # 每页候选数（1–9）
 page_size = 9
@@ -169,24 +212,60 @@ theme = "system"
 candidate_scale = 150
 # 候选窗口排布：vertical 竖排 / horizontal 横排（横排只给高亮候选显示译文）
 layout = "vertical"
+# 横排时 ↑ / ↓ 把单行展开成 6 行矩阵并换行（一行一页候选），← / → 改为在候选之间移动（拼音光标用 ⌥←/→、⌘←/→），
+# Esc 第一下先收回单行。缺省 false：横排下 ↑ / ↓ 逐个移动高亮、← / → 移动拼音光标，与以前一样。只有 macOS 用
+horizontal_grid = false
+# 候选窗口由谁绘制：qingjian 青简渲染器（各平台一致，主题走它）/ system 系统原生绘制（渲染器有问题时的退路）
+renderer = "qingjian"
+# 候选窗口字体（字族名，如 "LXGW WenKai"）；空为系统字体。只对青简渲染器生效，没装这个字体时自动回到系统字体
+font = ""
 # 组句中的拼音显示在哪：both 行内和候选窗口 / inline 只在行内 / window 只在候选窗口（应用里不放 marked text）
 preedit = "both"
 # 英文模式（Caps Lock 亮着）是否给英文候选：Tab 或方向键选词，空格、回车、标点仍原样上屏敲的字母；false 就是纯直通
 english_candidates = true
 # 严格全拼匹配（macOS / CLI）：完整音节不补长、不改拼写、不用模糊音；未打完时仍可补全
 strict_pinyin = false
+
+# 繁体输出模式。开启后上屏繁体，不影响词库和个人词频的简体记录。
+traditional = false
+# 中文模式下整段输入是英文词时（hello / key）是否让中文候选排第一、英文词第二；缺省 false：拼音不像话的输入英文词排第一
+chinese_first = false
+# 中文模式下按住 Shift 敲的字母：passthrough 拼音原样上屏、字母交给应用（缺省，与以前一致）/ compose 收进组句
+# 缓冲区参与匹配，这样 Cpan 与 cpan 一样能出「C盘」。英文模式与英文直输段（no-Way）不受影响
+shift_letter = "passthrough"
+# 内置英文模式：开着时单击切换键（[shortcut] switch_mode）或 Caps Lock 亮着进英文模式
+# 关掉后青简保持中文模式，切换键与语言栏按钮都不再切过去；要打英文请用系统快捷键（Win+Space）切到别的输入法。只有 Windows 用，macOS 的中英切换是 Caps Lock
+english_mode = true
 # 中文模式下（没在组句时）敲的标点转全角：, . ? ! : ; ( ) 等，数字后面的 . 保持半角。Windows 上悬浮状态条的「，。」格可以点着切；macOS 在偏好设置中选择默认中文标点模式
 full_width_punctuation = true
 # 英文模式下的同一件事，中英各记一份，状态条切的是当前模式那份；只有 Windows 用
 english_full_width_punctuation = false
-# 双拼方案：留空为全拼；xiaohe 小鹤 / ziranma 自然码 / microsoft 微软 / sogou 搜狗
-# 开着时 v / u / i 都是音节键，表达式与问字模式只能用 ? 开头进；微软、搜狗方案的 ; 键是 ing
-shuangpin = ""
+# 辅码触发键：拼音打完之后敲它进辅码态，之后敲的字母按码表缩小候选范围；缺省是分号
+# 单个可见字符，字母、数字与翻页键不能当触发键；微软 / 搜狗双拼里分号先当 ing 的韵母键
+aux_code_key = ";"
+# 候选上是否显示码（方括号紧跟在候选词后面，如「鹤[rbm] crane」）。缺省关
+aux_code_show = false
+# 码段删空后是否留在辅码状态：true 删空后 ; 仍在、候选全部回来，再按一次退格才退出辅码；false 删空即回拼音状态
+aux_code_keep_empty = true
+# 拼音方案：留空或 pinyin 为全拼 / xiaohe 小鹤双拼 / ziranma 自然码 / microsoft 微软双拼 / sogou 搜狗双拼 / abc 智能ABC / xiaolang 小浪双拼 / shoudao 首道双拼 /
+# zhuyin 大千注音 / none 关（只用形码，见下面的 wubi）。
+# 双拼与注音下 v / u / i 都是按键，表达式模式没有入口，问字只能靠 question_mark 打开后用 ? 进；微软、搜狗方案的 ; 键是 ing
+scheme = ""
+# 双拼方案下 preedit 显示原始按键（如 ljse）还是展开成全拼（lan'se）；缺省 false（展开成全拼）
+shuangpin_raw_preedit = false
+# 五笔（86 版形码）：留空为关，wubi86 为开。**与上面的拼音方案同时开着就是混输**——
+# 两边都出候选，编码打全的五笔词在前、其次拼音（打不出的字直接打拼音）；候选旁的译文、生词记录与学习照常。
+# 只用五笔的话把 scheme 写成 none；第 5 个字母起五笔已经查不到东西，自动只剩拼音。
+wubi = ""
 # 日志级别：info 缺省 / debug 详细（会记录敲的拼音与上屏的文字，配合作者排查问题时再开）。日志在 ~/Library/Logs/Qingjian/
 log_level = "info"
 # 输入日志：每次上屏记一行到数据目录的 input-log.jsonl（敲的键、看到的候选、选了什么），只写在这台电脑上，不上传；
 # 用来离线评测排序和训练个人模型。false 不记；「高级」页可以清空
 input_log = true
+# 学习输入习惯：按你的选择调整候选顺序、记新词与敲错纠正。false 不再学，已学的仍参与排序；学习数据在数据目录，删掉文件即清空
+learning = true
+# 把系统设置「键盘 → 文本替换」里的条目当自定义短语：输入码（小写字母）敲全后短语出现在该码最靠前的空位；只有 macOS 用
+system_text_replacements = true
 
 # 自定义短语示例：取消下面各行注释后启用；同码同位置不能重复。
 # [[custom_phrases]]
@@ -199,8 +278,10 @@ input_log = true
 # 前缀模式键，只能是 v / u / i 之一且互不相同（这三个字母不是任何拼音音节的开头）
 # 表达式模式：v1+2 出 3，v123 出中文数字
 expression = "v"
-# 问字模式：usangemu 问「三个木」（云端答），u4e00 出码点对应的字符（本地答）。? 开头永远也是问字
+# 问字模式：usangemu 问「三个木」（云端答），u4e00 出码点对应的字符（本地答）
 question = "u"
+# 没在组句时敲 ? 是否也进问字模式（中英文模式都行，后面跟字母才是问题，跟别的键还原成问号）；false 的话问号就是问号
+question_mark = false
 "#,
     template_shortcut_keys!(),
     r#"
@@ -225,6 +306,14 @@ in_ing = false
 # 偏好设置「词库」页可以勾选
 domains = ["idioms"]
 # 自己导入的词库：放在配置同目录 dicts/ 下的 .qj 文件都会加载，这里列出要关掉的（文件名，不含扩展名）
+disabled = []
+
+[aux_code]
+# 辅码总开关：false 时整条辅码线关（; 完全保持原生行为，候选也不挂码）；
+# true 且有可用码表（随包或 codes/ 下有 .qj）才生效
+enabled = false
+# 辅码码表：放在配置同目录 codes/ 下的 .qj 文件都会加载，这里列出要关掉的（文件名，不含扩展名）
+# 随包的笔画表也可以在这里关掉；码表由「辅码」设置页导入，或放好文件后在这里管
 disabled = []
 
 [model]
@@ -262,6 +351,12 @@ enabled = false
 # 记住的屏幕位置（物理像素，拖动后自动写入）；留空则首次出现在屏幕右下角
 # x = 0
 # y = 0
+
+[update]
+# 检查更新：每天向官网（qingjian.app）读一次版本索引，有新版在菜单与设置的「关于」页提示；请求不带任何标识，不自动下载安装
+check = true
+# 渠道：stable 只看正式版；beta 还会提示测试版（alpha / beta / rc）
+channel = "stable"
 "#
 );
 
@@ -336,8 +431,7 @@ impl Config {
             tables.push(t);
         }
         document["custom_phrases"] = toml_edit::Item::ArrayOfTables(tables);
-        qingjian_core::storage::write_atomic_str(path, &document.to_string())
-            .map_err(|e| e.to_string())
+        write_file(path, &document.to_string()).map_err(|e| e.to_string())
     }
 
     /// 读配置。文件不存在按默认值；存在但解析失败报错，不要静默吞掉用户的笔误。
@@ -354,10 +448,15 @@ impl Config {
                 });
             }
         };
-        toml::from_str(&source).map_err(|source| ConfigError::Parse {
+        let config: Self = toml::from_str(&source).map_err(|source| ConfigError::Parse {
             path: path.to_owned(),
-            source,
-        })
+            source: Box::new(source),
+        })?;
+        // 配置或环境变量里的密钥登记给日志掩码；各进程都从这里加载配置，登记在这一处就够
+        if let Some(key) = config.predict.resolve_api_key() {
+            crate::logs::secrets::register(&key);
+        }
+        Ok(config)
     }
 
     /// 原地改一个布尔键，见 [`Self::set_value`]。
@@ -386,7 +485,7 @@ impl Config {
         };
         let mut document: DocumentMut = source.parse().map_err(|source| ConfigError::Edit {
             path: path.to_owned(),
-            source,
+            source: Box::new(source),
         })?;
         // 分节不存在时先建成标准表，否则 toml_edit 会写成顶层的行内表 `predict = { enabled = true }`
         if !document.get(section).is_some_and(|item| item.is_table()) {
@@ -394,12 +493,7 @@ impl Config {
         }
         document[section][key] = toml_edit::value(value);
         // 写临时文件再改名：输入法进程随时可能被杀，不能留半个配置文件
-        qingjian_core::storage::write_atomic_str(path, &document.to_string()).map_err(|source| {
-            ConfigError::Write {
-                path: path.to_owned(),
-                source,
-            }
-        })
+        write_file(path, &document.to_string())
     }
 
     /// 原地把一个键改成字符串数组（`[section] key = ["a", "b"]`），其余内容、注释与顺序原样保留。
@@ -422,7 +516,7 @@ impl Config {
         };
         let mut document: DocumentMut = source.parse().map_err(|source| ConfigError::Edit {
             path: path.to_owned(),
-            source,
+            source: Box::new(source),
         })?;
         if !document.get(section).is_some_and(|item| item.is_table()) {
             document[section] = toml_edit::table();
@@ -432,27 +526,31 @@ impl Config {
             array.push(value.as_ref());
         }
         document[section][key] = toml_edit::value(array);
-        qingjian_core::storage::write_atomic_str(path, &document.to_string()).map_err(|source| {
-            ConfigError::Write {
-                path: path.to_owned(),
-                source,
-            }
-        })
+        write_file(path, &document.to_string())
     }
 
-    /// 文件不存在时写出模板，返回是否写了。
+    /// 文件不存在时写出模板（目录一并建），返回是否写了。
     pub fn write_template_if_missing(path: &Path) -> Result<bool, ConfigError> {
         if path.exists() {
             return Ok(false);
         }
-        qingjian_core::storage::write_atomic_str(path, TEMPLATE).map_err(|source| {
-            ConfigError::Write {
-                path: path.to_owned(),
-                source,
-            }
-        })?;
+        write_file(path, TEMPLATE)?;
         Ok(true)
     }
+}
+
+/// 原子写配置文件；数据目录还没有就先建（新账户第一次打开设置时输入法可能还没跑过）。
+fn write_file(path: &Path, text: &str) -> Result<(), ConfigError> {
+    let write = || {
+        if let Some(dir) = path.parent() {
+            std::fs::create_dir_all(dir)?;
+        }
+        qingjian_core::storage::write_atomic_str(path, text)
+    };
+    write().map_err(|source| ConfigError::Write {
+        path: path.to_owned(),
+        source,
+    })
 }
 
 #[cfg(test)]
@@ -495,11 +593,18 @@ mod tests {
         assert_eq!(config.general.preedit, PreeditMode::Window);
         assert_eq!(config.general.learning_language, "en");
         assert!(config.general.english_candidates);
+        assert!(!config.general.traditional);
         assert_eq!(config.general.shuangpin(), None);
         assert_eq!(config.general.log_level, LogLevel::Info);
         assert_eq!(config.shortcut.mode.expression, 'i');
         assert_eq!(config.shortcut.mode.question, 'u');
-        assert_eq!(config.shortcut.translation, Modifiers::OPTION);
+        // 译词修饰键缺省分平台（Windows 是 Ctrl 系，其余 Option 系，见 shortcut.rs），断言跟着 Default 走
+        assert_eq!(
+            config.shortcut.translation,
+            Config::default().shortcut.translation
+        );
+        assert_eq!(config.shortcut.switch_mode, SwitchKeys::default());
+        assert!(config.general.english_mode);
     }
 
     #[test]
@@ -534,6 +639,21 @@ mod tests {
         let config = Config::load(&path).unwrap();
         assert!(config.fuzzy.z_zh && config.fuzzy.n_l && config.predict.enabled);
         let _ = std::fs::remove_file(&path);
+    }
+
+    #[test]
+    fn writes_create_the_data_directory_for_a_fresh_account() {
+        let dir = std::env::temp_dir().join("qingjian-config-fresh-account-test");
+        let _ = std::fs::remove_dir_all(&dir);
+        let path = dir.join("Qingjian").join("config.toml");
+        assert!(Config::write_template_if_missing(&path).unwrap());
+        assert!(!Config::write_template_if_missing(&path).unwrap());
+        assert_eq!(std::fs::read_to_string(&path).unwrap(), TEMPLATE);
+        // 没有模板直接保存也行
+        std::fs::remove_dir_all(&dir).unwrap();
+        Config::set_bool(&path, "predict", "enabled", true).unwrap();
+        assert!(Config::load(&path).unwrap().predict.enabled);
+        std::fs::remove_dir_all(&dir).unwrap();
     }
 
     #[test]

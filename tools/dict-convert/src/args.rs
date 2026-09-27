@@ -2,6 +2,9 @@ use std::path::PathBuf;
 
 use clap::{Parser, Subcommand, ValueEnum};
 
+use crate::mmh::MmhReferenceOptions;
+use crate::stroke::StrokeOptions;
+
 #[derive(Debug, Parser)]
 #[command(
     name = "qingjian-dict-convert",
@@ -49,6 +52,20 @@ pub enum Command {
         domain_keep_min: u64,
     },
 
+    /// 形码码表（五笔）：Rime `.dict.yaml` → `词\t编码\t词频`。词频由青简词库按词面回填，不用码表自带的权重
+    Wubi {
+        /// 输入的 Rime 码表（`.dict.yaml`，如极点 86 五笔）
+        input: PathBuf,
+
+        /// 词频来源：青简词库 TSV（`词\t拼音\t词频`）。可给多个（基础词库 + 随包领域词库），同一个词取词频最大的那份
+        #[arg(long, default_value = "assets/lexicon/dict.tsv", num_args = 1..)]
+        frequency: Vec<PathBuf>,
+
+        /// 输出文件名（写在 --out-dir 下）
+        #[arg(long, default_value = "wubi86.tsv")]
+        name: String,
+    },
+
     /// CC-CEDICT `cedict_ts.u8` → glossary-en.tsv
     Cedict {
         /// 输入文件
@@ -91,9 +108,10 @@ pub enum Command {
         #[arg(long)]
         phrases: Vec<PathBuf>,
 
-        /// 品牌词文件（assets/lexicon/brand.tsv）：语料里没有的词按文件给的次数写进一元表
+        /// 品牌词文件（assets/lexicon/brand.tsv，可给多个，中英混杂词 mixed_words.tsv 也走这条路）：语料里没有的词按文件给的次数写进一元表。
+        /// 与 --phrases 的区别：合成计数要成分词在语料里，C盘 的 C 不是语料 token，只能直接给
         #[arg(long)]
-        brand: Option<PathBuf>,
+        brand: Vec<PathBuf>,
 
         /// 计数低于此值的二元组不输出
         #[arg(long, default_value_t = 3)]
@@ -162,9 +180,18 @@ pub enum Command {
         max_chars: usize,
     },
 
+    /// 笔画表：CNS11643 全字庫「筆順資料」+ 大陆序覆盖表 → `codes/stroke.tsv`（随包笔画码表的源数据，见模块文档）。
+    /// 参数的 clap 定义在 `stroke::StrokeOptions`，加参数只动那一处
+    Stroke(StrokeOptions),
+
+    /// 笔画对照表：从 hanzi-writer-data（Make Me a Hanzi；Arphic 许可，不进仓库）生成 `stroke --verify`
+    /// 用的两张开发期对照表到 `data/mmh/`（笔画数、首笔几何类别，见模块文档与 assets/stroke/README.md）
+    MmhReference(MmhReferenceOptions),
+
     /// 把 TSV 打包成 `.qj` 容器（mmap 直接用，启动近零耗时）：`dict` 读 dict.tsv 写 dict.qj，`lm` 读 lm-unigram/bigram.tsv 写 lm.qj，
     /// `glossary --language en` 读 glossary-en.tsv 写 glossary-en.qj；`model` 把训练仓库导出的三件套目录（缺省 data/model）
-    /// 打成一个 model.qjm（`--out-dir data/model` 就写回原目录，随包只带这一个文件）
+    /// 打成一个 model.qjm（`--out-dir data/model` 就写回原目录，随包只带这一个文件）；
+    /// `codes` 是唯一不「原样落盘」的一种：读笔画表与词库，按取码规则算成本地码表 codes/stroke.qj（见 codes 模块）
     Pack {
         /// 打包哪种数据
         kind: PackKind,
@@ -173,8 +200,20 @@ pub enum Command {
         #[arg(long, num_args = 1..)]
         input: Vec<PathBuf>,
 
-        /// 元数据：名称
+        /// `codes` 用：笔画表（`stroke` 子命令的产物，`字\t序列`）；缺省 <输出目录>/codes/stroke.tsv
         #[arg(long)]
+        stroke: Option<PathBuf>,
+
+        /// `codes` 用：取码用的词库（`.qj` 或 TSV）；缺省 <输出目录>/dict.qj
+        #[arg(long)]
+        dict: Option<PathBuf>,
+
+        /// `codes` 用：码表产物；缺省 <输出目录>/codes/stroke.qj
+        #[arg(long)]
+        output: Option<PathBuf>,
+
+        /// 元数据：名称（`codes` 缺省「笔画」，别的种类必填）
+        #[arg(long, default_value = "")]
         name: String,
 
         /// 元数据：许可证（SPDX 标识，如 GPL-3.0-only、CC-BY-SA-4.0）
@@ -193,7 +232,7 @@ pub enum Command {
         #[arg(long, default_value = "")]
         data_version: String,
 
-        /// `glossary` 专用：释义表的语言代码（en / ja / zh），决定输出文件名 glossary-<语言>.qj
+        /// `glossary` 专用：释义表的语言代码（en / ja / zh / es），决定输出文件名 glossary-<语言>.qj
         #[arg(long, default_value = "en")]
         language: String,
     },
@@ -213,4 +252,20 @@ pub enum PackKind {
 
     /// 本地整句模型（三件套目录 → model.qjm）
     Model,
+
+    /// 笔画码表（笔画表 + 词库 → codes/stroke.qj，随包原生码表）
+    Codes,
+}
+
+impl PackKind {
+    /// 子命令里写的名字（报错文案用）。
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Dict => "dict",
+            Self::Lm => "lm",
+            Self::Glossary => "glossary",
+            Self::Model => "model",
+            Self::Codes => "codes",
+        }
+    }
 }

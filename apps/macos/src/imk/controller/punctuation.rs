@@ -1,6 +1,10 @@
 //! 中文模式的标点偏好切换，不改变当前组句或候选选择。
 
-use super::*;
+use super::QingjianInputController;
+use crate::host;
+use crate::imk::TextClient;
+use objc2_app_kit::{NSEvent, NSEventModifierFlags};
+use qingjian_platform::Modifiers;
 
 impl QingjianInputController {
     pub(super) fn handle_punctuation_shortcut(

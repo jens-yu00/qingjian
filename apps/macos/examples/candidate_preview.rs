@@ -1,7 +1,7 @@
 //! 用真实 AppKit 候选窗口验证缩放与屏幕边界，并导出人工审阅用 PNG。
 //! 运行：cargo run -p qingjian-macos --example candidate_preview -- target/verification
 
-#[allow(dead_code)]
+#[allow(dead_code, unused_imports)]
 #[path = "../src/candidates/mod.rs"]
 mod candidates;
 
@@ -30,6 +30,7 @@ fn sample() -> Frame {
                 text: text.to_owned(),
                 kind: CandidateKind::Chinese,
                 syllables: vec![],
+                aux_code: None,
                 reading: None,
                 translation: Some(Translation::new(
                     Language::English,

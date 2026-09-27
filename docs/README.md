@@ -1,4 +1,3 @@
-| [notes/domain-words.md](notes/domain-words.md) | 领域词（2026-09-12）：从输入日志人工挑 48 条进基础词库的挑法、低频词当 token 统计为什么伤整句、两把尺子的前后数字 |
 # docs
 
 README.md 只介绍项目，所有技术内容放在这里，分四类：前三类是给开发者看的内部文档，`user/` 是给用户看的、官网渲染的文档。
@@ -20,13 +19,18 @@ README.md 只介绍项目，所有技术内容放在这里，分四类：前三�
 | [notes/personal-macos-validation.md](notes/personal-macos-validation.md) | 个人定制的回归、产品词库、本机安装与实机验收证据 |
 | [notes/wetype-migration.md](notes/wetype-migration.md) | 微信输入法个人词频解析、映射边界与本机迁移验证 |
 | [notes/context-ranking-research-20260927.md](notes/context-ranking-research-20260927.md) | 上游 0.1.4 合并评估、上下文排序缺口与神经模型方案实测 |
+| [design/rendering.md](design/rendering.md) | 跨平台 UI 与自绘渲染器（2026-09-13）：显示面与控件面的区分、Flutter / Avalonia / WebView 的调研结论、主题的两条路、tiny-skia + cosmic-text 的 spike 结果与两平台接入 |
+| [design/aux-code.md](design/aux-code.md) | 辅码（2026-09-14）：触发键与过滤语义、Rime 码表导入、笔画原生表与大陆序覆盖、候选注记与设置界面 |
 | [plan/roadmap.md](plan/roadmap.md) | 分阶段路线图、各阶段的依赖关系与已完成项 |
 | [plan/zh_tw_support_plan.md](plan/zh_tw_support_plan.md) | 繁体输出与台湾注音支持的分析与方案（贡献者 pinchiu，#22）：读音标准差异、台湾用语、简转繁一对多；两条路线 |
 | [plan/todo.md](plan/todo.md) | 待办清单，按「从自用到能给别人用」排 |
+| [plan/wubi.md](plan/wubi.md) | 五笔（形码）支持方案（2026-09-15）：为什么不能按双拼的方式接、两条平行管线、码表与词频、`[general] scheme` 收敛、分期 |
 | [notes/crate-notes.md](notes/crate-notes.md) | 各 crate / app / tool 的实现要点：入口类型、数据文件、常数、生成命令 |
+| [notes/linux-fcitx5.md](notes/linux-fcitx5.md) | Linux 默认面板构建、协议、安装与排错 |
 | [notes/performance.md](notes/performance.md) | 历次性能优化：起因、定位方法、改法、数字前后对比与经验 |
 | [notes/release.md](notes/release.md) | 发版流程：CHANGELOG、标签触发的 CI 打包、产品数据包、签名公证的 Secrets、官网用的 `releases.json` |
 | [notes/phrase-layer.md](notes/phrase-layer.md) | 短语层（2026-09-12）：常用词表收不到的 我的 / 不知道 怎么从语料挖、怎么进语言模型而不伤整句、两把尺子的前后数字 |
+| [notes/domain-words.md](notes/domain-words.md) | 领域词（2026-09-12）：从输入日志人工挑 48 条进基础词库的挑法、低频词当 token 统计为什么伤整句、两把尺子的前后数字 |
 | [notes/constant-sweep.md](notes/constant-sweep.md) | 排序常数扫描（2026-09-12）：插值与敲错代价在冻结日志上扫网格，全在平台区不改；没命中的构成与复现步骤 |
 | [notes/windows-win10.md](notes/windows-win10.md) | Windows 10 与设置程序（2026-09-13）：Reactor 早期绑定 Windows 11 才有的 AppModel API 导致加载期失败，改自包含部署 + 延迟加载 |
 

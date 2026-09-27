@@ -1,6 +1,8 @@
 //! 全拼匹配策略与运行时切换。
 
-use super::*;
+use super::{Engine, segment_longest_prefix};
+use crate::fuzzy::FuzzyRules;
+use crate::parser::{self, ParseError, Segmentation};
 
 impl Engine {
     /// 严格全拼：完整音节不补长、不改拼写；双拼、注音与英文模式不受影响。

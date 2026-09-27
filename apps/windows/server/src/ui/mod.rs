@@ -8,9 +8,12 @@ mod candidates;
 mod command;
 mod layered;
 mod monitor;
+mod painter;
 mod status;
 mod window_class;
 
+use std::cell::RefCell;
+use std::rc::Rc;
 use std::sync::mpsc::{self, Receiver, Sender};
 use std::thread;
 
@@ -21,7 +24,8 @@ use windows::Win32::UI::HiDpi::{
     DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2, SetProcessDpiAwarenessContext,
 };
 use windows::Win32::UI::WindowsAndMessaging::{
-    DispatchMessageW, GetMessageW, MSG, PostThreadMessageW, TranslateMessage, WM_APP,
+    ASFW_ANY, AllowSetForegroundWindow, DispatchMessageW, GetMessageW, MSG, PostThreadMessageW,
+    TranslateMessage, WM_APP,
 };
 use windows::core::{Error, Result};
 
@@ -29,8 +33,9 @@ use qingjian_platform::protocol::{Frame, ScreenRect};
 
 use self::candidates::CandidateWindow;
 use self::command::UiCommand;
+use self::painter::{Painter, SharedPainter};
 use self::status::StatusBar;
-use crate::dispatch::{CandidateSink, StatusEvent, StatusSink, StatusView};
+use crate::dispatch::{CandidateSink, RenderSettings, StatusEvent, StatusSink, StatusView};
 
 /// 状态条上的操作（点格子 / 拖动结束）回给 Router 的回调，UI 线程上调。
 pub type StatusEvents = Box<dyn Fn(StatusEvent) + Send>;
@@ -83,6 +88,10 @@ impl CandidateSink for UiHandle {
     fn hide(&self) {
         self.post(UiCommand::Hide);
     }
+
+    fn configure(&self, settings: RenderSettings) {
+        self.post(UiCommand::Configure(settings));
+    }
 }
 
 impl StatusSink for UiHandle {
@@ -92,6 +101,30 @@ impl StatusSink for UiHandle {
 
     fn hide_status(&self) {
         self.post(UiCommand::StatusHide);
+    }
+
+    fn open_settings(&self) {
+        open_settings();
+    }
+
+    fn open_download(&self) {
+        let _ = unsafe { AllowSetForegroundWindow(ASFW_ANY) };
+        let opened = std::process::Command::new("explorer")
+            .arg(qingjian_update::DOWNLOAD_URL)
+            .spawn();
+        if let Err(error) = opened {
+            tracing::warn!(%error, "打开下载页失败");
+        }
+    }
+}
+
+/// 起与本 exe 同目录的设置程序。设置程序已开时由新实例把它带到前台，得先把前台权让出去。
+pub(crate) fn open_settings() {
+    let _ = unsafe { AllowSetForegroundWindow(ASFW_ANY) };
+    let exe = std::env::current_exe().map(|exe| exe.with_file_name("qingjian-settings.exe"));
+    let spawned = exe.and_then(|exe| std::process::Command::new(exe).spawn());
+    if let Err(error) = spawned {
+        tracing::warn!(%error, "打开设置程序失败");
     }
 }
 
@@ -106,8 +139,10 @@ fn run(commands: Receiver<UiCommand>, ready: &Sender<Option<u32>>, on_status: St
     // 按物理像素定位，与应用报来的组句屏幕矩形对齐；已设过会失败，忽略。
     let _ = unsafe { SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2) };
     let thread_id = unsafe { GetCurrentThreadId() };
+    // 装上时随 Configure 命令建。
+    let painter: SharedPainter = Rc::new(RefCell::new(None));
     // 先建窗口再报 id：建窗口顺带建起本线程的消息队列，之后 PostThreadMessageW 才有处可投。
-    let window = match CandidateWindow::new() {
+    let window = match CandidateWindow::new(painter.clone()) {
         Ok(window) => window,
         Err(error) => {
             tracing::error!(%error, "建候选窗口失败，Server 将不显示候选框");
@@ -115,7 +150,7 @@ fn run(commands: Receiver<UiCommand>, ready: &Sender<Option<u32>>, on_status: St
             return;
         }
     };
-    let status = match StatusBar::new(on_status) {
+    let status = match StatusBar::new(on_status, painter.clone()) {
         Ok(status) => Some(status),
         Err(error) => {
             tracing::error!(%error, "建悬浮状态条失败，将不显示状态条");
@@ -134,7 +169,7 @@ fn run(commands: Receiver<UiCommand>, ready: &Sender<Option<u32>>, on_status: St
         if msg.message == WM_WAKE {
             // 一次唤醒排空整个队列，保住 Hide→Show 的先后。
             while let Ok(command) = commands.try_recv() {
-                apply(&window, status.as_ref(), command);
+                apply(&window, status.as_ref(), &painter, command);
             }
             continue;
         }
@@ -145,7 +180,12 @@ fn run(commands: Receiver<UiCommand>, ready: &Sender<Option<u32>>, on_status: St
     }
 }
 
-fn apply(window: &CandidateWindow, status: Option<&StatusBar>, command: UiCommand) {
+fn apply(
+    window: &CandidateWindow,
+    status: Option<&StatusBar>,
+    painter: &SharedPainter,
+    command: UiCommand,
+) {
     match command {
         UiCommand::Show(payload) => {
             let (frame, rect) = *payload;
@@ -163,6 +203,7 @@ fn apply(window: &CandidateWindow, status: Option<&StatusBar>, command: UiComman
                 status.hide();
             }
         }
+        UiCommand::Configure(settings) => Painter::configure(painter, &settings),
     }
 }
 
