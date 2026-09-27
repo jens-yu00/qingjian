@@ -130,7 +130,7 @@
 - 完整 workspace 672 通过 / 0 失败 / 1 个既有模型耗时测试忽略；日志 `mixed-tail-workspace.log`。
 - 产品词库复现只需空的 `user.tsv` 和同目录合成 `user-english.tsv`（内容为 `ng\t7`），配置 `general.strict_pinyin = true`、`predict.enabled = false`。修复后 `keneng`、`jineng`、`heneng` 首选分别为可能、技能、核能；`wokeneng` 首选我可能；`kaifarust` 首选开发rust。日志 `mixed-tail-product.log`。
 - 同轮 `liuchu` 仍不含流传／流畅，`liuchuan` 可出流传，未完成的 `liuch` 仍可补全，`meiganxi` 不改成没关系。上述 CLI 结果不等同于实体键盘的系统输入会话验收。
-- 逐键 release CLI 对照使用同一组 53 次按键：修复后全部低于 2.34 ms；多切分比较会增加部分英文混输的计算，例如 `kaifarust` 末键从约 0.37 ms 增至 0.66 ms，仍低于 10 ms 目标。日志 `mixed-tail-{baseline-typing,typing}.log`，仅代表本轮公开样例、无神经模型的 Core 查询，不是所有输入或 IMK 的延迟上限。
+- 逐键 release CLI 对照使用同一组 53 次按键：修复后最慢约 2.34 ms；多切分比较会增加部分英文混输的计算，例如 `kaifarust` 末键从约 0.37 ms 增至 0.66 ms，仍低于 10 ms 目标。日志 `mixed-tail-{baseline-typing,typing}.log`，仅代表本轮公开样例、无神经模型的 Core 查询，不是所有输入或 IMK 的延迟上限。
 - 随包真实模型的四个上下文同音词用例全部通过（上海／伤害、权力／权利）；40 次同步热态查询 p95 14.28 ms，20 次异步初始查询 p95 0.13 ms、收到结果再查询 p95 10.40 ms（不含壳防抖和绘制）。日志 `mixed-tail-context-model.log`。
 - 随包模型 + 合成个人英文表的产品 CLI 也通过：可能／技能／核能首选恢复，开发rust 正常；导出全部候选确认 liuchu 无流传／流畅。日志 `mixed-tail-neural-product.log`。
 
@@ -140,6 +140,8 @@
 - 已安装到 `~/Library/Input Methods/Qingjian.app`，打包与安装的签名严格校验通过，二进制 SHA256 `c09de5702b93360a7c637bd5e75a19b4371e219cade29db977b13de61ea99d83`。
 - 安装前已切 ABC、停用青简并退出旧进程；旧应用和数据备份到 `~/Library/Application Support/Qingjian/backups/pinyin-english-tail-20260927-125351/`。其中 `Qingjian.app` 为旧版，`data/` 为配置及学习数据快照，`receipt.json` 保存校验清单。安装前后配置和学习文件校验值一致。
 - 注册、启用与选择 Hans 模式成功；独立 TIS 查询当前输入源为 `app.qingjian.inputmethod.Hans`。新进程正常启动，日志确认产品词库、本地模型加载并预热；严格全拼、150% 缩放、本地模型开启和云联想关闭均保留。
-- 实体键盘输入 keneng／jineng／heneng 的验证已请用户进行，尚未取得本轮回执；不将 CLI 通过或输入源选中当作实体键盘验收。
+- 用户随后以实体键盘验证并回复“已经测试，可能正常了”，确认 `keneng → 可能` 实际输入恢复；技能／核能仍只有自动化验证，不扩大本次实机回执范围。
 
 需要回退时，切 ABC 并退出青简，用本次备份的 `Qingjian.app` 替换安装应用后注册、启用 Hans 模式即可。修复未修改学习数据，不需要恢复 `data/`；恢复数据前须另存之后新增的学习记录。
+
+用户确认今后的安装分工：安装完成后，由用户在系统设置中启用并测试。本轮已自动启用；此后遵循该分工。
