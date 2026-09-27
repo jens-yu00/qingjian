@@ -133,3 +133,13 @@
 - 逐键 release CLI 对照使用同一组 53 次按键：修复后全部低于 2.34 ms；多切分比较会增加部分英文混输的计算，例如 `kaifarust` 末键从约 0.37 ms 增至 0.66 ms，仍低于 10 ms 目标。日志 `mixed-tail-{baseline-typing,typing}.log`，仅代表本轮公开样例、无神经模型的 Core 查询，不是所有输入或 IMK 的延迟上限。
 - 随包真实模型的四个上下文同音词用例全部通过（上海／伤害、权力／权利）；40 次同步热态查询 p95 14.28 ms，20 次异步初始查询 p95 0.13 ms、收到结果再查询 p95 10.40 ms（不含壳防抖和绘制）。日志 `mixed-tail-context-model.log`。
 - 随包模型 + 合成个人英文表的产品 CLI 也通过：可能／技能／核能首选恢复，开发rust 正常；导出全部候选确认 liuchu 无流传／流畅。日志 `mixed-tail-neural-product.log`。
+
+### 安装与回退
+
+- 代码提交 `0cc8069`，分支 `codex/fix-pinyin-english-tail`；fmt、Clippy（workspace/all-targets，警告视为错误）与 diff 检查通过。构建版本 `0.1.4-dev-0cc8069+` / build 244，release/arm64。版本尾部 `+` 来自用户已有的截图增删，构建时没有未提交代码修改；这些截图变化未纳入修复提交。
+- 已安装到 `~/Library/Input Methods/Qingjian.app`，打包与安装的签名严格校验通过，二进制 SHA256 `c09de5702b93360a7c637bd5e75a19b4371e219cade29db977b13de61ea99d83`。
+- 安装前已切 ABC、停用青简并退出旧进程；旧应用和数据备份到 `~/Library/Application Support/Qingjian/backups/pinyin-english-tail-20260927-125351/`。其中 `Qingjian.app` 为旧版，`data/` 为配置及学习数据快照，`receipt.json` 保存校验清单。安装前后配置和学习文件校验值一致。
+- 注册、启用与选择 Hans 模式成功；独立 TIS 查询当前输入源为 `app.qingjian.inputmethod.Hans`。新进程正常启动，日志确认产品词库、本地模型加载并预热；严格全拼、150% 缩放、本地模型开启和云联想关闭均保留。
+- 实体键盘输入 keneng／jineng／heneng 的验证已请用户进行，尚未取得本轮回执；不将 CLI 通过或输入源选中当作实体键盘验收。
+
+需要回退时，切 ABC 并退出青简，用本次备份的 `Qingjian.app` 替换安装应用后注册、启用 Hans 模式即可。修复未修改学习数据，不需要恢复 `data/`；恢复数据前须另存之后新增的学习记录。
