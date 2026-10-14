@@ -153,3 +153,10 @@
 - Core 324 项通过；全 workspace 675 项通过 / 0 失败 / 1 上游模型耗时测试忽略。fmt、workspace/all-targets Clippy（警告视为错误）和 diff 检查通过；日志为 `target/verification/sentence-priority-{core,workspace,clippy}.log`。
 - 真实产品词库、个人数据副本、现有随包模型的无模型 / 同步 / 异步三种查询，均确认 `yange → 严格`、`diyige → 第一个`，以及既有“可能／技能／核能”、合法多音字和未收录组合回归。输入法学习数据原件未作为 CLI 写回目标。
 - 本轮没有引入新模型，后续选型已按用户要求限定为专用分类决策模型。安装后由用户手动启用并进行实体键盘验收；命令行结果不代替实机回执。
+
+### 本轮安装
+
+- 代码提交 `015c9ad`，分支 `codex/fix-sentence-priority`；release 构建 `0.1.4-dev-015c9ad+` 已安装到 `~/Library/Input Methods/Qingjian.app`。版本尾部 `+` 来自原有截图文件的未提交变动，截图不在本次提交范围。
+- 安装前应用、配置和六张学习表备份至 `/Users/jaadmin/Library/Application Support/Qingjian/backups/sentence-priority-20261014-134331`，校验清单在其 `receipt.json`。
+- 打包与安装的二进制 SHA256 一致：`af93f4c1805e512b454900c5bd9cddc7a0810e261a605f82d01d92faca7c849f`；安装应用通过 `codesign --verify --deep --strict`，配置与学习表七个文件安装前后哈希全部一致。
+- 使用仓库安装脚本替换应用并结束旧进程，未执行注册、启用或输入源切换。待用户启用后确认 `yange → 严格`、`diyige → 第一个`；本轮尚无实体键盘回执。
