@@ -4,7 +4,38 @@
 
 这里的 Jev 是 TypeSafe 的决策模型，不是 JEPA。下面只引用厂商、项目作者与原始论文，不以同名聚合站或营销目录作为性能证据。本轮未安装下列模型、未调用付费接口，也没有将个人日志发往云端。
 
-## 最值得复用的开源项目
+## 已接入 Jev 的开源输入法
+
+用户进一步要求查看输入法本身的实现。检索后已阅读下面两个项目的实际请求、重排与交互代码；**首要接入参考改为 `Ideny42/jev-keyboard`**，通用 Jev-Reranker 降为补充。以下是源码核对，不是本机安装或 Jev 准确率实测。
+
+### Jev Keyboard：首要参考
+
+[`Ideny42/jev-keyboard`](https://github.com/Ideny42/jev-keyboard/tree/20624fd50f095bd61cbfccdd3aa2ed5c08237c0b) 是 macOS 鼠须管插件，当前为开发者预览版。
+
+- **怎么用 Jev：** Rime 给出真实候选，后台把上文、未确认拼音及候选 ID 发送给 Jev Choice。默认请求把每个选项写成“候选文本 + 选中后的完整片段”，让模型判断接续自然度，而不是孤立词的常用程度。回包必须包含同一候选集合的完整概率，排序相同分数时保留原序。见 [`lib/ime-completion.mjs`](https://github.com/Ideny42/jev-keyboard/blob/20624fd50f095bd61cbfccdd3aa2ed5c08237c0b/lib/ime-completion.mjs)、[`lib/jev.mjs`](https://github.com/Ideny42/jev-keyboard/blob/20624fd50f095bd61cbfccdd3aa2ed5c08237c0b/lib/jev.mjs)。
+- **何时请求、何时显示：** 启用后输入期间预取，默认防抖 150 ms、上文 20 字、9 个候选；Ctrl 是应用排序的按键，不是首次联网的按键。可开启结果返回后自动刷新。不能把这套默认操作直接当成青简的交互需求。见 [`配置`](https://github.com/Ideny42/jev-keyboard/blob/20624fd50f095bd61cbfccdd3aa2ed5c08237c0b/macos/lib/config.mjs)。
+- **如何防串词：** 请求带会话、序列和候选快照；新输入取消旧请求，返回后再次核对当前输入及光标；20 秒短缓存的键包含候选快照和上文。见 [`bridge.mjs`](https://github.com/Ideny42/jev-keyboard/blob/20624fd50f095bd61cbfccdd3aa2ed5c08237c0b/macos/bridge.mjs)。
+- **边界：** 所读 Lua 路径的上文来自连续上屏记录，`effective_context` 标为 `fallback`；不能仅因配置名为 `host` 就认为它读取了应用光标前全文。输入变化时校验也不等于青简要求的“用户已移动高亮后冻结”。见 [`jev_keyboard.lua`](https://github.com/Ideny42/jev-keyboard/blob/20624fd50f095bd61cbfccdd3aa2ed5c08237c0b/macos/rime/lua/jev_keyboard.lua)。
+
+取用候选身份、完整片段提示、异步取消和快照校验的思路；保留青简已有的光标前文获取、严格全拼以及交互冻结。所读决策路径没有显式的模型概率与个人词频融合，仍需青简自己完成。仅参考原创桥接代码与设计，不引入其配套雾凇词库。
+
+### Rime-Capsule-AI：能说明接法，不能直接搬运行路径
+
+[`Love-Neko/Rime-Capsule-AI`](https://github.com/Love-Neko/Rime-Capsule-AI/tree/fab9f12809ddbef89f27da12156d17e36be9bb42) 使用小狼毫与 Python 桥接，界面主题称为 macOS 风格；不要据此把它当成原生 macOS 输入法。
+
+- [`rerank.py`](https://github.com/Love-Neko/Rime-Capsule-AI/blob/fab9f12809ddbef89f27da12156d17e36be9bb42/jev_bridge/rerank.py) 将前 6 个候选作为 Jev Choice 选项，成功后把选中项移到第一，其余保留原序。虽然读取了概率与置信度，但没有按低置信度门控，也没有与个人频率做概率融合。
+- [`local_ranker.py`](https://github.com/Love-Neko/Rime-Capsule-AI/blob/fab9f12809ddbef89f27da12156d17e36be9bb42/jev_bridge/local_ranker.py) 使用 SQLite 记录拼音、候选、上文及次数，按 `log1p(count)` 加分；还有手写“汽车→油箱”等规则。Jev 成功时首选直接由 Jev 覆盖，学习主要服务本地排序/回退，不能当成已解决“模型结合历史习惯”的证据。
+- [`jev_filter.lua`](https://github.com/Love-Neko/Rime-Capsule-AI/blob/fab9f12809ddbef89f27da12156d17e36be9bb42/lua/jev_filter.lua) 在普通输入时就写请求，Tab 时读结果；未就绪会用 `os.clock()` 忙等至 1.2 秒，所谓 8 ms 微休同样是忙循环。返回文件只比较规范化拼音，没有校验上文与候选快照；同拼音不同语境可能读到旧结果。这两个实现点都不适合青简。
+
+其源码确实调用远端 Jev，因此 README 的“打字数据完全本地闭环”不能作为实际数据流描述。这里不采用它的忙等、固定临时文件通信及手写语义规则。
+
+### 不使用 Jev 的对照：MSIME / chinese-ime-lm
+
+[`metasequoiaime/chinese-ime-lm`](https://github.com/metasequoiaime/chinese-ime-lm/tree/ed030178ebf7f361a08b57c6b179d512ea47042f) 提供中文输入法专用字级模型；项目报告 MSIME 已接入 4M/25M 两档重排。它不使用 Jev，也不是通用指令模型。其 [测量记录](https://github.com/metasequoiaime/chinese-ime-lm/blob/ed030178ebf7f361a08b57c6b179d512ea47042f/docs/measurements.md) 的主要启发是：判断候选是否覆盖完整拼音、区分词典命中与拼装路径，并分别统计纠正和误提升。
+
+这份记录不同段落包含不同候选池口径，且存在用金标准等长过滤却称为运行时判据的矛盾，因此不采纳它的模型胜负与准确率数字。发布体积 4.5/25.5 MB 也不是本机内存测量。它值得借鉴评测方法和专用训练方向，不据此替换青简现有模型，更不把“词典命中永不重排”的门控搬来阻止强语境纠正同音词。
+
+## 通用决策模型与重排项目
 
 | 项目 | 已有能力 | 青简应取用的部分 | 不直接照搬的部分 |
 |---|---|---|---|
@@ -14,7 +45,7 @@
 | [jaredpalmer/kev](https://github.com/jaredpalmer/kev)（Apache-2.0 基座） | Qwen 基座加训练过的选项指针头，直接出分布；有 MLX 服务与概率一致性测试 | 指针头、状态前缀复用、校准及“决策模型专门训练”思路 | 4B 仍是大骨干，改成决策头不会消除读取上文的成本；本轮不下载它的模型 |
 | [Nokia Applied Research / AnyJev](https://github.com/nokia-applied-research/AnyJev)（Apache-2.0） | 直接读取 LLM 分数、处理标签偏好与选项顺序偏差；另有蒸馏 checkpoint | 评测必须置换候选，原始 softmax 不视为校准置信度；领域蒸馏的方向 | 全轮换需多次前向，不能当成免费提准；检索时 MLX 后端仍列在路线图，不能宣传为现成 MLX 方案 |
 
-最接近青简业务的参考实现是 **Jev-Reranker**；最符合本机体积与 MLX 约束的模型试验对象是 **Laya-multilingual + laya-apple**。这些是可复用方向，不是已经通过中文同音词验收的产品。
+输入法接入优先参考上面的 **Jev Keyboard**；**Jev-Reranker** 补充通用重排经验。本地 MLX 模型试验优先考察 **Laya-multilingual + laya-apple**。这些是可复用方向，不是已经通过中文同音词验收的产品。
 
 ## 模型供应商与其他可选实现
 
