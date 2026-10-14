@@ -21,6 +21,7 @@ README.md 只介绍项目，所有技术内容放在这里，分四类：前三�
 | [notes/context-ranking-research-20260927.md](notes/context-ranking-research-20260927.md) | 上游 0.1.4 合并评估、上下文排序缺口与神经模型方案实测 |
 | [design/llm-first-homophones.md](design/llm-first-homophones.md) | 准确率优先的语境首选、历史偏好与异步结果边界 |
 | [notes/mlx-context-benchmark-20261014.md](notes/mlx-context-benchmark-20261014.md) | M1 Pro 的 Qwen3.5-4B 实测、候选位置错误与未采用原因 |
+| [notes/decision-model-benchmark-20261014.md](notes/decision-model-benchmark-20261014.md) | 专用分类决策模型的中文同音词本机实测、错误归因与复现 |
 | [notes/chinese-decision-models-20261014.md](notes/chinese-decision-models-20261014.md) | 中文决策质量证据、云端对照与本地 MLX 候选取舍 |
 | [notes/decision-models-20261014.md](notes/decision-models-20261014.md) | Jev 输入法源码对照，以及 Laya、Kev、AnyJev 等决策模型筛选 |
 | [notes/ordinal-candidate-20261014.md](notes/ordinal-candidate-20261014.md) | diyige 首选“的一个”的日志确认及个人学习数据消融诊断 |

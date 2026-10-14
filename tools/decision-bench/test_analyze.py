@@ -1,6 +1,6 @@
 """用手算的纠正、误改和合理变体核对统计口径。"""
 import unittest
-from analyze import metrics, predictions
+from analyze import metrics, predictions, wilson95
 
 
 class MetricsTest(unittest.TestCase):
@@ -19,6 +19,12 @@ class MetricsTest(unittest.TestCase):
         self.assertEqual(result['changed'], 3)
         self.assertEqual(result['net'], 0)
         self.assertEqual(result['mis_promotion_rate'], 1/3)
+
+    def test_zero_observed_errors_still_has_nonzero_upper_bound(self):
+        low, high = wilson95(0, 100)
+        self.assertAlmostEqual(low, 0)
+        self.assertAlmostEqual(high, 0.0369935, places=6)
+        self.assertIsNone(wilson95(0, 0))
 
     def test_margin_gate_preserves_baseline_below_threshold(self):
         rows = [dict(id='a', selected='食盐', baseline_first='实验', margin=.99),

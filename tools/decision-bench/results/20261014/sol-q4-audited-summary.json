@@ -13,7 +13,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -24,7 +28,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -35,7 +43,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ]
     },
@@ -51,7 +63,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -62,7 +78,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -73,7 +93,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ]
     },
@@ -89,7 +113,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -100,7 +128,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -111,7 +143,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ]
     },
@@ -127,7 +163,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -138,7 +178,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -149,7 +193,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ]
     },
@@ -165,7 +213,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -176,7 +228,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -187,7 +243,11 @@
           "corrected": 1,
           "damaged": 0,
           "net": 1,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ]
     },
@@ -203,7 +263,11 @@
           "corrected": 0,
           "damaged": 0,
           "net": 0,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -214,7 +278,11 @@
           "corrected": 0,
           "damaged": 0,
           "net": 0,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -225,7 +293,11 @@
           "corrected": 0,
           "damaged": 0,
           "net": 0,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ]
     },
@@ -241,7 +313,11 @@
           "corrected": 0,
           "damaged": 0,
           "net": 0,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -252,7 +328,11 @@
           "corrected": 0,
           "damaged": 0,
           "net": 0,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -263,7 +343,11 @@
           "corrected": 0,
           "damaged": 0,
           "net": 0,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ]
     }
@@ -281,7 +365,11 @@
         "corrected": 0,
         "damaged": 0,
         "net": 0,
-        "mis_promotion_rate": 0.0
+        "mis_promotion_rate": 0.0,
+        "mis_promotion_wilson95": [
+          1.3877787807814457e-17,
+          0.2153108027376358
+        ]
       },
       "raw": {
         "n": 16,
@@ -292,7 +380,11 @@
         "corrected": 2,
         "damaged": 0,
         "net": 2,
-        "mis_promotion_rate": 0.0
+        "mis_promotion_rate": 0.0,
+        "mis_promotion_wilson95": [
+          1.3877787807814457e-17,
+          0.2153108027376358
+        ]
       },
       "challenger": {
         "n": 16,
@@ -303,7 +395,11 @@
         "corrected": 2,
         "damaged": 0,
         "net": 2,
-        "mis_promotion_rate": 0.0
+        "mis_promotion_rate": 0.0,
+        "mis_promotion_wilson95": [
+          1.3877787807814457e-17,
+          0.2153108027376358
+        ]
       },
       "in_pool": 16,
       "raw_in_pool": {
@@ -315,7 +411,11 @@
         "corrected": 2,
         "damaged": 0,
         "net": 2,
-        "mis_promotion_rate": 0.0
+        "mis_promotion_rate": 0.0,
+        "mis_promotion_wilson95": [
+          1.3877787807814457e-17,
+          0.2153108027376358
+        ]
       },
       "permutations_raw": [
         {
@@ -327,7 +427,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -338,7 +442,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -349,7 +457,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ],
       "permutations_challenger": [
@@ -362,7 +474,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -373,7 +489,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         },
         {
           "n": 16,
@@ -384,7 +504,11 @@
           "corrected": 2,
           "damaged": 0,
           "net": 2,
-          "mis_promotion_rate": 0.0
+          "mis_promotion_rate": 0.0,
+          "mis_promotion_wilson95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
         }
       ],
       "order_sensitive_ids": [
@@ -401,7 +525,11 @@
         "corrected": 0,
         "damaged": 0,
         "net": 0,
-        "mis_promotion_rate": 0.0
+        "mis_promotion_rate": 0.0,
+        "mis_promotion_wilson95": [
+          0.0,
+          0.04751842528243408
+        ]
       },
       "raw": {
         "n": 92,
@@ -412,7 +540,11 @@
         "corrected": 14,
         "damaged": 1,
         "net": 13,
-        "mis_promotion_rate": 0.012987012987012988
+        "mis_promotion_rate": 0.012987012987012988,
+        "mis_promotion_wilson95": [
+          0.0022962172971240508,
+          0.06996198914680525
+        ]
       },
       "challenger": {
         "n": 92,
@@ -423,7 +555,11 @@
         "corrected": 14,
         "damaged": 1,
         "net": 13,
-        "mis_promotion_rate": 0.012987012987012988
+        "mis_promotion_rate": 0.012987012987012988,
+        "mis_promotion_wilson95": [
+          0.0022962172971240508,
+          0.06996198914680525
+        ]
       },
       "in_pool": 91,
       "raw_in_pool": {
@@ -435,7 +571,11 @@
         "corrected": 14,
         "damaged": 1,
         "net": 13,
-        "mis_promotion_rate": 0.012987012987012988
+        "mis_promotion_rate": 0.012987012987012988,
+        "mis_promotion_wilson95": [
+          0.0022962172971240508,
+          0.06996198914680525
+        ]
       },
       "permutations_raw": [
         {
@@ -447,7 +587,11 @@
           "corrected": 14,
           "damaged": 1,
           "net": 13,
-          "mis_promotion_rate": 0.012987012987012988
+          "mis_promotion_rate": 0.012987012987012988,
+          "mis_promotion_wilson95": [
+            0.0022962172971240508,
+            0.06996198914680525
+          ]
         },
         {
           "n": 92,
@@ -458,7 +602,11 @@
           "corrected": 14,
           "damaged": 1,
           "net": 13,
-          "mis_promotion_rate": 0.012987012987012988
+          "mis_promotion_rate": 0.012987012987012988,
+          "mis_promotion_wilson95": [
+            0.0022962172971240508,
+            0.06996198914680525
+          ]
         },
         {
           "n": 92,
@@ -469,7 +617,11 @@
           "corrected": 14,
           "damaged": 1,
           "net": 13,
-          "mis_promotion_rate": 0.012987012987012988
+          "mis_promotion_rate": 0.012987012987012988,
+          "mis_promotion_wilson95": [
+            0.0022962172971240508,
+            0.06996198914680525
+          ]
         }
       ],
       "permutations_challenger": [
@@ -482,7 +634,11 @@
           "corrected": 14,
           "damaged": 1,
           "net": 13,
-          "mis_promotion_rate": 0.012987012987012988
+          "mis_promotion_rate": 0.012987012987012988,
+          "mis_promotion_wilson95": [
+            0.0022962172971240508,
+            0.06996198914680525
+          ]
         },
         {
           "n": 92,
@@ -493,7 +649,11 @@
           "corrected": 14,
           "damaged": 1,
           "net": 13,
-          "mis_promotion_rate": 0.012987012987012988
+          "mis_promotion_rate": 0.012987012987012988,
+          "mis_promotion_wilson95": [
+            0.0022962172971240508,
+            0.06996198914680525
+          ]
         },
         {
           "n": 92,
@@ -504,7 +664,11 @@
           "corrected": 14,
           "damaged": 1,
           "net": 13,
-          "mis_promotion_rate": 0.012987012987012988
+          "mis_promotion_rate": 0.012987012987012988,
+          "mis_promotion_wilson95": [
+            0.0022962172971240508,
+            0.06996198914680525
+          ]
         }
       ],
       "order_sensitive_ids": [
@@ -522,7 +686,11 @@
         "corrected": 0,
         "damaged": 0,
         "net": 0,
-        "mis_promotion_rate": 0.0
+        "mis_promotion_rate": 0.0,
+        "mis_promotion_wilson95": [
+          0.0,
+          0.04050400392888021
+        ]
       },
       "raw": {
         "n": 108,
@@ -533,7 +701,11 @@
         "corrected": 16,
         "damaged": 1,
         "net": 15,
-        "mis_promotion_rate": 0.01098901098901099
+        "mis_promotion_rate": 0.01098901098901099,
+        "mis_promotion_wilson95": [
+          0.0019424713318492125,
+          0.05964935668650616
+        ]
       },
       "challenger": {
         "n": 108,
@@ -544,7 +716,11 @@
         "corrected": 16,
         "damaged": 1,
         "net": 15,
-        "mis_promotion_rate": 0.01098901098901099
+        "mis_promotion_rate": 0.01098901098901099,
+        "mis_promotion_wilson95": [
+          0.0019424713318492125,
+          0.05964935668650616
+        ]
       },
       "in_pool": 107,
       "raw_in_pool": {
@@ -556,7 +732,11 @@
         "corrected": 16,
         "damaged": 1,
         "net": 15,
-        "mis_promotion_rate": 0.01098901098901099
+        "mis_promotion_rate": 0.01098901098901099,
+        "mis_promotion_wilson95": [
+          0.0019424713318492125,
+          0.05964935668650616
+        ]
       },
       "permutations_raw": [
         {
@@ -568,7 +748,11 @@
           "corrected": 16,
           "damaged": 1,
           "net": 15,
-          "mis_promotion_rate": 0.01098901098901099
+          "mis_promotion_rate": 0.01098901098901099,
+          "mis_promotion_wilson95": [
+            0.0019424713318492125,
+            0.05964935668650616
+          ]
         },
         {
           "n": 108,
@@ -579,7 +763,11 @@
           "corrected": 16,
           "damaged": 1,
           "net": 15,
-          "mis_promotion_rate": 0.01098901098901099
+          "mis_promotion_rate": 0.01098901098901099,
+          "mis_promotion_wilson95": [
+            0.0019424713318492125,
+            0.05964935668650616
+          ]
         },
         {
           "n": 108,
@@ -590,7 +778,11 @@
           "corrected": 16,
           "damaged": 1,
           "net": 15,
-          "mis_promotion_rate": 0.01098901098901099
+          "mis_promotion_rate": 0.01098901098901099,
+          "mis_promotion_wilson95": [
+            0.0019424713318492125,
+            0.05964935668650616
+          ]
         }
       ],
       "permutations_challenger": [
@@ -603,7 +795,11 @@
           "corrected": 16,
           "damaged": 1,
           "net": 15,
-          "mis_promotion_rate": 0.01098901098901099
+          "mis_promotion_rate": 0.01098901098901099,
+          "mis_promotion_wilson95": [
+            0.0019424713318492125,
+            0.05964935668650616
+          ]
         },
         {
           "n": 108,
@@ -614,7 +810,11 @@
           "corrected": 16,
           "damaged": 1,
           "net": 15,
-          "mis_promotion_rate": 0.01098901098901099
+          "mis_promotion_rate": 0.01098901098901099,
+          "mis_promotion_wilson95": [
+            0.0019424713318492125,
+            0.05964935668650616
+          ]
         },
         {
           "n": 108,
@@ -625,7 +825,11 @@
           "corrected": 16,
           "damaged": 1,
           "net": 15,
-          "mis_promotion_rate": 0.01098901098901099
+          "mis_promotion_rate": 0.01098901098901099,
+          "mis_promotion_wilson95": [
+            0.0019424713318492125,
+            0.05964935668650616
+          ]
         }
       ],
       "order_sensitive_ids": [

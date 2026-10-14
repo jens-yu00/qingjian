@@ -6,6 +6,17 @@ import statistics
 from pathlib import Path
 
 
+def wilson95(successes, total):
+    if total == 0:
+        return None
+    z = 1.959963984540054
+    p = successes / total
+    denominator = 1 + z*z/total
+    center = (p + z*z/(2*total)) / denominator
+    radius = z*math.sqrt(p*(1-p)/total + z*z/(4*total*total)) / denominator
+    return [max(0.0, center-radius), min(1.0, center+radius)]
+
+
 def metrics(cases, predictions):
     correct = changed = corrected = damaged = baseline_correct = 0
     for case in cases:
@@ -20,7 +31,8 @@ def metrics(cases, predictions):
     return {'n': len(cases), 'correct': correct, 'accuracy': correct / len(cases),
             'baseline_correct': baseline_correct, 'changed': changed,
             'corrected': corrected, 'damaged': damaged, 'net': corrected - damaged,
-            'mis_promotion_rate': damaged / baseline_correct if baseline_correct else None}
+            'mis_promotion_rate': damaged / baseline_correct if baseline_correct else None,
+            'mis_promotion_wilson95': wilson95(damaged, baseline_correct)}
 
 
 def predictions(rows, threshold):
