@@ -82,6 +82,9 @@ impl Host {
 
     /// 按会话状态画候选窗口。候选为空且没有 preedit 时收窗。
     pub fn render(&mut self) {
+        if self.session.navigated {
+            self.engine.freeze_decision();
+        }
         let size = self.session.layout.page_size();
         let page = self.session.page;
         // 横排展开成矩阵时画视口里的几行，序号只标在高亮所在那一行（数字键选的就是它）；单行时只画当前页

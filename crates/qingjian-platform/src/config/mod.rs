@@ -317,6 +317,8 @@ enabled = false
 disabled = []
 
 [model]
+# macOS 专用 Sol 决策模型试用；需单独安装本机运行目录
+sol = false
 # 本地整句模型：随包的小模型在本机给整句候选重新排序，全程离线；停顿后几十毫秒生效。关掉只用词库统计
 enabled = true
 

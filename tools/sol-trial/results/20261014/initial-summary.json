@@ -1,0 +1,118 @@
+{
+  "load_ms": 7937.190583,
+  "requests": 107,
+  "completed": 107,
+  "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+  "processor": "Apple M1 Pro / 32 GiB",
+  "bundle_manifest_sha256": "aa8d9f269f69dfa8b58335ea698ff2601d205f40e23390f11adc7dd2a09304ba",
+  "files_sha256": {
+    "tools/sol-trial/worker.py": "4b0e210389baa3434f669b4ab0b491273017b48446c6c3fcede8f56ebf53e371",
+    "tools/sol-trial/requirements.txt": "9390580bdd48a24877846770c635498e8daece6dad8100ef2a6227ccec449810",
+    "tools/decision-bench/cases.json": "b6a1421656429d91190b1acc1e15029a8dcaeb4cac6e56a399f9ed24fc305a84",
+    "tools/decision-bench/label-review.json": "49000dda8d4e7fff80e7192b494390e43f3c8c1e0631bb2d6bda83c947c0e3fc"
+  },
+  "original": {
+    "n": 92,
+    "base_correct": 41,
+    "correct": 87,
+    "corrected": 46,
+    "damaged": 0,
+    "failures": [
+      {
+        "id": "bianli-2",
+        "before": "程序需要访问数组里的每个元素，也就是对数组进行",
+        "pinyin": "bianli",
+        "selected": "便利",
+        "acceptable": [
+          "遍历"
+        ]
+      },
+      {
+        "id": "shiyong-2",
+        "before": "这款软件尚未购买正式授权，目前只能免费",
+        "pinyin": "shiyong",
+        "selected": "使用",
+        "acceptable": [
+          "试用"
+        ]
+      },
+      {
+        "id": "shouji-2",
+        "before": "做这项调查，需要先从各地",
+        "pinyin": "shouji",
+        "selected": "手机",
+        "acceptable": [
+          "收集",
+          "搜集"
+        ]
+      },
+      {
+        "id": "tongzhi-2",
+        "before": "古代皇帝依靠官僚体系实行",
+        "pinyin": "tongzhi",
+        "selected": "同治",
+        "acceptable": [
+          "统治"
+        ]
+      },
+      {
+        "id": "stress-6",
+        "before": "他正在谈论人的",
+        "pinyin": "yishi",
+        "selected": "一时",
+        "acceptable": [
+          "意识"
+        ]
+      }
+    ]
+  },
+  "audited": {
+    "n": 92,
+    "base_correct": 43,
+    "correct": 88,
+    "corrected": 45,
+    "damaged": 0,
+    "failures": [
+      {
+        "id": "bianli-2",
+        "before": "程序需要访问数组里的每个元素，也就是对数组进行",
+        "pinyin": "bianli",
+        "selected": "便利",
+        "acceptable": [
+          "遍历"
+        ]
+      },
+      {
+        "id": "shouji-2",
+        "before": "做这项调查，需要先从各地",
+        "pinyin": "shouji",
+        "selected": "手机",
+        "acceptable": [
+          "收集",
+          "搜集"
+        ]
+      },
+      {
+        "id": "tongzhi-2",
+        "before": "古代皇帝依靠官僚体系实行",
+        "pinyin": "tongzhi",
+        "selected": "同治",
+        "acceptable": [
+          "统治"
+        ]
+      },
+      {
+        "id": "stress-6",
+        "before": "他正在谈论人的",
+        "pinyin": "yishi",
+        "selected": "一时",
+        "acceptable": [
+          "意识"
+        ]
+      }
+    ]
+  },
+  "decision_p50_ms": 232.071542,
+  "decision_p95_ms": 341.118958,
+  "baseline_p50_ms": 0.0807505
+}

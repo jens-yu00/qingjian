@@ -5,7 +5,9 @@
 
 use std::sync::mpsc::{TryRecvError, channel};
 
-use qingjian_neural::{CharScorer, NeuralError};
+use qingjian_neural::{CharScorer, decision::SolScorer};
+mod loaded;
+pub(super) use loaded::LoadedModel;
 
 mod rescore_monitor;
 
@@ -18,25 +20,42 @@ use crate::candidates::Preedit;
 impl Host {
     /// 在后台线程加载模型并预热（第一次前向要编译 Metal 内核，几百毫秒），加载完由 [`Self::attach_loaded_model`] 接上。
     /// 没有模型文件就什么都不做。
-    pub(super) fn load_local_model(&mut self) {
-        if self.model_loader.is_some() || self.engine.has_sentence_scorer() {
+    pub(super) fn load_local_model(&mut self, sol: bool) {
+        if self.model_loader.is_some()
+            || self.engine.has_sentence_scorer()
+            || self.engine.has_decision_scorer()
+        {
             return;
         }
-        let Some(path) = paths::model_path() else {
+        let Some(path) = (if sol {
+            paths::user_data_dir().map(|p| p.join("sol"))
+        } else {
+            paths::model_path()
+        }) else {
             tracing::info!("没有本地整句模型文件，不重排");
             return;
         };
-        let (tx, rx) = channel::<Result<CharScorer, NeuralError>>();
+        let (tx, rx) = channel::<Result<LoadedModel, String>>();
         let spawned = std::thread::Builder::new()
             .name("qingjian-model-load".to_owned())
             .spawn(move || {
                 let started = std::time::Instant::now();
-                let loaded = CharScorer::load(&path).and_then(|scorer| {
-                    scorer.score("", &["的"])?;
-                    Ok(scorer)
-                });
+                let loaded = if sol {
+                    SolScorer::load(&path)
+                        .map(LoadedModel::Decision)
+                        .map_err(|e| e.to_string())
+                } else {
+                    CharScorer::load(&path)
+                        .and_then(|scorer| {
+                            scorer.score("", &["的"])?;
+                            Ok(scorer)
+                        })
+                        .map(|s| LoadedModel::Sentence(Box::new(s)))
+                        .map_err(|e| e.to_string())
+                };
                 if loaded.is_ok() {
                     tracing::info!(
+                        sol,
                         path = %path.display(),
                         total_ms = started.elapsed().as_millis(),
                         "本地整句模型已加载并预热"
@@ -61,8 +80,14 @@ impl Host {
         };
         match rx.try_recv() {
             Ok(Ok(scorer)) => {
-                self.engine
-                    .set_async_sentence_scorer(Some(Box::new(scorer)));
+                match scorer {
+                    LoadedModel::Sentence(scorer) => {
+                        self.engine.set_async_sentence_scorer(Some(scorer))
+                    }
+                    LoadedModel::Decision(scorer) => {
+                        self.engine.set_decision_scorer(Some(Box::new(scorer)))
+                    }
+                }
                 self.model_loader = None;
                 self.rescore.stop_watching();
                 // 模型上线了：日志里补一条会话信息，之后的条目知道重排开着
@@ -108,6 +133,7 @@ impl Host {
     pub(super) fn unload_local_model(&mut self) {
         self.model_loader = None;
         self.engine.set_async_sentence_scorer(None);
+        self.engine.set_decision_scorer(None);
         self.rescore.stop_watching();
         self.rescore.stop();
     }

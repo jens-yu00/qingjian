@@ -15,6 +15,9 @@ pub(in crate::engine) struct MutedLearner {
 
     /// 用户关掉了学习（`[general] learning = false`）。
     disabled: bool,
+
+    /// 模型自己提升的候选不能作为新的人工偏好反复喂回。
+    prediction: bool,
 }
 
 impl MutedLearner {
@@ -23,6 +26,7 @@ impl MutedLearner {
             inner,
             private: false,
             disabled: false,
+            prediction: false,
         }
     }
 
@@ -34,9 +38,13 @@ impl MutedLearner {
         self.disabled = disabled;
     }
 
-    /// 两个开关任一生效就不写。
+    pub(in crate::engine) fn set_prediction(&mut self, prediction: bool) {
+        self.prediction = prediction;
+    }
+
+    /// 任一静默原因生效就不写。
     fn muted(&self) -> bool {
-        self.private || self.disabled
+        self.private || self.disabled || self.prediction
     }
 
     pub(in crate::engine) fn replace(&mut self, inner: Box<dyn Learner>) {

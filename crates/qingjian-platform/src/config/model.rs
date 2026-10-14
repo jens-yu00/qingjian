@@ -9,10 +9,31 @@ use serde::{Deserialize, Serialize};
 pub struct LocalModelConfig {
     /// 开着就加载模型、给整句重排。
     pub enabled: bool,
+
+    /// macOS 本机 Sol 专用决策模型试用，替换字级模型；需要预先安装运行目录。
+    pub sol: bool,
 }
 
 impl Default for LocalModelConfig {
     fn default() -> Self {
-        Self { enabled: true }
+        Self {
+            enabled: true,
+            sol: false,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::LocalModelConfig;
+    #[test]
+    fn sol_is_opt_in_and_survives_master_switch_changes() {
+        let old: LocalModelConfig = toml::from_str("enabled = true").unwrap();
+        assert!(!old.sol);
+        let trial: LocalModelConfig = toml::from_str("enabled = false\nsol = true").unwrap();
+        assert!(trial.sol && !trial.enabled);
+        let roundtrip: LocalModelConfig =
+            toml::from_str(&toml::to_string(&trial).unwrap()).unwrap();
+        assert_eq!(trial, roundtrip);
     }
 }

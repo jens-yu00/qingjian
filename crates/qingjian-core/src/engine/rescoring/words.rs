@@ -8,6 +8,10 @@ const MIN_ADVANTAGE: f64 = 1.0;
 
 impl Engine {
     pub(in crate::engine) fn rescore_words(&self, words: &mut [Scored<'_>], letters: &str) {
+        if self.has_decision_scorer() {
+            self.decision_words(words, letters);
+            return;
+        }
         if self.private
             || !self.has_sentence_scorer()
             || self.neural_weight <= 0.0

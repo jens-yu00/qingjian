@@ -93,6 +93,13 @@ impl Engine {
             candidate_owned.text = simp.clone();
         }
         let candidate = &candidate_owned;
+        let model_accept = self
+            .decision
+            .borrow()
+            .as_ref()
+            .is_some_and(|s| s.promoted.as_deref() == Some(&candidate.text));
+        self.learner.set_prediction(model_accept);
+        self.invalidate_decision();
         // 整句不是一个词，不记词频；按路径上的词逐条记转移（喂个人 n-gram），路径要在拼音消耗前重算
         let sentence_words = (candidate.kind == CandidateKind::Sentence)
             .then(|| self.sentence_words(candidate))
@@ -252,13 +259,14 @@ impl Engine {
         };
         self.punctuation.note_committed(&candidate.text);
         self.history.record(&candidate.text);
-        let learned = matches!(
-            candidate.kind,
-            CandidateKind::Chinese
-                | CandidateKind::Code
-                | CandidateKind::Cloud
-                | CandidateKind::Sentence
-        );
+        let learned = !model_accept
+            && matches!(
+                candidate.kind,
+                CandidateKind::Chinese
+                    | CandidateKind::Code
+                    | CandidateKind::Cloud
+                    | CandidateKind::Sentence
+            );
         let commit = if learned {
             LastCommit {
                 text: candidate.text.clone(),
@@ -281,6 +289,10 @@ impl Engine {
             plain
         };
         self.remember_commit(commit);
+        if model_accept {
+            self.chain.reset();
+        }
+        self.learner.set_prediction(false);
         traditional_text
     }
 

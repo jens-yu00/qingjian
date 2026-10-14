@@ -8,6 +8,7 @@
 
 mod config;
 mod core_scorer;
+pub mod decision;
 mod error;
 mod model;
 pub mod qjm;

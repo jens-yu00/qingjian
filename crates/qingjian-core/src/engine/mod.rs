@@ -9,6 +9,7 @@ mod aux_code;
 mod commit;
 mod composing;
 mod correcting;
+mod decision;
 mod decoded;
 mod extras;
 mod gloss;
@@ -39,6 +40,7 @@ pub use alignment::Alignment;
 pub use annotation::AnnotationReport;
 pub use aux_code::is_valid_aux_code_key;
 pub use commit::{LastCommit, Transition};
+pub use decision::DecisionScorer;
 pub use gloss::{FilledGloss, GlossFiller, NoGlossFiller};
 pub use input_log::{
     CommitEntry, INPUT_LOG_VERSION, InputLogEntry, InputLogger, InputSource, LOGGED_CANDIDATES,
@@ -132,6 +134,9 @@ pub struct Engine {
 
     /// 整句路径的同步神经重打分器（字级 Transformer，查询里当场打分；CLI 评测用）。
     sentence_scorer: Option<Box<dyn SentenceScorer>>,
+
+    /// 专用决策头的整批候选状态，不复用字级概率缓存。
+    decision: std::cell::RefCell<Option<decision::DecisionState>>,
 
     /// 异步重打分：后台线程里的打分器，壳在停顿后送任务、轮询结果（见 [`rescoring`]）。
     rescorer: Option<rescoring::RescoreWorker>,
@@ -387,6 +392,7 @@ impl Engine {
             predictor: Box::new(NoPredictor),
             language_model: Box::new(NoLanguageModel),
             sentence_scorer: None,
+            decision: std::cell::RefCell::new(None),
             rescorer: None,
             neural_cache: std::cell::RefCell::new(rescoring::NeuralCache::default()),
             rescoring_before: None,

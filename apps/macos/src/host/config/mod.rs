@@ -85,10 +85,9 @@ impl Host {
             self.reload_dictionaries();
         }
         if self.applied_model.as_ref() != Some(&config.model) {
+            self.unload_local_model();
             if config.model.enabled {
-                self.load_local_model();
-            } else {
-                self.unload_local_model();
+                self.load_local_model(config.model.sol);
             }
             self.applied_model = Some(config.model.clone());
         }

@@ -32,3 +32,21 @@ description: 随包的小模型在本机根据上文调整同音词和整句候�
 - **macOS**：`~/Library/Application Support/Qingjian/model/`
 - **Windows**：`%APPDATA%\Qingjian\model\`
 - **Linux**：`~/.local/share/qingjian/model/`
+
+## 本机 Sol 2B 试用（macOS 定制版）
+
+这版可改用 Sol 2B 专用决策模型，根据上文挑选同音词。它不会生成新词或联网。先正常显示候选，停键后约三四百毫秒可能将更符合上文的词提升到第一位；开始翻页或移动高亮后不再调整。
+
+安装好试用模型后，在用户配置文件中设置：
+
+```toml
+[model]
+enabled = true
+sol = true
+```
+
+本机运行文件位于 `~/Library/Application Support/Qingjian/sol/`。首次启动约需 8 秒准备，期间仍可正常输入。模型随后驻留内存；关闭“本地整句模型”会释放它。
+
+可试“炒菜时加入少量”后输入 `shiyan`，或“这种行为会对孩子造成”后输入 `shanghai`。没有上文或判断不明显时保留基础候选。模型提升的词暂不积累为全局选词习惯，手动改选其他词仍按原规则学习。
+
+`sol = false` 恢复原来的小模型，`enabled = false` 关闭所有本地模型。模型异常时基础输入继续可用；关闭后重新开启本地模型可重试。此版仍在试用，词典缺失的词不会由模型补出。

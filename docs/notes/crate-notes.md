@@ -329,3 +329,11 @@ Unix socket 用共享长度前缀与 Frame（当前公共版本 7，与 `PROTOCO
 `apps/cli/examples/homophone_probe.rs` 接收输出 JSON 路径和可选公开样例路径，导出真实完整候选（去重后最多 12 项）、基线首选与目标召回标记；缺候选不再中断整组评测。未传样例路径时仍使用 `tools/context-bench/cases.json`。
 
 `tools/decision-bench/` 使用专用 MLX 决策头，记录原序/反序/乱序逐项分数、冷启动与热态耗时。开发集校准和独立语境计数由 `analyze.py` 维护，结果不自动写入输入法设置或个人学习库。实测证据见 [中文同音词测试](decision-model-benchmark-20261014.md)。
+
+## Sol 专用决策试用（2026-10-14）
+
+- Core `engine/decision/`：`DecisionScorer` 与整批分数缓存。上下文最多沿用 64 字，完整精确同音词最多 12 个；logit 领先原首选至少 1.0（原首选词频超过挑战者 100 倍时用 2.0），且前两名差至少 0.1。只提升一个，其余相对顺序保留。词典外表达仍走原组句路径。
+- 决策请求按输入修订号、上文、拼音、整个候选列表绑定，不能使用字级模型的逐文本缓存；排队时合并为最新请求，2 秒后结果无权改变首选。编辑、提交、会话、隐私边界作废；候选导航冻结。接受本次模型提升的词时 `MutedLearner` 暂停写入并避免撤销扣减历史记录。
+- `qingjian-neural::decision::SolScorer` 管理私有 stdin/stdout JSONL，异常或超时结束子进程，不自动重试。加载含预热最多 60 秒、请求最多 2 秒，Drop 终止并回收。Python stdin 关闭时退出，防止 IMK 被杀后遗留模型进程。
+- macOS `[model] sol = true` 选择 Sol；仍沿用 `enabled` 总开关、80 ms 防抖与后台装载，替换旧字级后端。关闭/切换模型卸载旧实例；核心排序不进入壳层。
+- `tools/sol-trial/install-runtime.py` 安装固定清单 SHA 的 Sol q4 bundle、Python 3.12 和冻结依赖，目录 `~/Library/Application Support/Qingjian/sol/`；无运行时下载或网络服务。详见 [进程契约](../design/sol-trial.md) 与 [回放](sol-trial-20261014.md)。

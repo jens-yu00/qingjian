@@ -59,6 +59,7 @@ impl Engine {
     /// 壳告知光标离开了刚才上屏的位置（切换应用、点了别处、停用输入法）：之后上屏的词按句首记。
     /// 上次断开之后有过上屏才往输入日志记一条 `break`，连着失焦几次只记一次。
     pub fn break_chain(&mut self) {
+        self.invalidate_decision();
         self.chain.reset();
         self.recent_commits.clear();
         self.flush_passthrough();
@@ -85,6 +86,7 @@ impl Engine {
 
     /// 壳翻了一页候选：记进这段组句的翻页数（写进输入日志，候选质量的隐式信号）。
     pub fn note_page_turn(&mut self) {
+        self.freeze_decision();
         self.page_turns = self.page_turns.saturating_add(1);
     }
 
@@ -95,7 +97,7 @@ impl Engine {
             v: INPUT_LOG_VERSION,
             version: version.to_owned(),
             platform: platform.to_owned(),
-            model: self.has_sentence_scorer(),
+            model: self.has_sentence_scorer() || self.has_decision_scorer(),
             scheme: self.scheme_key(),
         });
     }
@@ -170,6 +172,7 @@ impl Engine {
     }
 
     pub fn push(&mut self, c: char) {
+        self.invalidate_decision();
         if self.composition.is_empty() {
             // 新一段组句：从这一键起算耗时、翻页与重打
             self.composition_started = Some(Instant::now());
@@ -194,6 +197,7 @@ impl Engine {
     /// 开（缺省）停在辅码态（`;` 仍在、无码词也回来），关则回拼音态。码段本来就空（刚触发，或删空停住）
     /// 时按退格 = 退出辅码态、拼音一个字符都不动。每次退格候选都当场重筛。
     pub fn backspace(&mut self) -> bool {
+        self.invalidate_decision();
         if let Some(code) = self.aux_code.take() {
             if code.len() > 1 {
                 self.aux_code = Some(code[..code.len() - 1].to_owned());
@@ -207,6 +211,7 @@ impl Engine {
     }
 
     pub fn clear(&mut self) {
+        self.invalidate_decision();
         self.composition.clear();
         self.aux_code = None;
         self.chain.leave_buffer();
@@ -219,6 +224,7 @@ impl Engine {
     }
 
     pub fn delete_forward(&mut self) -> bool {
+        self.invalidate_decision();
         self.note_edit();
         self.composition.delete_forward()
     }
@@ -227,6 +233,7 @@ impl Engine {
     /// 双拼两键一音节，落单的一键单删；英文直输段 / 表达式 / 问字里删最后一段字母或数字，标点一次删一个。
     /// 光标在开头时返回 `false`。
     pub fn delete_syllable_backward(&mut self) -> bool {
+        self.invalidate_decision();
         self.note_edit();
         let cursor = self.composition.cursor();
         let before = &self.composition.text()[..cursor];
@@ -238,6 +245,7 @@ impl Engine {
 
     /// 光标向左跳过一个音节，遇 `'` 连它一起跳过。光标在开头时返回 `false`。
     pub fn move_cursor_syllable_left(&mut self) -> bool {
+        self.invalidate_decision();
         let cursor = self.composition.cursor();
         let before = &self.composition.text()[..cursor];
         let plain =
@@ -248,6 +256,7 @@ impl Engine {
 
     /// 光标向右跳过一个音节，遇 `'` 连它一起跳过。光标在末尾时返回 `false`。
     pub fn move_cursor_syllable_right(&mut self) -> bool {
+        self.invalidate_decision();
         let cursor = self.composition.cursor();
         let after = &self.composition.text()[cursor..];
         let plain =
@@ -258,24 +267,29 @@ impl Engine {
 
     /// 删掉光标前的全部拼音（壳里 ⌘⌫），光标后的留着。光标在开头时返回 `false`。
     pub fn delete_to_start(&mut self) -> bool {
+        self.invalidate_decision();
         self.note_edit();
         let cursor = self.composition.cursor();
         self.composition.delete_before_cursor(cursor)
     }
 
     pub fn move_cursor_left(&mut self) -> bool {
+        self.invalidate_decision();
         self.composition.move_left()
     }
 
     pub fn move_cursor_right(&mut self) -> bool {
+        self.invalidate_decision();
         self.composition.move_right()
     }
 
     pub fn move_cursor_home(&mut self) {
+        self.invalidate_decision();
         self.composition.move_home();
     }
 
     pub fn move_cursor_end(&mut self) {
+        self.invalidate_decision();
         self.composition.move_end();
     }
 
@@ -335,6 +349,7 @@ impl Engine {
 
     /// 用一段完整拼音替换当前缓冲区，供 CLI 和测试一次性喂入。
     pub fn set_input(&mut self, input: &str) {
+        self.invalidate_decision();
         self.composition.clear();
         for c in input.chars() {
             self.push(c);
@@ -343,6 +358,7 @@ impl Engine {
 
     /// 放弃当前拼音，原样返回给壳（通常是用户按回车要上屏字母本身）。
     pub fn take_raw(&mut self) -> String {
+        self.invalidate_decision();
         // 回车原样上屏拼音段：码段（没上屏的码）到此结束
         self.aux_code = None;
         // 纠错生效时用户仍按了回车：这个串就是要原样打的，记下来以后不再纠它

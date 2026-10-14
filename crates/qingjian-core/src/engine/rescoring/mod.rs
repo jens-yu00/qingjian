@@ -30,7 +30,7 @@ impl Engine {
 
     /// 给模型看的前文：壳给了应用里的光标前文就用它（[`Self::set_rescoring_context`]），
     /// 否则用本会话最近上屏的字符；长度按 `neural_context` 截。
-    pub(super) fn rescoring_context(&self) -> String {
+    pub(in crate::engine) fn rescoring_context(&self) -> String {
         if self.neural_context == 0 {
             return String::new();
         }
@@ -42,7 +42,11 @@ impl Engine {
 
     /// 壳告知应用里光标前的文本（每次查询前给；应用给不出就 `None`，退回本会话历史）。
     pub fn set_rescoring_context(&mut self, before: Option<String>) {
+        let previous = self.rescoring_context();
         self.rescoring_before = before;
+        if previous != self.rescoring_context() {
+            self.invalidate_decision();
+        }
         let context = self.rescoring_context();
         tracing::debug!(
             application_context = self.rescoring_before.is_some(),
@@ -110,11 +114,15 @@ impl Engine {
 
     /// 最近一次查询里有候选还没拿到神经分：壳该在用户停顿后调 [`Self::request_rescoring`]。
     pub fn rescoring_pending(&self) -> bool {
-        self.rescorer.is_some() && self.neural_cache.borrow().has_wanted()
+        self.decision.borrow().as_ref().is_some_and(|s| s.pending())
+            || (self.rescorer.is_some() && self.neural_cache.borrow().has_wanted())
     }
 
     /// 把攒着的文本送去后台打分。没接异步打分器或没什么要打的返回 `false`。
     pub fn request_rescoring(&mut self) -> bool {
+        if let Some(state) = self.decision.borrow_mut().as_mut() {
+            return state.submit();
+        }
         let Some(worker) = &self.rescorer else {
             return false;
         };
@@ -130,6 +138,9 @@ impl Engine {
 
     /// 收后台打好的分。有新分进了缓存返回 `true`，壳该重新 [`Self::query`] 一次；前文已经变了的结果丢掉。
     pub fn poll_rescoring(&mut self) -> bool {
+        if let Some(state) = self.decision.borrow_mut().as_mut() {
+            return state.poll();
+        }
         let Some(worker) = &self.rescorer else {
             return false;
         };
