@@ -1,0 +1,453 @@
+{
+  "model": "target/verification/mlx-models/Qwen3.5-4B-4bit",
+  "cases": "target/verification/homophone-baseline.json",
+  "cold": {
+    "id": "shanghai-injury",
+    "ms": 479.13395799696445,
+    "chosen": "伤害",
+    "correct": true,
+    "valid": true,
+    "generated_tokens": 2
+  },
+  "prefix_tokens": 44,
+  "n": 48,
+  "correct": 45,
+  "valid": 48,
+  "p50_ms": 243.4932079995633,
+  "p95_ms": 247.19312498928048,
+  "peak_mlx_gb": 2.659395884,
+  "rows": [
+    {
+      "id": "shanghai-injury",
+      "ms": 163.05704100523144,
+      "chosen": "伤害",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "shanghai-injury",
+      "ms": 162.98608299985062,
+      "chosen": "伤害",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "shanghai-injury",
+      "ms": 162.93354200024623,
+      "chosen": "伤害",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "shanghai-city",
+      "ms": 164.59033299179282,
+      "chosen": "上海",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "shanghai-city",
+      "ms": 164.5629580016248,
+      "chosen": "上海",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "shanghai-city",
+      "ms": 163.51829101040494,
+      "chosen": "上海",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "quanli-rights",
+      "ms": 162.33449999708682,
+      "chosen": "权利",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "quanli-rights",
+      "ms": 162.9776670015417,
+      "chosen": "权利",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "quanli-rights",
+      "ms": 164.5890419895295,
+      "chosen": "权利",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "quanli-power",
+      "ms": 163.77504100091755,
+      "chosen": "权力",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "quanli-power",
+      "ms": 163.1444160011597,
+      "chosen": "权力",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "quanli-power",
+      "ms": 163.51116599980742,
+      "chosen": "权力",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "shiyan-oath",
+      "ms": 243.68070899799932,
+      "chosen": "誓言",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "shiyan-oath",
+      "ms": 242.93316599505488,
+      "chosen": "誓言",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "shiyan-oath",
+      "ms": 245.82458299119025,
+      "chosen": "誓言",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "shiyan-salt",
+      "ms": 243.3063330099685,
+      "chosen": "食盐",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "shiyan-salt",
+      "ms": 244.23904200375546,
+      "chosen": "实验",
+      "correct": false,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "shiyan-salt",
+      "ms": 243.67933299799915,
+      "chosen": "实验",
+      "correct": false,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "zhili-intelligence",
+      "ms": 245.04475000139792,
+      "chosen": "智力",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "zhili-intelligence",
+      "ms": 243.30708300112747,
+      "chosen": "智力",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "zhili-intelligence",
+      "ms": 246.37754198920447,
+      "chosen": "智力",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "zhili-country",
+      "ms": 244.67933300184086,
+      "chosen": "智利",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "zhili-country",
+      "ms": 247.30512499809265,
+      "chosen": "智利",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "zhili-country",
+      "ms": 245.95125000632834,
+      "chosen": "智利",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "jingji-economy",
+      "ms": 243.04887499602046,
+      "chosen": "经济",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "jingji-economy",
+      "ms": 243.21420799242333,
+      "chosen": "经济",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "jingji-economy",
+      "ms": 244.71995800558943,
+      "chosen": "经济",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "jingji-thorns",
+      "ms": 243.90849999326747,
+      "chosen": "荆棘",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "jingji-thorns",
+      "ms": 245.48616600804962,
+      "chosen": "荆棘",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "jingji-thorns",
+      "ms": 242.91170900687575,
+      "chosen": "荆棘",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "zhiding-formulate",
+      "ms": 164.5032080123201,
+      "chosen": "制定",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "zhiding-formulate",
+      "ms": 164.21049999189563,
+      "chosen": "制定",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "zhiding-formulate",
+      "ms": 163.30887500953395,
+      "chosen": "制定",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "zhiding-pin",
+      "ms": 155.4819589946419,
+      "chosen": "置顶",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "zhiding-pin",
+      "ms": 154.8559170041699,
+      "chosen": "置顶",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "zhiding-pin",
+      "ms": 154.73591700720135,
+      "chosen": "置顶",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "gongshi-formula",
+      "ms": 246.75204200320877,
+      "chosen": "公式",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "gongshi-formula",
+      "ms": 245.33179200079758,
+      "chosen": "公式",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "gongshi-formula",
+      "ms": 247.88837500091176,
+      "chosen": "公式",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "gongshi-consensus",
+      "ms": 245.19991700071841,
+      "chosen": "共识",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "gongshi-consensus",
+      "ms": 247.19312498928048,
+      "chosen": "共识",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "gongshi-consensus",
+      "ms": 245.80187500396278,
+      "chosen": "共识",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "shishi-facts",
+      "ms": 244.4245420047082,
+      "chosen": "事实",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "shishi-facts",
+      "ms": 244.62100000528153,
+      "chosen": "实施",
+      "correct": false,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "shishi-facts",
+      "ms": 244.39041600271594,
+      "chosen": "事实",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    },
+    {
+      "id": "shishi-live",
+      "ms": 246.23974999121856,
+      "chosen": "实时",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 0
+    },
+    {
+      "id": "shishi-live",
+      "ms": 245.11562500265427,
+      "chosen": "实时",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 1
+    },
+    {
+      "id": "shishi-live",
+      "ms": 244.70241701055784,
+      "chosen": "实时",
+      "correct": true,
+      "valid": true,
+      "generated_tokens": 2,
+      "repeat": 2
+    }
+  ]
+}

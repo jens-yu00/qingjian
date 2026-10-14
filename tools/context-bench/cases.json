@@ -1,0 +1,18 @@
+[
+  {"id":"shanghai-injury","before":"这种行为会对孩子造成","pinyin":"shanghai","candidates":["上海","伤害","商海"],"expected":"伤害"},
+  {"id":"shanghai-city","before":"我明天坐高铁去","pinyin":"shanghai","candidates":["伤害","商海","上海"],"expected":"上海"},
+  {"id":"quanli-rights","before":"每个公民都享有平等的","pinyin":"quanli","candidates":["权力","全力","权利"],"expected":"权利"},
+  {"id":"quanli-power","before":"他掌握着至高无上的","pinyin":"quanli","candidates":["权利","权力","全力"],"expected":"权力"},
+  {"id":"shiyan-oath","before":"面对国旗，他们庄严地许下","pinyin":"shiyan","candidates":["实验","食盐","誓言","试验"],"expected":"誓言"},
+  {"id":"shiyan-salt","before":"炒菜时只需要加入少量","pinyin":"shiyan","candidates":["誓言","实验","食盐","试验"],"expected":"食盐"},
+  {"id":"zhili-intelligence","before":"这套测验主要评估儿童的","pinyin":"zhili","candidates":["治理","智利","智力","致力"],"expected":"智力"},
+  {"id":"zhili-country","before":"圣地亚哥是南美国家","pinyin":"zhili","candidates":["智力","治理","致力","智利"],"expected":"智利"},
+  {"id":"jingji-economy","before":"降低利率有助于刺激","pinyin":"jingji","candidates":["竞技","经济","经纪","荆棘"],"expected":"经济"},
+  {"id":"jingji-thorns","before":"通往山顶的小路长满了","pinyin":"jingji","candidates":["经济","经纪","荆棘","竞技"],"expected":"荆棘"},
+  {"id":"zhiding-formulate","before":"项目启动前，团队需要先","pinyin":"zhiding","candidates":["指定","置顶","制定"],"expected":"制定"},
+  {"id":"zhiding-pin","before":"为了让群成员都能看到，请把这条消息","pinyin":"zhiding","candidates":["制定","置顶","指定"],"expected":"置顶"},
+  {"id":"gongshi-formula","before":"求解二次方程可以使用求根","pinyin":"gongshi","candidates":["公示","共识","公式","工事"],"expected":"公式"},
+  {"id":"gongshi-consensus","before":"经过充分讨论，双方终于达成","pinyin":"gongshi","candidates":["公式","公示","工事","共识"],"expected":"共识"},
+  {"id":"shishi-facts","before":"调查必须以证据为基础，尊重客观","pinyin":"shishi","candidates":["实施","实时","事实","逝世"],"expected":"事实"},
+  {"id":"shishi-live","before":"这套监控系统能够对服务器状态进行","pinyin":"shishi","candidates":["逝世","事实","实时","实施"],"expected":"实时"}
+]

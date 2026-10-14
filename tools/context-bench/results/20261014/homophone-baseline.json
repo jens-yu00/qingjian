@@ -1,0 +1,290 @@
+[
+  {
+    "baseline_first": "伤害",
+    "baseline_ms": 66.20604200000001,
+    "before": "这种行为会对孩子造成",
+    "candidates": [
+      "伤害",
+      "上海",
+      "商海"
+    ],
+    "expected": "伤害",
+    "id": "shanghai-injury",
+    "pinyin": "shanghai"
+  },
+  {
+    "baseline_first": "上海",
+    "baseline_ms": 13.817458,
+    "before": "我明天坐高铁去",
+    "candidates": [
+      "上海",
+      "伤害",
+      "商海"
+    ],
+    "expected": "上海",
+    "id": "shanghai-city",
+    "pinyin": "shanghai"
+  },
+  {
+    "baseline_first": "权利",
+    "baseline_ms": 13.671167,
+    "before": "每个公民都享有平等的",
+    "candidates": [
+      "权利",
+      "权力",
+      "全力"
+    ],
+    "expected": "权利",
+    "id": "quanli-rights",
+    "pinyin": "quanli"
+  },
+  {
+    "baseline_first": "权力",
+    "baseline_ms": 13.379333,
+    "before": "他掌握着至高无上的",
+    "candidates": [
+      "权力",
+      "权利",
+      "全力"
+    ],
+    "expected": "权力",
+    "id": "quanli-power",
+    "pinyin": "quanli"
+  },
+  {
+    "baseline_first": "誓言",
+    "baseline_ms": 14.804583,
+    "before": "面对国旗，他们庄严地许下",
+    "candidates": [
+      "誓言",
+      "饰演",
+      "实验",
+      "试验",
+      "十堰",
+      "食盐",
+      "失言",
+      "石岩",
+      "食言",
+      "试演"
+    ],
+    "expected": "誓言",
+    "id": "shiyan-oath",
+    "pinyin": "shiyan"
+  },
+  {
+    "baseline_first": "食盐",
+    "baseline_ms": 14.910292,
+    "before": "炒菜时只需要加入少量",
+    "candidates": [
+      "食盐",
+      "饰演",
+      "实验",
+      "试验",
+      "十堰",
+      "誓言",
+      "失言",
+      "石岩",
+      "食言",
+      "试演"
+    ],
+    "expected": "食盐",
+    "id": "shiyan-salt",
+    "pinyin": "shiyan"
+  },
+  {
+    "baseline_first": "智力",
+    "baseline_ms": 11.1685,
+    "before": "这套测验主要评估儿童的",
+    "candidates": [
+      "智力",
+      "直隶",
+      "智利",
+      "致力",
+      "治理",
+      "直立",
+      "之力",
+      "质粒",
+      "脂鲤",
+      "至理",
+      "支离"
+    ],
+    "expected": "智力",
+    "id": "zhili-intelligence",
+    "pinyin": "zhili"
+  },
+  {
+    "baseline_first": "智利",
+    "baseline_ms": 11.084750000000001,
+    "before": "圣地亚哥是南美国家",
+    "candidates": [
+      "智利",
+      "直隶",
+      "智力",
+      "致力",
+      "治理",
+      "直立",
+      "之力",
+      "质粒",
+      "脂鲤",
+      "至理",
+      "支离"
+    ],
+    "expected": "智利",
+    "id": "zhili-country",
+    "pinyin": "zhili"
+  },
+  {
+    "baseline_first": "经济",
+    "baseline_ms": 10.389666,
+    "before": "降低利率有助于刺激",
+    "candidates": [
+      "经济",
+      "经纪",
+      "竞技",
+      "京畿",
+      "荆棘",
+      "京极",
+      "静寂",
+      "惊悸",
+      "警纪"
+    ],
+    "expected": "经济",
+    "id": "jingji-economy",
+    "pinyin": "jingji"
+  },
+  {
+    "baseline_first": "经济",
+    "baseline_ms": 10.605375,
+    "before": "通往山顶的小路长满了",
+    "candidates": [
+      "经济",
+      "经纪",
+      "竞技",
+      "京畿",
+      "荆棘",
+      "京极",
+      "静寂",
+      "惊悸",
+      "警纪"
+    ],
+    "expected": "荆棘",
+    "id": "jingji-thorns",
+    "pinyin": "jingji"
+  },
+  {
+    "baseline_first": "制定",
+    "baseline_ms": 13.455959,
+    "before": "项目启动前，团队需要先",
+    "candidates": [
+      "制定",
+      "指定",
+      "置顶",
+      "制订"
+    ],
+    "expected": "制定",
+    "id": "zhiding-formulate",
+    "pinyin": "zhiding"
+  },
+  {
+    "baseline_first": "制定",
+    "baseline_ms": 243.83320899999998,
+    "before": "为了让群成员都能看到，请把这条消息",
+    "candidates": [
+      "制定",
+      "指定",
+      "置顶",
+      "制订"
+    ],
+    "expected": "置顶",
+    "id": "zhiding-pin",
+    "pinyin": "zhiding"
+  },
+  {
+    "baseline_first": "公式",
+    "baseline_ms": 11.354332999999999,
+    "before": "求解二次方程可以使用求根",
+    "candidates": [
+      "公式",
+      "贡士",
+      "公视",
+      "共识",
+      "攻势",
+      "公事",
+      "公使",
+      "公示",
+      "工事",
+      "工时",
+      "共事",
+      "宫市"
+    ],
+    "expected": "公式",
+    "id": "gongshi-formula",
+    "pinyin": "gongshi"
+  },
+  {
+    "baseline_first": "共识",
+    "baseline_ms": 72.875208,
+    "before": "经过充分讨论，双方终于达成",
+    "candidates": [
+      "共识",
+      "公式",
+      "贡士",
+      "公视",
+      "攻势",
+      "公事",
+      "公使",
+      "公示",
+      "工事",
+      "工时",
+      "共事",
+      "宫市"
+    ],
+    "expected": "共识",
+    "id": "gongshi-consensus",
+    "pinyin": "gongshi"
+  },
+  {
+    "baseline_first": "事实",
+    "baseline_ms": 16.518834,
+    "before": "调查必须以证据为基础，尊重客观",
+    "candidates": [
+      "事实",
+      "实施",
+      "逝世",
+      "事事",
+      "世事",
+      "实时",
+      "时事",
+      "时时",
+      "失事",
+      "史诗",
+      "适时",
+      "石狮"
+    ],
+    "expected": "事实",
+    "id": "shishi-facts",
+    "pinyin": "shishi"
+  },
+  {
+    "baseline_first": "实时",
+    "baseline_ms": 171.20274999999998,
+    "before": "这套监控系统能够对服务器状态进行",
+    "candidates": [
+      "实时",
+      "事实",
+      "实施",
+      "逝世",
+      "事事",
+      "世事",
+      "时事",
+      "时时",
+      "失事",
+      "史诗",
+      "适时",
+      "石狮"
+    ],
+    "expected": "实时",
+    "id": "shishi-live",
+    "pinyin": "shishi"
+  }
+]

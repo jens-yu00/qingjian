@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-14",
+  "hardware": "Apple M1 Pro, 10 CPU cores, 16 GPU cores, 32 GB unified memory",
+  "macOS": "26.7.1",
+  "power": "AC attached, battery 80%, not charging",
+  "model": "mlx-community/Qwen3.5-4B-4bit",
+  "revision": "0e7ffd5c629ef7719d4cbc04069232580bfa9d9c",
+  "model_sha256": "5fb9acd0246866381cf8c5c354c6db1019f6498eec4ccb4f5edcc71ffeacb2db",
+  "model_bytes": 3034300695,
+  "protocol": "single-label constrained logits; thinking disabled; no HTTP or IMK overhead"
+}

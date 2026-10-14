@@ -19,6 +19,10 @@ README.md 只介绍项目，所有技术内容放在这里，分四类：前三�
 | [notes/personal-macos-validation.md](notes/personal-macos-validation.md) | 个人定制的回归、产品词库、本机安装与实机验收证据 |
 | [notes/wetype-migration.md](notes/wetype-migration.md) | 微信输入法个人词频解析、映射边界与本机迁移验证 |
 | [notes/context-ranking-research-20260927.md](notes/context-ranking-research-20260927.md) | 上游 0.1.4 合并评估、上下文排序缺口与神经模型方案实测 |
+| [design/llm-first-homophones.md](design/llm-first-homophones.md) | 准确率优先的语境首选、历史偏好与异步结果边界 |
+| [notes/mlx-context-benchmark-20261014.md](notes/mlx-context-benchmark-20261014.md) | M1 Pro 的 Qwen3.5-4B 实测、候选位置错误与未采用原因 |
+| [notes/decision-models-20261014.md](notes/decision-models-20261014.md) | Jev、Laya、Kev、AnyJev 与轻量分类模型的项目筛选 |
+| [notes/ordinal-candidate-20261014.md](notes/ordinal-candidate-20261014.md) | diyige 首选“的一个”的日志确认及个人学习数据消融诊断 |
 | [design/rendering.md](design/rendering.md) | 跨平台 UI 与自绘渲染器（2026-09-13）：显示面与控件面的区分、Flutter / Avalonia / WebView 的调研结论、主题的两条路、tiny-skia + cosmic-text 的 spike 结果与两平台接入 |
 | [design/aux-code.md](design/aux-code.md) | 辅码（2026-09-14）：触发键与过滤语义、Rime 码表导入、笔画原生表与大陆序覆盖、候选注记与设置界面 |
 | [plan/roadmap.md](plan/roadmap.md) | 分阶段路线图、各阶段的依赖关系与已完成项 |
