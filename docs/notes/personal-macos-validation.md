@@ -160,3 +160,12 @@
 - 安装前应用、配置和六张学习表备份至 `/Users/jaadmin/Library/Application Support/Qingjian/backups/sentence-priority-20261014-134331`，校验清单在其 `receipt.json`。
 - 打包与安装的二进制 SHA256 一致：`af93f4c1805e512b454900c5bd9cddc7a0810e261a605f82d01d92faca7c849f`；安装应用通过 `codesign --verify --deep --strict`，配置与学习表七个文件安装前后哈希全部一致。
 - 使用仓库安装脚本替换应用并结束旧进程，未执行注册、启用或输入源切换。用户于 2026-10-14 手动测试并确认“严格和第一个都正常了”，补齐 `yange → 严格`、`diyige → 第一个` 的实体键盘验收。
+
+
+## 2026-10-14：Sol 2B 决策试用安装
+
+- 用户指定“先用 Sol 2B 做一版”，已安装 `0.1.4-dev-9df33ec+`，分支 `codex/sol-decision-trial`。
+- 真实 Core + 常驻 MLX 进程回放 108 条公开语境；92 条测试例原标签 90 正确、复核标签 91 正确。阈值在同批试用样例上调整，尚非独立误改率验收。模型中位 226.5 ms、P95 322.3 ms，详见 [试用记录](sol-trial-20261014.md)。
+- workspace 688 通过、0 失败、1 忽略；fmt、Clippy、签名和安装产物哈希验证通过。
+- 备份在 `~/Library/Application Support/Qingjian/backups/sol-trial-20261014-145100/`；配置只加 `[model] sol = true`，8 个 TSV 文件哈希不变。脚本与模型安装在用户数据目录 `sol/`，不依赖开发目录。
+- 未注册、启用或切换输入源。待用户手动启用后验证：“炒菜时加入少量 shiyan → 食盐”；“做这项调查，需要先从各地 shouji → 收集”；继续观察“严格／第一个／可能”的日常输入。
