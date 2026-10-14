@@ -539,7 +539,7 @@ impl Engine {
         }
     }
 
-    /// 整句候选。没有英文尾段时是整段拼音的转换（[`Self::plain_sentence`]），排在开头的英文候选之后。
+    /// 整句候选。没有英文尾段时是整段拼音的转换（[`Self::plain_sentence`]）；严格全拼时让完整命中词优先。
     /// 有英文尾段且英文读法胜出（`head_wins`）时，头段的转换加上那个词排第一（`woxiangxuehaorust` → 我想学好rust），
     /// 整段也能读成拼音的再把拼音读法的整句放在第二；英文读法输了就不出（`diaoyong` 不出 掉Yong），
     /// 免得把真正要的候选往后挤。
@@ -572,7 +572,32 @@ impl Engine {
             }
             _ => {
                 if let Some(plain) = self.plain_sentence(items, best, typos) {
-                    let position = leading_english(items);
+                    // 自动组句与词级排序的分数不可直接比较，不能靠插入位置把「样 + 哦」置于「严格」之上。
+                    // 检查全部完整切分及音节边界，保留词级已完成的个人偏好与语境重排。
+                    let exact_word_end = self
+                        .strict_pinyin_active()
+                        .then(|| {
+                            items
+                                .iter()
+                                .rposition(|candidate| {
+                                    candidate.kind == CandidateKind::Chinese
+                                        && segmentations.iter().any(|segmentation| {
+                                            segmentation.syllables.len()
+                                                == candidate.syllables.len()
+                                                && segmentation
+                                                    .syllables
+                                                    .iter()
+                                                    .zip(&candidate.syllables)
+                                                    .all(|(input, actual)| {
+                                                        input.complete
+                                                            && input.pattern().text == actual
+                                                    })
+                                        })
+                                })
+                                .map(|index| index + 1)
+                        })
+                        .flatten();
+                    let position = exact_word_end.unwrap_or_else(|| leading_english(items));
                     items.insert(position, plain);
                 }
             }

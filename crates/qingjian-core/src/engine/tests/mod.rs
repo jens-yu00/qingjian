@@ -12,6 +12,7 @@ mod lookup;
 mod mixed;
 mod privacy;
 mod raw;
+mod sentence_priority;
 mod shuangpin;
 mod strict;
 mod zhuyin;
