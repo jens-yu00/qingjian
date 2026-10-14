@@ -1,0 +1,681 @@
+{
+  "calibration": [
+    {
+      "threshold": 0,
+      "permutations": [
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 3,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        }
+      ]
+    },
+    {
+      "threshold": 0.5,
+      "permutations": [
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        }
+      ]
+    },
+    {
+      "threshold": 1,
+      "permutations": [
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        }
+      ]
+    },
+    {
+      "threshold": 2,
+      "permutations": [
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        }
+      ]
+    },
+    {
+      "threshold": 4,
+      "permutations": [
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 15,
+          "accuracy": 0.9375,
+          "baseline_correct": 14,
+          "changed": 1,
+          "corrected": 1,
+          "damaged": 0,
+          "net": 1,
+          "mis_promotion_rate": 0.0
+        }
+      ]
+    },
+    {
+      "threshold": 8,
+      "permutations": [
+        {
+          "n": 16,
+          "correct": 14,
+          "accuracy": 0.875,
+          "baseline_correct": 14,
+          "changed": 0,
+          "corrected": 0,
+          "damaged": 0,
+          "net": 0,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 14,
+          "accuracy": 0.875,
+          "baseline_correct": 14,
+          "changed": 0,
+          "corrected": 0,
+          "damaged": 0,
+          "net": 0,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 14,
+          "accuracy": 0.875,
+          "baseline_correct": 14,
+          "changed": 0,
+          "corrected": 0,
+          "damaged": 0,
+          "net": 0,
+          "mis_promotion_rate": 0.0
+        }
+      ]
+    },
+    {
+      "threshold": 16,
+      "permutations": [
+        {
+          "n": 16,
+          "correct": 14,
+          "accuracy": 0.875,
+          "baseline_correct": 14,
+          "changed": 0,
+          "corrected": 0,
+          "damaged": 0,
+          "net": 0,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 14,
+          "accuracy": 0.875,
+          "baseline_correct": 14,
+          "changed": 0,
+          "corrected": 0,
+          "damaged": 0,
+          "net": 0,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 14,
+          "accuracy": 0.875,
+          "baseline_correct": 14,
+          "changed": 0,
+          "corrected": 0,
+          "damaged": 0,
+          "net": 0,
+          "mis_promotion_rate": 0.0
+        }
+      ]
+    }
+  ],
+  "chosen_threshold": 0,
+  "threshold_disabled": false,
+  "splits": {
+    "dev": {
+      "baseline": {
+        "n": 16,
+        "correct": 14,
+        "accuracy": 0.875,
+        "baseline_correct": 14,
+        "changed": 0,
+        "corrected": 0,
+        "damaged": 0,
+        "net": 0,
+        "mis_promotion_rate": 0.0
+      },
+      "raw": {
+        "n": 16,
+        "correct": 16,
+        "accuracy": 1.0,
+        "baseline_correct": 14,
+        "changed": 3,
+        "corrected": 2,
+        "damaged": 0,
+        "net": 2,
+        "mis_promotion_rate": 0.0
+      },
+      "challenger": {
+        "n": 16,
+        "correct": 16,
+        "accuracy": 1.0,
+        "baseline_correct": 14,
+        "changed": 3,
+        "corrected": 2,
+        "damaged": 0,
+        "net": 2,
+        "mis_promotion_rate": 0.0
+      },
+      "in_pool": 16,
+      "raw_in_pool": {
+        "n": 16,
+        "correct": 16,
+        "accuracy": 1.0,
+        "baseline_correct": 14,
+        "changed": 3,
+        "corrected": 2,
+        "damaged": 0,
+        "net": 2,
+        "mis_promotion_rate": 0.0
+      },
+      "permutations_raw": [
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 3,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        }
+      ],
+      "permutations_challenger": [
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 3,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        },
+        {
+          "n": 16,
+          "correct": 16,
+          "accuracy": 1.0,
+          "baseline_correct": 14,
+          "changed": 2,
+          "corrected": 2,
+          "damaged": 0,
+          "net": 2,
+          "mis_promotion_rate": 0.0
+        }
+      ],
+      "order_sensitive_ids": [
+        "zhiding-formulate"
+      ]
+    },
+    "test": {
+      "baseline": {
+        "n": 92,
+        "correct": 75,
+        "accuracy": 0.8152173913043478,
+        "baseline_correct": 75,
+        "changed": 0,
+        "corrected": 0,
+        "damaged": 0,
+        "net": 0,
+        "mis_promotion_rate": 0.0
+      },
+      "raw": {
+        "n": 92,
+        "correct": 89,
+        "accuracy": 0.967391304347826,
+        "baseline_correct": 75,
+        "changed": 19,
+        "corrected": 16,
+        "damaged": 2,
+        "net": 14,
+        "mis_promotion_rate": 0.02666666666666667
+      },
+      "challenger": {
+        "n": 92,
+        "correct": 89,
+        "accuracy": 0.967391304347826,
+        "baseline_correct": 75,
+        "changed": 19,
+        "corrected": 16,
+        "damaged": 2,
+        "net": 14,
+        "mis_promotion_rate": 0.02666666666666667
+      },
+      "in_pool": 91,
+      "raw_in_pool": {
+        "n": 91,
+        "correct": 89,
+        "accuracy": 0.978021978021978,
+        "baseline_correct": 75,
+        "changed": 19,
+        "corrected": 16,
+        "damaged": 2,
+        "net": 14,
+        "mis_promotion_rate": 0.02666666666666667
+      },
+      "permutations_raw": [
+        {
+          "n": 92,
+          "correct": 89,
+          "accuracy": 0.967391304347826,
+          "baseline_correct": 75,
+          "changed": 19,
+          "corrected": 16,
+          "damaged": 2,
+          "net": 14,
+          "mis_promotion_rate": 0.02666666666666667
+        },
+        {
+          "n": 92,
+          "correct": 90,
+          "accuracy": 0.9782608695652174,
+          "baseline_correct": 75,
+          "changed": 18,
+          "corrected": 16,
+          "damaged": 1,
+          "net": 15,
+          "mis_promotion_rate": 0.013333333333333334
+        },
+        {
+          "n": 92,
+          "correct": 90,
+          "accuracy": 0.9782608695652174,
+          "baseline_correct": 75,
+          "changed": 18,
+          "corrected": 16,
+          "damaged": 1,
+          "net": 15,
+          "mis_promotion_rate": 0.013333333333333334
+        }
+      ],
+      "permutations_challenger": [
+        {
+          "n": 92,
+          "correct": 89,
+          "accuracy": 0.967391304347826,
+          "baseline_correct": 75,
+          "changed": 19,
+          "corrected": 16,
+          "damaged": 2,
+          "net": 14,
+          "mis_promotion_rate": 0.02666666666666667
+        },
+        {
+          "n": 92,
+          "correct": 90,
+          "accuracy": 0.9782608695652174,
+          "baseline_correct": 75,
+          "changed": 18,
+          "corrected": 16,
+          "damaged": 1,
+          "net": 15,
+          "mis_promotion_rate": 0.013333333333333334
+        },
+        {
+          "n": 92,
+          "correct": 90,
+          "accuracy": 0.9782608695652174,
+          "baseline_correct": 75,
+          "changed": 18,
+          "corrected": 16,
+          "damaged": 1,
+          "net": 15,
+          "mis_promotion_rate": 0.013333333333333334
+        }
+      ],
+      "order_sensitive_ids": [
+        "zhuangshi-1",
+        "stress-5"
+      ]
+    },
+    "all": {
+      "baseline": {
+        "n": 108,
+        "correct": 89,
+        "accuracy": 0.8240740740740741,
+        "baseline_correct": 89,
+        "changed": 0,
+        "corrected": 0,
+        "damaged": 0,
+        "net": 0,
+        "mis_promotion_rate": 0.0
+      },
+      "raw": {
+        "n": 108,
+        "correct": 105,
+        "accuracy": 0.9722222222222222,
+        "baseline_correct": 89,
+        "changed": 22,
+        "corrected": 18,
+        "damaged": 2,
+        "net": 16,
+        "mis_promotion_rate": 0.02247191011235955
+      },
+      "challenger": {
+        "n": 108,
+        "correct": 105,
+        "accuracy": 0.9722222222222222,
+        "baseline_correct": 89,
+        "changed": 22,
+        "corrected": 18,
+        "damaged": 2,
+        "net": 16,
+        "mis_promotion_rate": 0.02247191011235955
+      },
+      "in_pool": 107,
+      "raw_in_pool": {
+        "n": 107,
+        "correct": 105,
+        "accuracy": 0.9813084112149533,
+        "baseline_correct": 89,
+        "changed": 22,
+        "corrected": 18,
+        "damaged": 2,
+        "net": 16,
+        "mis_promotion_rate": 0.02247191011235955
+      },
+      "permutations_raw": [
+        {
+          "n": 108,
+          "correct": 105,
+          "accuracy": 0.9722222222222222,
+          "baseline_correct": 89,
+          "changed": 22,
+          "corrected": 18,
+          "damaged": 2,
+          "net": 16,
+          "mis_promotion_rate": 0.02247191011235955
+        },
+        {
+          "n": 108,
+          "correct": 106,
+          "accuracy": 0.9814814814814815,
+          "baseline_correct": 89,
+          "changed": 20,
+          "corrected": 18,
+          "damaged": 1,
+          "net": 17,
+          "mis_promotion_rate": 0.011235955056179775
+        },
+        {
+          "n": 108,
+          "correct": 106,
+          "accuracy": 0.9814814814814815,
+          "baseline_correct": 89,
+          "changed": 20,
+          "corrected": 18,
+          "damaged": 1,
+          "net": 17,
+          "mis_promotion_rate": 0.011235955056179775
+        }
+      ],
+      "permutations_challenger": [
+        {
+          "n": 108,
+          "correct": 105,
+          "accuracy": 0.9722222222222222,
+          "baseline_correct": 89,
+          "changed": 22,
+          "corrected": 18,
+          "damaged": 2,
+          "net": 16,
+          "mis_promotion_rate": 0.02247191011235955
+        },
+        {
+          "n": 108,
+          "correct": 106,
+          "accuracy": 0.9814814814814815,
+          "baseline_correct": 89,
+          "changed": 20,
+          "corrected": 18,
+          "damaged": 1,
+          "net": 17,
+          "mis_promotion_rate": 0.011235955056179775
+        },
+        {
+          "n": 108,
+          "correct": 106,
+          "accuracy": 0.9814814814814815,
+          "baseline_correct": 89,
+          "changed": 20,
+          "corrected": 18,
+          "damaged": 1,
+          "net": 17,
+          "mis_promotion_rate": 0.011235955056179775
+        }
+      ],
+      "order_sensitive_ids": [
+        "zhiding-formulate",
+        "zhuangshi-1",
+        "stress-5"
+      ]
+    }
+  },
+  "performance": {
+    "load_ms": 8057.1203750005225,
+    "first_request_ms": 1371.238749998156,
+    "warm_p50_ms": 226.9678960001329,
+    "warm_p95_ms": 325.37400000728667,
+    "warm_n": 320,
+    "mlx_peak_bytes": 1922172060,
+    "rss_peak_bytes": 1429585920
+  },
+  "failures": [
+    {
+      "id": "bianli-2",
+      "before": "程序需要访问数组里的每个元素，也就是对数组进行",
+      "pinyin": "bianli",
+      "acceptable": [
+        "遍历"
+      ],
+      "baseline": "便利",
+      "selected": "便利",
+      "in_pool": false
+    },
+    {
+      "id": "xingshi-1",
+      "before": "参加正式典礼时要注意礼节和仪式的",
+      "pinyin": "xingshi",
+      "acceptable": [
+        "形式"
+      ],
+      "baseline": "形式",
+      "selected": "行事",
+      "in_pool": true
+    },
+    {
+      "id": "zhuangshi-1",
+      "before": "为了迎接节日，大家用彩灯把大厅",
+      "pinyin": "zhuangshi",
+      "acceptable": [
+        "装饰"
+      ],
+      "baseline": "装饰",
+      "selected": "妆饰",
+      "in_pool": true
+    }
+  ]
+}

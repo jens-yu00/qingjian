@@ -322,3 +322,10 @@ Unix socket 用共享长度前缀与 Frame（当前公共版本 7，与 `PROTOCO
 `general.strict_pinyin` 由 macOS 设置/热加载和 CLI 传给 Core，旧配置默认 false；本机个人配置显式 true。Windows 壳尚未接入这个个人定制入口。
 
 需求边界与回归证据见 [个人定制](../plan/personal-macos-customization.md) 与 [验证记录](personal-macos-validation.md)。
+
+
+## 专用决策模型的离线验证
+
+`apps/cli/examples/homophone_probe.rs` 接收输出 JSON 路径和可选公开样例路径，导出真实完整候选（去重后最多 12 项）、基线首选与目标召回标记；缺候选不再中断整组评测。未传样例路径时仍使用 `tools/context-bench/cases.json`。
+
+`tools/decision-bench/` 使用专用 MLX 决策头，记录原序/反序/乱序逐项分数、冷启动与热态耗时。开发集校准和独立语境计数由 `analyze.py` 维护，结果不自动写入输入法设置或个人学习库。实测证据见 [中文同音词测试](decision-model-benchmark-20261014.md)。

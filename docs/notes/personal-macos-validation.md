@@ -159,4 +159,4 @@
 - 代码提交 `015c9ad`，分支 `codex/fix-sentence-priority`；release 构建 `0.1.4-dev-015c9ad+` 已安装到 `~/Library/Input Methods/Qingjian.app`。版本尾部 `+` 来自原有截图文件的未提交变动，截图不在本次提交范围。
 - 安装前应用、配置和六张学习表备份至 `/Users/jaadmin/Library/Application Support/Qingjian/backups/sentence-priority-20261014-134331`，校验清单在其 `receipt.json`。
 - 打包与安装的二进制 SHA256 一致：`af93f4c1805e512b454900c5bd9cddc7a0810e261a605f82d01d92faca7c849f`；安装应用通过 `codesign --verify --deep --strict`，配置与学习表七个文件安装前后哈希全部一致。
-- 使用仓库安装脚本替换应用并结束旧进程，未执行注册、启用或输入源切换。待用户启用后确认 `yange → 严格`、`diyige → 第一个`；本轮尚无实体键盘回执。
+- 使用仓库安装脚本替换应用并结束旧进程，未执行注册、启用或输入源切换。用户于 2026-10-14 手动测试并确认“严格和第一个都正常了”，补齐 `yange → 严格`、`diyige → 第一个` 的实体键盘验收。

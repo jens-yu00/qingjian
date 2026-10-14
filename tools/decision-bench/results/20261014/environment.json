@@ -1,0 +1,11 @@
+{
+  "git_base": "b5d7ca684d218bcca271b2d41795434653c520a8",
+  "chip": "Apple M1 Pro",
+  "memory_bytes": 34359738368,
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.7.1\nBuildVersion:\t\t25G241\n",
+  "data_sha256": {
+    "data/generated/dict.qj": "f4b1f4189a41b309a524ba4280f96a8d074095e67d7c74450bb7aa631592cb8d",
+    "data/generated/lm.qj": "60c6e351425117cab62b35b7b8305959be6d9a57fac0c7090324378b91765643",
+    "data/model/model.qjm": "eed5bd0bda0c7bd8b43d1acb2dc4678d4bbe295bd47b2b0d4eeace0af9daff4d"
+  }
+}

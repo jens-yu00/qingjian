@@ -1,0 +1,2476 @@
+[
+  {
+    "acceptable": [
+      "伤害"
+    ],
+    "baseline_first": "伤害",
+    "baseline_ms": 50.470292,
+    "before": "这种行为会对孩子造成",
+    "candidates": [
+      "伤害",
+      "上海",
+      "商海"
+    ],
+    "category": "seed",
+    "expected": "伤害",
+    "expected_in_pool": true,
+    "id": "shanghai-injury",
+    "pinyin": "shanghai",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "上海"
+    ],
+    "baseline_first": "上海",
+    "baseline_ms": 13.792917,
+    "before": "我明天坐高铁去",
+    "candidates": [
+      "上海",
+      "伤害",
+      "商海"
+    ],
+    "category": "seed",
+    "expected": "上海",
+    "expected_in_pool": true,
+    "id": "shanghai-city",
+    "pinyin": "shanghai",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "权利"
+    ],
+    "baseline_first": "权利",
+    "baseline_ms": 14.258417000000001,
+    "before": "每个公民都享有平等的",
+    "candidates": [
+      "权利",
+      "权力",
+      "全力"
+    ],
+    "category": "seed",
+    "expected": "权利",
+    "expected_in_pool": true,
+    "id": "quanli-rights",
+    "pinyin": "quanli",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "权力"
+    ],
+    "baseline_first": "权力",
+    "baseline_ms": 14.290249999999999,
+    "before": "他掌握着至高无上的",
+    "candidates": [
+      "权力",
+      "权利",
+      "全力"
+    ],
+    "category": "seed",
+    "expected": "权力",
+    "expected_in_pool": true,
+    "id": "quanli-power",
+    "pinyin": "quanli",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "誓言"
+    ],
+    "baseline_first": "誓言",
+    "baseline_ms": 15.331375,
+    "before": "面对国旗，他们庄严地许下",
+    "candidates": [
+      "誓言",
+      "饰演",
+      "实验",
+      "试验",
+      "十堰",
+      "食盐",
+      "失言",
+      "石岩",
+      "食言",
+      "试演"
+    ],
+    "category": "seed",
+    "expected": "誓言",
+    "expected_in_pool": true,
+    "id": "shiyan-oath",
+    "pinyin": "shiyan",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "食盐"
+    ],
+    "baseline_first": "食盐",
+    "baseline_ms": 14.572417000000002,
+    "before": "炒菜时只需要加入少量",
+    "candidates": [
+      "食盐",
+      "饰演",
+      "实验",
+      "试验",
+      "十堰",
+      "誓言",
+      "失言",
+      "石岩",
+      "食言",
+      "试演"
+    ],
+    "category": "seed",
+    "expected": "食盐",
+    "expected_in_pool": true,
+    "id": "shiyan-salt",
+    "pinyin": "shiyan",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "智力"
+    ],
+    "baseline_first": "智力",
+    "baseline_ms": 11.723832999999999,
+    "before": "这套测验主要评估儿童的",
+    "candidates": [
+      "智力",
+      "直隶",
+      "智利",
+      "致力",
+      "治理",
+      "直立",
+      "之力",
+      "质粒",
+      "脂鲤",
+      "至理",
+      "支离"
+    ],
+    "category": "seed",
+    "expected": "智力",
+    "expected_in_pool": true,
+    "id": "zhili-intelligence",
+    "pinyin": "zhili",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "智利"
+    ],
+    "baseline_first": "智利",
+    "baseline_ms": 10.945708,
+    "before": "圣地亚哥是南美国家",
+    "candidates": [
+      "智利",
+      "直隶",
+      "智力",
+      "致力",
+      "治理",
+      "直立",
+      "之力",
+      "质粒",
+      "脂鲤",
+      "至理",
+      "支离"
+    ],
+    "category": "seed",
+    "expected": "智利",
+    "expected_in_pool": true,
+    "id": "zhili-country",
+    "pinyin": "zhili",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "经济"
+    ],
+    "baseline_first": "经济",
+    "baseline_ms": 10.585374999999999,
+    "before": "降低利率有助于刺激",
+    "candidates": [
+      "经济",
+      "经纪",
+      "竞技",
+      "京畿",
+      "荆棘",
+      "京极",
+      "静寂",
+      "惊悸",
+      "警纪"
+    ],
+    "category": "seed",
+    "expected": "经济",
+    "expected_in_pool": true,
+    "id": "jingji-economy",
+    "pinyin": "jingji",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "荆棘"
+    ],
+    "baseline_first": "经济",
+    "baseline_ms": 10.4335,
+    "before": "通往山顶的小路长满了",
+    "candidates": [
+      "经济",
+      "经纪",
+      "竞技",
+      "京畿",
+      "荆棘",
+      "京极",
+      "静寂",
+      "惊悸",
+      "警纪"
+    ],
+    "category": "seed",
+    "expected": "荆棘",
+    "expected_in_pool": true,
+    "id": "jingji-thorns",
+    "pinyin": "jingji",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "制定",
+      "制订"
+    ],
+    "baseline_first": "制定",
+    "baseline_ms": 13.399125,
+    "before": "项目启动前，团队需要先",
+    "candidates": [
+      "制定",
+      "指定",
+      "置顶",
+      "制订"
+    ],
+    "category": "seed",
+    "expected": "制定",
+    "expected_in_pool": true,
+    "id": "zhiding-formulate",
+    "pinyin": "zhiding",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "置顶"
+    ],
+    "baseline_first": "制定",
+    "baseline_ms": 14.079625,
+    "before": "为了让群成员都能看到，请把这条消息",
+    "candidates": [
+      "制定",
+      "指定",
+      "置顶",
+      "制订"
+    ],
+    "category": "seed",
+    "expected": "置顶",
+    "expected_in_pool": true,
+    "id": "zhiding-pin",
+    "pinyin": "zhiding",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "公式"
+    ],
+    "baseline_first": "公式",
+    "baseline_ms": 11.509791,
+    "before": "求解二次方程可以使用求根",
+    "candidates": [
+      "公式",
+      "贡士",
+      "公视",
+      "共识",
+      "攻势",
+      "公事",
+      "公使",
+      "公示",
+      "工事",
+      "工时",
+      "共事",
+      "宫市"
+    ],
+    "category": "seed",
+    "expected": "公式",
+    "expected_in_pool": true,
+    "id": "gongshi-formula",
+    "pinyin": "gongshi",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "共识"
+    ],
+    "baseline_first": "共识",
+    "baseline_ms": 11.819458999999998,
+    "before": "经过充分讨论，双方终于达成",
+    "candidates": [
+      "共识",
+      "公式",
+      "贡士",
+      "公视",
+      "攻势",
+      "公事",
+      "公使",
+      "公示",
+      "工事",
+      "工时",
+      "共事",
+      "宫市"
+    ],
+    "category": "seed",
+    "expected": "共识",
+    "expected_in_pool": true,
+    "id": "gongshi-consensus",
+    "pinyin": "gongshi",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "事实"
+    ],
+    "baseline_first": "事实",
+    "baseline_ms": 16.331125,
+    "before": "调查必须以证据为基础，尊重客观",
+    "candidates": [
+      "事实",
+      "实施",
+      "逝世",
+      "事事",
+      "世事",
+      "实时",
+      "时事",
+      "时时",
+      "失事",
+      "史诗",
+      "适时",
+      "石狮"
+    ],
+    "category": "seed",
+    "expected": "事实",
+    "expected_in_pool": true,
+    "id": "shishi-facts",
+    "pinyin": "shishi",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "实时"
+    ],
+    "baseline_first": "实时",
+    "baseline_ms": 16.788084,
+    "before": "这套监控系统能够对服务器状态进行",
+    "candidates": [
+      "实时",
+      "事实",
+      "实施",
+      "逝世",
+      "事事",
+      "世事",
+      "时事",
+      "时时",
+      "失事",
+      "史诗",
+      "适时",
+      "石狮"
+    ],
+    "category": "seed",
+    "expected": "实时",
+    "expected_in_pool": true,
+    "id": "shishi-live",
+    "pinyin": "shishi",
+    "split": "dev"
+  },
+  {
+    "acceptable": [
+      "时间"
+    ],
+    "baseline_first": "时间",
+    "baseline_ms": 15.403958000000001,
+    "before": "钟表显示的不是距离，而是当前的",
+    "candidates": [
+      "时间",
+      "事件",
+      "实践",
+      "世间",
+      "始建",
+      "尸检",
+      "失检"
+    ],
+    "category": "contrast",
+    "expected": "时间",
+    "expected_in_pool": true,
+    "id": "shijian-1",
+    "pinyin": "shijian",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "实践"
+    ],
+    "baseline_first": "时间",
+    "baseline_ms": 15.836165999999999,
+    "before": "这个方案不能只停留在纸上，还需要亲自",
+    "candidates": [
+      "时间",
+      "事件",
+      "实践",
+      "世间",
+      "始建",
+      "尸检",
+      "失检"
+    ],
+    "category": "contrast",
+    "expected": "实践",
+    "expected_in_pool": true,
+    "id": "shijian-2",
+    "pinyin": "shijian",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "世界"
+    ],
+    "baseline_first": "世界",
+    "baseline_ms": 15.617291999999999,
+    "before": "联合国的成员国遍布整个",
+    "candidates": [
+      "世界",
+      "师姐",
+      "十届",
+      "视界",
+      "时节",
+      "使节",
+      "世杰",
+      "失节",
+      "石街",
+      "时捷"
+    ],
+    "category": "contrast",
+    "expected": "世界",
+    "expected_in_pool": true,
+    "id": "shijie-1",
+    "pinyin": "shijie",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "时节"
+    ],
+    "baseline_first": "世界",
+    "baseline_ms": 15.429167000000001,
+    "before": "眼下正是桂花盛开的",
+    "candidates": [
+      "世界",
+      "师姐",
+      "十届",
+      "视界",
+      "时节",
+      "使节",
+      "世杰",
+      "失节",
+      "石街",
+      "时捷"
+    ],
+    "category": "contrast",
+    "expected": "时节",
+    "expected_in_pool": true,
+    "id": "shijie-2",
+    "pinyin": "shijie",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "工程"
+    ],
+    "baseline_first": "工程",
+    "baseline_ms": 13.847708,
+    "before": "这座跨江大桥是一项重大的交通",
+    "candidates": [
+      "工程",
+      "宫城",
+      "攻城",
+      "恭城",
+      "供称"
+    ],
+    "category": "contrast",
+    "expected": "工程",
+    "expected_in_pool": true,
+    "id": "gongcheng-1",
+    "pinyin": "gongcheng",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "攻城"
+    ],
+    "baseline_first": "攻城",
+    "baseline_ms": 13.506499999999999,
+    "before": "古代军队带着云梯和攻城槌准备",
+    "candidates": [
+      "攻城",
+      "工程",
+      "宫城",
+      "恭城",
+      "供称"
+    ],
+    "category": "contrast",
+    "expected": "攻城",
+    "expected_in_pool": true,
+    "id": "gongcheng-2",
+    "pinyin": "gongcheng",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "攻击"
+    ],
+    "baseline_first": "攻击",
+    "baseline_ms": 13.825375000000001,
+    "before": "服务器遭到黑客的恶意",
+    "candidates": [
+      "攻击",
+      "共计",
+      "供给",
+      "公鸡",
+      "功绩",
+      "共济",
+      "公祭",
+      "宫急"
+    ],
+    "category": "contrast",
+    "expected": "攻击",
+    "expected_in_pool": true,
+    "id": "gongji-1",
+    "pinyin": "gongji",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "共计"
+    ],
+    "baseline_first": "攻击",
+    "baseline_ms": 14.775708999999999,
+    "before": "结账时店员把所有商品的价格加起来算出",
+    "candidates": [
+      "攻击",
+      "共计",
+      "供给",
+      "公鸡",
+      "功绩",
+      "共济",
+      "公祭",
+      "宫急"
+    ],
+    "category": "contrast",
+    "expected": "共计",
+    "expected_in_pool": true,
+    "id": "gongji-2",
+    "pinyin": "gongji",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "保密"
+    ],
+    "baseline_first": "保密",
+    "baseline_ms": 14.154709,
+    "before": "这份文件涉及商业秘密，所有参会人员必须",
+    "candidates": [
+      "保密",
+      "苞米"
+    ],
+    "category": "contrast",
+    "expected": "保密",
+    "expected_in_pool": true,
+    "id": "baomi-1",
+    "pinyin": "baomi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "苞米"
+    ],
+    "baseline_first": "苞米",
+    "baseline_ms": 13.243542,
+    "before": "东北人有时把玉米叫作",
+    "candidates": [
+      "苞米",
+      "保密"
+    ],
+    "category": "contrast",
+    "expected": "苞米",
+    "expected_in_pool": true,
+    "id": "baomi-2",
+    "pinyin": "baomi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "保险"
+    ],
+    "baseline_first": "保险",
+    "baseline_ms": 14.200541000000001,
+    "before": "出门旅游前，他为这趟行程购买了意外",
+    "candidates": [
+      "保险",
+      "保鲜"
+    ],
+    "category": "contrast",
+    "expected": "保险",
+    "expected_in_pool": true,
+    "id": "baoxian-1",
+    "pinyin": "baoxian",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "保鲜"
+    ],
+    "baseline_first": "保险",
+    "baseline_ms": 13.703209,
+    "before": "把剩菜放进冰箱可以延长食物的",
+    "candidates": [
+      "保险",
+      "保鲜"
+    ],
+    "category": "contrast",
+    "expected": "保鲜",
+    "expected_in_pool": true,
+    "id": "baoxian-2",
+    "pinyin": "baoxian",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "报酬"
+    ],
+    "baseline_first": "报酬",
+    "baseline_ms": 13.676083,
+    "before": "这份兼职做完后，公司会支付相应的",
+    "candidates": [
+      "报酬",
+      "报仇"
+    ],
+    "category": "contrast",
+    "expected": "报酬",
+    "expected_in_pool": true,
+    "id": "baochou-1",
+    "pinyin": "baochou",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "报仇"
+    ],
+    "baseline_first": "报仇",
+    "baseline_ms": 14.088625,
+    "before": "小说中的主人公苦练武艺，发誓要为父亲",
+    "candidates": [
+      "报仇",
+      "报酬"
+    ],
+    "category": "contrast",
+    "expected": "报仇",
+    "expected_in_pool": true,
+    "id": "baochou-2",
+    "pinyin": "baochou",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "便利"
+    ],
+    "baseline_first": "便利",
+    "baseline_ms": 14.224125,
+    "before": "这家店离家很近，买日用品十分",
+    "candidates": [
+      "便利",
+      "变例"
+    ],
+    "category": "contrast",
+    "expected": "便利",
+    "expected_in_pool": true,
+    "id": "bianli-1",
+    "pinyin": "bianli",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "遍历"
+    ],
+    "baseline_first": "便利",
+    "baseline_ms": 15.818417000000002,
+    "before": "程序需要访问数组里的每个元素，也就是对数组进行",
+    "candidates": [
+      "便利",
+      "变例"
+    ],
+    "category": "contrast",
+    "expected": "遍历",
+    "expected_in_pool": false,
+    "id": "bianli-2",
+    "pinyin": "bianli",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "成绩"
+    ],
+    "baseline_first": "成绩",
+    "baseline_ms": 10.944958,
+    "before": "期末考试结束后，老师公布了全班的",
+    "candidates": [
+      "成绩",
+      "城际",
+      "乘机",
+      "承继",
+      "乘积",
+      "成疾"
+    ],
+    "category": "contrast",
+    "expected": "成绩",
+    "expected_in_pool": true,
+    "id": "chengji-1",
+    "pinyin": "chengji",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "乘积"
+    ],
+    "baseline_first": "成绩",
+    "baseline_ms": 11.209083,
+    "before": "老师在黑板上画了横线，写下两个数相乘得到的",
+    "candidates": [
+      "成绩",
+      "城际",
+      "乘机",
+      "承继",
+      "乘积",
+      "成疾"
+    ],
+    "category": "contrast",
+    "expected": "乘积",
+    "expected_in_pool": true,
+    "id": "chengji-2",
+    "pinyin": "chengji",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "承认"
+    ],
+    "baseline_first": "承认",
+    "baseline_ms": 13.825666,
+    "before": "证据确凿，嫌疑人终于低头",
+    "candidates": [
+      "承认",
+      "成人"
+    ],
+    "category": "contrast",
+    "expected": "承认",
+    "expected_in_pool": true,
+    "id": "chengren-1",
+    "pinyin": "chengren",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "成人"
+    ],
+    "baseline_first": "成人",
+    "baseline_ms": 13.770959,
+    "before": "这部电影只适合年满十八岁的",
+    "candidates": [
+      "成人",
+      "承认"
+    ],
+    "category": "contrast",
+    "expected": "成人",
+    "expected_in_pool": true,
+    "id": "chengren-2",
+    "pinyin": "chengren",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "城市"
+    ],
+    "baseline_first": "城市",
+    "baseline_ms": 15.071042,
+    "before": "与农村相比，这座人口密集的地方是一座现代化",
+    "candidates": [
+      "城市",
+      "程式",
+      "诚实",
+      "成事",
+      "乘势"
+    ],
+    "category": "contrast",
+    "expected": "城市",
+    "expected_in_pool": true,
+    "id": "chengshi-1",
+    "pinyin": "chengshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "诚实"
+    ],
+    "baseline_first": "诚实",
+    "baseline_ms": 14.345916,
+    "before": "他说了实话，没有隐瞒错误，表现得很",
+    "candidates": [
+      "诚实",
+      "城市",
+      "程式",
+      "成事",
+      "乘势"
+    ],
+    "category": "contrast",
+    "expected": "诚实",
+    "expected_in_pool": true,
+    "id": "chengshi-2",
+    "pinyin": "chengshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "厨师"
+    ],
+    "baseline_first": "厨师",
+    "baseline_ms": 16.5865,
+    "before": "餐厅后厨负责炒菜的是一位经验丰富的",
+    "candidates": [
+      "厨师",
+      "初始",
+      "出事",
+      "初时",
+      "出使",
+      "初十",
+      "出师",
+      "处事",
+      "初试",
+      "出示",
+      "出世",
+      "出仕"
+    ],
+    "category": "contrast",
+    "expected": "厨师",
+    "expected_in_pool": true,
+    "id": "chushi-1",
+    "pinyin": "chushi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "出示"
+    ],
+    "baseline_first": "出示",
+    "baseline_ms": 15.870375,
+    "before": "进入展馆时，工作人员要求游客",
+    "candidates": [
+      "出示",
+      "厨师",
+      "初始",
+      "出事",
+      "初时",
+      "出使",
+      "初十",
+      "出师",
+      "处事",
+      "初试",
+      "出世",
+      "出仕"
+    ],
+    "category": "contrast",
+    "expected": "出示",
+    "expected_in_pool": true,
+    "id": "chushi-2",
+    "pinyin": "chushi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "地址"
+    ],
+    "baseline_first": "地址",
+    "baseline_ms": 16.309250000000002,
+    "before": "请把快递送到订单上填写的收货",
+    "candidates": [
+      "地址",
+      "地质",
+      "抵制",
+      "底质",
+      "帝制",
+      "地支",
+      "低智",
+      "低质"
+    ],
+    "category": "contrast",
+    "expected": "地址",
+    "expected_in_pool": true,
+    "id": "dizhi-1",
+    "pinyin": "dizhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "抵制"
+    ],
+    "baseline_first": "抵制",
+    "baseline_ms": 16.385208,
+    "before": "面对假冒伪劣产品，消费者应该共同",
+    "candidates": [
+      "抵制",
+      "地址",
+      "地质",
+      "底质",
+      "帝制",
+      "地支",
+      "低智",
+      "低质"
+    ],
+    "category": "contrast",
+    "expected": "抵制",
+    "expected_in_pool": true,
+    "id": "dizhi-2",
+    "pinyin": "dizhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "反映"
+    ],
+    "baseline_first": "反应",
+    "baseline_ms": 13.942792,
+    "before": "镜子能够把物体的影像",
+    "candidates": [
+      "反应",
+      "反映"
+    ],
+    "category": "contrast",
+    "expected": "反映",
+    "expected_in_pool": true,
+    "id": "fanying-1",
+    "pinyin": "fanying",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "反应"
+    ],
+    "baseline_first": "反应",
+    "baseline_ms": 13.75425,
+    "before": "听见背后突然响起巨声，他的第一",
+    "candidates": [
+      "反应",
+      "反映"
+    ],
+    "category": "contrast",
+    "expected": "反应",
+    "expected_in_pool": true,
+    "id": "fanying-2",
+    "pinyin": "fanying",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "发言"
+    ],
+    "baseline_first": "发言",
+    "baseline_ms": 13.910292,
+    "before": "会议主持人邀请下一位代表上台",
+    "candidates": [
+      "发言",
+      "发炎"
+    ],
+    "category": "contrast",
+    "expected": "发言",
+    "expected_in_pool": true,
+    "id": "fayan-1",
+    "pinyin": "fayan",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "发炎"
+    ],
+    "baseline_first": "发炎",
+    "baseline_ms": 13.7845,
+    "before": "伤口又红又肿，医生判断已经",
+    "candidates": [
+      "发炎",
+      "发言"
+    ],
+    "category": "contrast",
+    "expected": "发炎",
+    "expected_in_pool": true,
+    "id": "fayan-2",
+    "pinyin": "fayan",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "教室"
+    ],
+    "baseline_first": "教室",
+    "baseline_ms": 14.48725,
+    "before": "下节课在教学楼二层的这间",
+    "candidates": [
+      "教室",
+      "教师",
+      "教士",
+      "礁石",
+      "矫饰"
+    ],
+    "category": "contrast",
+    "expected": "教室",
+    "expected_in_pool": true,
+    "id": "jiaoshi-1",
+    "pinyin": "jiaoshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "教师"
+    ],
+    "baseline_first": "教师",
+    "baseline_ms": 14.758875,
+    "before": "学校招聘了三名负责数学教学的",
+    "candidates": [
+      "教师",
+      "教室",
+      "教士",
+      "礁石",
+      "矫饰"
+    ],
+    "category": "contrast",
+    "expected": "教师",
+    "expected_in_pool": true,
+    "id": "jiaoshi-2",
+    "pinyin": "jiaoshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "阶段"
+    ],
+    "baseline_first": "阶段",
+    "baseline_ms": 14.559292,
+    "before": "项目已经完成设计，进入施工",
+    "candidates": [
+      "阶段",
+      "截断",
+      "揭短"
+    ],
+    "category": "contrast",
+    "expected": "阶段",
+    "expected_in_pool": true,
+    "id": "jieduan-1",
+    "pinyin": "jieduan",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "截断"
+    ],
+    "baseline_first": "截断",
+    "baseline_ms": 14.966833000000001,
+    "before": "为了阻止洪水继续涌入，他们设法把水流",
+    "candidates": [
+      "截断",
+      "阶段",
+      "揭短"
+    ],
+    "category": "contrast",
+    "expected": "截断",
+    "expected_in_pool": true,
+    "id": "jieduan-2",
+    "pinyin": "jieduan",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "解释"
+    ],
+    "baseline_first": "解释",
+    "baseline_ms": 15.523292,
+    "before": "这句话有歧义，请你详细",
+    "candidates": [
+      "解释",
+      "届时",
+      "节食",
+      "结识",
+      "揭示",
+      "结实",
+      "街市",
+      "碣石",
+      "结石",
+      "界石",
+      "借势"
+    ],
+    "category": "contrast",
+    "expected": "解释",
+    "expected_in_pool": true,
+    "id": "jieshi-1",
+    "pinyin": "jieshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "结实"
+    ],
+    "baseline_first": "结实",
+    "baseline_ms": 15.853209,
+    "before": "经过多年锻炼，他的身体变得非常",
+    "candidates": [
+      "结实",
+      "解释",
+      "届时",
+      "节食",
+      "结识",
+      "揭示",
+      "街市",
+      "碣石",
+      "结石",
+      "界石",
+      "借势"
+    ],
+    "category": "contrast",
+    "expected": "结实",
+    "expected_in_pool": true,
+    "id": "jieshi-2",
+    "pinyin": "jieshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "经理"
+    ],
+    "baseline_first": "经理",
+    "baseline_ms": 14.285584,
+    "before": "公司的销售部门由这位部门",
+    "candidates": [
+      "经理",
+      "经历",
+      "精力",
+      "敬礼",
+      "警力",
+      "净利"
+    ],
+    "category": "contrast",
+    "expected": "经理",
+    "expected_in_pool": true,
+    "id": "jingli-1",
+    "pinyin": "jingli",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "经历"
+    ],
+    "baseline_first": "经历",
+    "baseline_ms": 14.896834,
+    "before": "我年轻时在边境工作过，那是一段难忘的",
+    "candidates": [
+      "经历",
+      "经理",
+      "精力",
+      "敬礼",
+      "警力",
+      "净利"
+    ],
+    "category": "contrast",
+    "expected": "经历",
+    "expected_in_pool": true,
+    "id": "jingli-2",
+    "pinyin": "jingli",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "经验"
+    ],
+    "baseline_first": "经验",
+    "baseline_ms": 14.693291,
+    "before": "这位医生从业三十年，有丰富的临床",
+    "candidates": [
+      "经验",
+      "惊艳",
+      "竞演",
+      "井研",
+      "精盐"
+    ],
+    "category": "contrast",
+    "expected": "经验",
+    "expected_in_pool": true,
+    "id": "jingyan-1",
+    "pinyin": "jingyan",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "惊艳"
+    ],
+    "baseline_first": "惊艳",
+    "baseline_ms": 14.276458,
+    "before": "她盛装走进大厅，美得令人",
+    "candidates": [
+      "惊艳",
+      "经验",
+      "竞演",
+      "井研",
+      "精盐"
+    ],
+    "category": "contrast",
+    "expected": "惊艳",
+    "expected_in_pool": true,
+    "id": "jingyan-2",
+    "pinyin": "jingyan",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "精致"
+    ],
+    "baseline_first": "精致",
+    "baseline_ms": 14.668875,
+    "before": "这枚手工雕刻的戒指做工十分",
+    "candidates": [
+      "精致",
+      "静止",
+      "景致",
+      "精制",
+      "径直",
+      "净值",
+      "竟至"
+    ],
+    "category": "contrast",
+    "expected": "精致",
+    "expected_in_pool": true,
+    "id": "jingzhi-1",
+    "pinyin": "jingzhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "静止"
+    ],
+    "baseline_first": "精致",
+    "baseline_ms": 13.629334,
+    "before": "拍照时请保持身体",
+    "candidates": [
+      "精致",
+      "静止",
+      "景致",
+      "精制",
+      "径直",
+      "净值",
+      "竟至"
+    ],
+    "category": "contrast",
+    "expected": "静止",
+    "expected_in_pool": true,
+    "id": "jingzhi-2",
+    "pinyin": "jingzhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "理想"
+    ],
+    "baseline_first": "理想",
+    "baseline_ms": 15.671917,
+    "before": "他从小立志当宇航员，一直努力追求这个",
+    "candidates": [
+      "理想",
+      "李翔",
+      "李相",
+      "立项",
+      "李湘",
+      "离乡",
+      "里巷"
+    ],
+    "category": "contrast",
+    "expected": "理想",
+    "expected_in_pool": true,
+    "id": "lixiang-1",
+    "pinyin": "lixiang",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "立项"
+    ],
+    "baseline_first": "立项",
+    "baseline_ms": 15.536167,
+    "before": "这个研究课题已经获批，下一步办理项目",
+    "candidates": [
+      "立项",
+      "理想",
+      "李翔",
+      "李相",
+      "李湘",
+      "离乡",
+      "里巷"
+    ],
+    "category": "contrast",
+    "expected": "立项",
+    "expected_in_pool": true,
+    "id": "lixiang-2",
+    "pinyin": "lixiang",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "歧视"
+    ],
+    "baseline_first": "歧视",
+    "baseline_ms": 16.608,
+    "before": "公司招聘应当一视同仁，不得存在性别",
+    "candidates": [
+      "歧视",
+      "其实",
+      "骑士",
+      "其时",
+      "七十",
+      "气势",
+      "起始",
+      "骑师",
+      "七世",
+      "启示",
+      "岂是",
+      "起事"
+    ],
+    "category": "contrast",
+    "expected": "歧视",
+    "expected_in_pool": true,
+    "id": "qishi-1",
+    "pinyin": "qishi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "骑士"
+    ],
+    "baseline_first": "骑士",
+    "baseline_ms": 16.391709000000002,
+    "before": "国王授予这位勇士爵位，使他成为一名",
+    "candidates": [
+      "骑士",
+      "其实",
+      "其时",
+      "歧视",
+      "七十",
+      "气势",
+      "起始",
+      "骑师",
+      "七世",
+      "启示",
+      "岂是",
+      "起事"
+    ],
+    "category": "contrast",
+    "expected": "骑士",
+    "expected_in_pool": true,
+    "id": "qishi-2",
+    "pinyin": "qishi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "趋势"
+    ],
+    "baseline_first": "趋势",
+    "baseline_ms": 16.472708,
+    "before": "图表显示销量持续上升，这是一种明显的增长",
+    "candidates": [
+      "趋势",
+      "去世",
+      "去试",
+      "驱使",
+      "趣事",
+      "去势",
+      "趋时"
+    ],
+    "category": "contrast",
+    "expected": "趋势",
+    "expected_in_pool": true,
+    "id": "qushi-1",
+    "pinyin": "qushi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "去世"
+    ],
+    "baseline_first": "去世",
+    "baseline_ms": 15.061417,
+    "before": "奶奶年事已高，昨天安详地",
+    "candidates": [
+      "去世",
+      "去试",
+      "趋势",
+      "驱使",
+      "趣事",
+      "去势",
+      "趋时"
+    ],
+    "category": "contrast",
+    "expected": "去世",
+    "expected_in_pool": true,
+    "id": "qushi-2",
+    "pinyin": "qushi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "使用"
+    ],
+    "baseline_first": "使用",
+    "baseline_ms": 14.247542000000001,
+    "before": "打开软件后，请按说明书开始",
+    "candidates": [
+      "使用",
+      "适用",
+      "实用",
+      "食用",
+      "试用",
+      "施用"
+    ],
+    "category": "contrast",
+    "expected": "使用",
+    "expected_in_pool": true,
+    "id": "shiyong-1",
+    "pinyin": "shiyong",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "试用"
+    ],
+    "baseline_first": "使用",
+    "baseline_ms": 15.585083,
+    "before": "这款软件尚未购买正式授权，目前只能免费",
+    "candidates": [
+      "使用",
+      "适用",
+      "实用",
+      "食用",
+      "试用",
+      "施用"
+    ],
+    "category": "contrast",
+    "expected": "试用",
+    "expected_in_pool": true,
+    "id": "shiyong-2",
+    "pinyin": "shiyong",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "手机"
+    ],
+    "baseline_first": "手机",
+    "baseline_ms": 14.423459,
+    "before": "出门忘了带能打电话的",
+    "candidates": [
+      "手机",
+      "收集",
+      "首季",
+      "首级",
+      "手记",
+      "手迹",
+      "瘦瘠",
+      "手技"
+    ],
+    "category": "contrast",
+    "expected": "手机",
+    "expected_in_pool": true,
+    "id": "shouji-1",
+    "pinyin": "shouji",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "收集",
+      "搜集"
+    ],
+    "baseline_first": "手机",
+    "baseline_ms": 14.557708000000002,
+    "before": "做这项调查，需要先从各地",
+    "candidates": [
+      "手机",
+      "收集",
+      "首季",
+      "首级",
+      "手记",
+      "手迹",
+      "瘦瘠",
+      "手技"
+    ],
+    "category": "contrast",
+    "expected": "收集",
+    "expected_in_pool": true,
+    "id": "shouji-2",
+    "pinyin": "shouji",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "通知"
+    ],
+    "baseline_first": "通知",
+    "baseline_ms": 11.87075,
+    "before": "学校决定停课，正在向全体家长发送",
+    "candidates": [
+      "通知",
+      "同治",
+      "同志",
+      "统治",
+      "同知",
+      "通志",
+      "同质",
+      "统制",
+      "童稚"
+    ],
+    "category": "contrast",
+    "expected": "通知",
+    "expected_in_pool": true,
+    "id": "tongzhi-1",
+    "pinyin": "tongzhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "统治"
+    ],
+    "baseline_first": "统治",
+    "baseline_ms": 11.091167,
+    "before": "古代皇帝依靠官僚体系实行",
+    "candidates": [
+      "统治",
+      "同治",
+      "同志",
+      "通知",
+      "同知",
+      "通志",
+      "同质",
+      "统制",
+      "童稚"
+    ],
+    "category": "contrast",
+    "expected": "统治",
+    "expected_in_pool": true,
+    "id": "tongzhi-2",
+    "pinyin": "tongzhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "位置"
+    ],
+    "baseline_first": "位置",
+    "baseline_ms": 14.469917,
+    "before": "手机地图上的蓝点表示我现在的",
+    "candidates": [
+      "位置",
+      "未知",
+      "为止",
+      "谓之",
+      "威治"
+    ],
+    "category": "contrast",
+    "expected": "位置",
+    "expected_in_pool": true,
+    "id": "weizhi-1",
+    "pinyin": "weizhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "未知"
+    ],
+    "baseline_first": "位置",
+    "baseline_ms": 15.153167,
+    "before": "这片海域还没有人探索，其中有许多",
+    "candidates": [
+      "位置",
+      "未知",
+      "为止",
+      "谓之",
+      "威治"
+    ],
+    "category": "contrast",
+    "expected": "未知",
+    "expected_in_pool": true,
+    "id": "weizhi-2",
+    "pinyin": "weizhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "物理"
+    ],
+    "baseline_first": "物理",
+    "baseline_ms": 15.263416,
+    "before": "光学、力学和电磁学都属于",
+    "candidates": [
+      "物理",
+      "屋里",
+      "无力",
+      "武力",
+      "无理",
+      "五里",
+      "无礼",
+      "物力",
+      "兀立",
+      "无厘"
+    ],
+    "category": "contrast",
+    "expected": "物理",
+    "expected_in_pool": true,
+    "id": "wuli-1",
+    "pinyin": "wuli",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "无力"
+    ],
+    "baseline_first": "无力",
+    "baseline_ms": 15.677084,
+    "before": "他高烧后连站起来的力气都没有，浑身",
+    "candidates": [
+      "无力",
+      "物理",
+      "屋里",
+      "武力",
+      "无理",
+      "五里",
+      "无礼",
+      "物力",
+      "兀立",
+      "无厘"
+    ],
+    "category": "contrast",
+    "expected": "无力",
+    "expected_in_pool": true,
+    "id": "wuli-2",
+    "pinyin": "wuli",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "响应"
+    ],
+    "baseline_first": "相应",
+    "baseline_ms": 14.833083,
+    "before": "收到求助后，救援队立即作出",
+    "candidates": [
+      "相应",
+      "响应",
+      "项英",
+      "相迎",
+      "相映"
+    ],
+    "category": "contrast",
+    "expected": "响应",
+    "expected_in_pool": true,
+    "id": "xiangying-1",
+    "pinyin": "xiangying",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "相应"
+    ],
+    "baseline_first": "相应",
+    "baseline_ms": 15.597041,
+    "before": "请选择与这个插头型号",
+    "candidates": [
+      "相应",
+      "响应",
+      "项英",
+      "相迎",
+      "相映"
+    ],
+    "category": "contrast",
+    "expected": "相应",
+    "expected_in_pool": true,
+    "id": "xiangying-2",
+    "pinyin": "xiangying",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "形式"
+    ],
+    "baseline_first": "形式",
+    "baseline_ms": 13.075833,
+    "before": "参加正式典礼时要注意礼节和仪式的",
+    "candidates": [
+      "形式",
+      "刑事",
+      "行驶",
+      "姓氏",
+      "形势",
+      "行事",
+      "行使",
+      "型式",
+      "星矢",
+      "幸事",
+      "兴师",
+      "省视"
+    ],
+    "category": "contrast",
+    "expected": "形式",
+    "expected_in_pool": true,
+    "id": "xingshi-1",
+    "pinyin": "xingshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "形势"
+    ],
+    "baseline_first": "形势",
+    "baseline_ms": 12.601374999999999,
+    "before": "公司经营遇到危机，目前面临严峻的",
+    "candidates": [
+      "形势",
+      "形式",
+      "刑事",
+      "行驶",
+      "姓氏",
+      "行事",
+      "行使",
+      "型式",
+      "星矢",
+      "幸事",
+      "兴师",
+      "省视"
+    ],
+    "category": "contrast",
+    "expected": "形势",
+    "expected_in_pool": true,
+    "id": "xingshi-2",
+    "pinyin": "xingshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "一起"
+    ],
+    "baseline_first": "一起",
+    "baseline_ms": 15.867292,
+    "before": "我们约好了明天下午去公园，大家",
+    "candidates": [
+      "一起",
+      "一期",
+      "一齐",
+      "以期",
+      "仪器",
+      "遗弃",
+      "一汽",
+      "义气",
+      "意气",
+      "义旗"
+    ],
+    "category": "contrast",
+    "expected": "一起",
+    "expected_in_pool": true,
+    "id": "yiqi-1",
+    "pinyin": "yiqi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "仪器"
+    ],
+    "baseline_first": "仪器",
+    "baseline_ms": 15.793708,
+    "before": "实验室购置了一台精密的测量",
+    "candidates": [
+      "仪器",
+      "一起",
+      "一期",
+      "一齐",
+      "以期",
+      "遗弃",
+      "一汽",
+      "义气",
+      "意气",
+      "义旗"
+    ],
+    "category": "contrast",
+    "expected": "仪器",
+    "expected_in_pool": true,
+    "id": "yiqi-2",
+    "pinyin": "yiqi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "意识"
+    ],
+    "baseline_first": "意识",
+    "baseline_ms": 16.897875,
+    "before": "他被撞晕后，经过抢救终于恢复了",
+    "candidates": [
+      "意识",
+      "一时",
+      "仪式",
+      "伊势",
+      "一世",
+      "医师",
+      "以示",
+      "遗失",
+      "议事",
+      "伊什",
+      "医事",
+      "衣食"
+    ],
+    "category": "contrast",
+    "expected": "意识",
+    "expected_in_pool": true,
+    "id": "yishi-1",
+    "pinyin": "yishi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "仪式"
+    ],
+    "baseline_first": "仪式",
+    "baseline_ms": 16.843833,
+    "before": "结婚当天，新人在亲友见证下举行了婚礼",
+    "candidates": [
+      "仪式",
+      "一时",
+      "意识",
+      "伊势",
+      "一世",
+      "医师",
+      "以示",
+      "遗失",
+      "议事",
+      "伊什",
+      "医事",
+      "衣食"
+    ],
+    "category": "contrast",
+    "expected": "仪式",
+    "expected_in_pool": true,
+    "id": "yishi-2",
+    "pinyin": "yishi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "意向"
+    ],
+    "baseline_first": "意向",
+    "baseline_ms": 15.958208,
+    "before": "合同还没签，但双方已经达成合作",
+    "candidates": [
+      "意向",
+      "一项",
+      "一想",
+      "一向",
+      "一箱",
+      "异乡",
+      "意象",
+      "臆想",
+      "异香",
+      "遗像",
+      "义项",
+      "衣箱"
+    ],
+    "category": "contrast",
+    "expected": "意向",
+    "expected_in_pool": true,
+    "id": "yixiang-1",
+    "pinyin": "yixiang",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "意象"
+    ],
+    "baseline_first": "意象",
+    "baseline_ms": 17.084875,
+    "before": "诗歌中的月亮常常承载思乡之情，是一种文学",
+    "candidates": [
+      "意象",
+      "一项",
+      "一想",
+      "一向",
+      "一箱",
+      "异乡",
+      "意向",
+      "臆想",
+      "异香",
+      "遗像",
+      "义项",
+      "衣箱"
+    ],
+    "category": "contrast",
+    "expected": "意象",
+    "expected_in_pool": true,
+    "id": "yixiang-2",
+    "pinyin": "yixiang",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "犹豫"
+    ],
+    "baseline_first": "由于",
+    "baseline_ms": 17.033834000000002,
+    "before": "路口有两条路，他拿不定主意，站在那里",
+    "candidates": [
+      "由于",
+      "忧郁",
+      "犹豫",
+      "鱿鱼",
+      "优于",
+      "右玉",
+      "囿于",
+      "游鱼",
+      "有余",
+      "优裕",
+      "优遇",
+      "优育"
+    ],
+    "category": "contrast",
+    "expected": "犹豫",
+    "expected_in_pool": true,
+    "id": "youyu-1",
+    "pinyin": "youyu",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "鱿鱼"
+    ],
+    "baseline_first": "鱿鱼",
+    "baseline_ms": 17.337583,
+    "before": "菜单里有一道铁板海鲜，主料是切成圈的",
+    "candidates": [
+      "鱿鱼",
+      "由于",
+      "忧郁",
+      "犹豫",
+      "优于",
+      "右玉",
+      "囿于",
+      "游鱼",
+      "有余",
+      "优裕",
+      "优遇",
+      "优育"
+    ],
+    "category": "contrast",
+    "expected": "鱿鱼",
+    "expected_in_pool": true,
+    "id": "youyu-2",
+    "pinyin": "youyu",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "证实"
+    ],
+    "baseline_first": "证实",
+    "baseline_ms": 12.657625000000001,
+    "before": "签署合同前必须核实信息的真实性，需要进一步",
+    "candidates": [
+      "证实",
+      "正式",
+      "正是",
+      "正视",
+      "郑氏",
+      "政事",
+      "正室",
+      "正事",
+      "正史",
+      "政使",
+      "整饰"
+    ],
+    "category": "contrast",
+    "expected": "证实",
+    "expected_in_pool": true,
+    "id": "zhengshi-1",
+    "pinyin": "zhengshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "正式"
+    ],
+    "baseline_first": "正式",
+    "baseline_ms": 11.289458,
+    "before": "这次只是彩排，明晚才是",
+    "candidates": [
+      "正式",
+      "正是",
+      "证实",
+      "正视",
+      "郑氏",
+      "政事",
+      "正室",
+      "正事",
+      "正史",
+      "政使",
+      "整饰"
+    ],
+    "category": "contrast",
+    "expected": "正式",
+    "expected_in_pool": true,
+    "id": "zhengshi-2",
+    "pinyin": "zhengshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "中心"
+    ],
+    "baseline_first": "中心",
+    "baseline_ms": 13.537041,
+    "before": "圆心位于圆形的",
+    "candidates": [
+      "中心",
+      "中信",
+      "衷心",
+      "重心",
+      "忠心"
+    ],
+    "category": "contrast",
+    "expected": "中心",
+    "expected_in_pool": true,
+    "id": "zhongxin-1",
+    "pinyin": "zhongxin",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "重心"
+    ],
+    "baseline_first": "中心",
+    "baseline_ms": 14.185333,
+    "before": "设计不倒翁时，需要让底部更重，以降低它的",
+    "candidates": [
+      "中心",
+      "中信",
+      "衷心",
+      "重心",
+      "忠心"
+    ],
+    "category": "contrast",
+    "expected": "重心",
+    "expected_in_pool": true,
+    "id": "zhongxin-2",
+    "pinyin": "zhongxin",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "注意"
+    ],
+    "baseline_first": "注意",
+    "baseline_ms": 15.509459,
+    "before": "过马路时不能只顾看手机，必须时刻",
+    "candidates": [
+      "注意",
+      "主义",
+      "主意",
+      "逐一",
+      "属意",
+      "竹椅"
+    ],
+    "category": "contrast",
+    "expected": "注意",
+    "expected_in_pool": true,
+    "id": "zhuyi-1",
+    "pinyin": "zhuyi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "主意"
+    ],
+    "baseline_first": "主意",
+    "baseline_ms": 14.829500000000001,
+    "before": "他想出了一个解决难题的好",
+    "candidates": [
+      "主意",
+      "注意",
+      "主义",
+      "逐一",
+      "属意",
+      "竹椅"
+    ],
+    "category": "contrast",
+    "expected": "主意",
+    "expected_in_pool": true,
+    "id": "zhuyi-2",
+    "pinyin": "zhuyi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "装饰"
+    ],
+    "baseline_first": "装饰",
+    "baseline_ms": 14.62525,
+    "before": "为了迎接节日，大家用彩灯把大厅",
+    "candidates": [
+      "装饰",
+      "壮士",
+      "壮实",
+      "妆饰"
+    ],
+    "category": "contrast",
+    "expected": "装饰",
+    "expected_in_pool": true,
+    "id": "zhuangshi-1",
+    "pinyin": "zhuangshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "壮士"
+    ],
+    "baseline_first": "壮士",
+    "baseline_ms": 14.194875,
+    "before": "这位勇士身材魁梧，被人称作",
+    "candidates": [
+      "壮士",
+      "装饰",
+      "壮实",
+      "妆饰"
+    ],
+    "category": "contrast",
+    "expected": "壮士",
+    "expected_in_pool": true,
+    "id": "zhuangshi-2",
+    "pinyin": "zhuangshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "转移"
+    ],
+    "baseline_first": "转移",
+    "baseline_ms": 14.002374999999999,
+    "before": "救护人员把伤员从危险地区迅速",
+    "candidates": [
+      "转移",
+      "专一",
+      "转译",
+      "转椅"
+    ],
+    "category": "contrast",
+    "expected": "转移",
+    "expected_in_pool": true,
+    "id": "zhuanyi-1",
+    "pinyin": "zhuanyi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "专一"
+    ],
+    "baseline_first": "专一",
+    "baseline_ms": 13.622083,
+    "before": "他从不三心二意，对待感情十分",
+    "candidates": [
+      "专一",
+      "转移",
+      "转译",
+      "转椅"
+    ],
+    "category": "contrast",
+    "expected": "专一",
+    "expected_in_pool": true,
+    "id": "zhuanyi-2",
+    "pinyin": "zhuanyi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "严格"
+    ],
+    "baseline_first": "严格",
+    "baseline_ms": 14.998375,
+    "before": "这项规定非常",
+    "candidates": [
+      "严格",
+      "沿革",
+      "阉割",
+      "延搁",
+      "杨阿"
+    ],
+    "category": "stress",
+    "expected": "严格",
+    "expected_in_pool": true,
+    "id": "stress-1",
+    "pinyin": "yange",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "第一个"
+    ],
+    "baseline_first": "第一个",
+    "baseline_ms": 10.20475,
+    "before": "排在队伍最前面的是",
+    "candidates": [
+      "第一个"
+    ],
+    "category": "stress",
+    "expected": "第一个",
+    "expected_in_pool": true,
+    "id": "stress-2",
+    "pinyin": "diyige",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "时间"
+    ],
+    "baseline_first": "时间",
+    "baseline_ms": 15.199499999999999,
+    "before": "目前还无法确定具体的",
+    "candidates": [
+      "时间",
+      "事件",
+      "实践",
+      "世间",
+      "始建",
+      "尸检",
+      "失检"
+    ],
+    "category": "stress",
+    "expected": "时间",
+    "expected_in_pool": true,
+    "id": "stress-3",
+    "pinyin": "shijian",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "城市"
+    ],
+    "baseline_first": "城市",
+    "baseline_ms": 14.514208,
+    "before": "与乡村相比，我更习惯人口密集的现代化",
+    "candidates": [
+      "城市",
+      "程式",
+      "诚实",
+      "成事",
+      "乘势"
+    ],
+    "category": "stress",
+    "expected": "城市",
+    "expected_in_pool": true,
+    "id": "stress-4",
+    "pinyin": "chengshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "经历",
+      "经理",
+      "精力"
+    ],
+    "baseline_first": "经历",
+    "baseline_ms": 13.324083,
+    "before": "他刚刚提到了自己的",
+    "candidates": [
+      "经历",
+      "经理",
+      "精力",
+      "敬礼",
+      "警力",
+      "净利"
+    ],
+    "category": "stress",
+    "expected": "经历",
+    "expected_in_pool": true,
+    "id": "stress-5",
+    "pinyin": "jingli",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "意识"
+    ],
+    "baseline_first": "意识",
+    "baseline_ms": 15.143666999999999,
+    "before": "他正在谈论人的",
+    "candidates": [
+      "意识",
+      "一时",
+      "仪式",
+      "伊势",
+      "一世",
+      "医师",
+      "以示",
+      "遗失",
+      "议事",
+      "伊什",
+      "医事",
+      "衣食"
+    ],
+    "category": "stress",
+    "expected": "意识",
+    "expected_in_pool": true,
+    "id": "stress-6",
+    "pinyin": "yishi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "证实"
+    ],
+    "baseline_first": "证实",
+    "baseline_ms": 12.006499999999999,
+    "before": "他没有确认传闻，更没有提供证据来",
+    "candidates": [
+      "证实",
+      "正式",
+      "正是",
+      "正视",
+      "郑氏",
+      "政事",
+      "正室",
+      "正事",
+      "正史",
+      "政使",
+      "整饰"
+    ],
+    "category": "stress",
+    "expected": "证实",
+    "expected_in_pool": true,
+    "id": "stress-7",
+    "pinyin": "zhengshi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "发炎"
+    ],
+    "baseline_first": "发炎",
+    "baseline_ms": 14.651458,
+    "before": "医生说这不是外伤，红肿是因为局部组织已经",
+    "candidates": [
+      "发炎",
+      "发言"
+    ],
+    "category": "stress",
+    "expected": "发炎",
+    "expected_in_pool": true,
+    "id": "stress-8",
+    "pinyin": "fayan",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "歧视"
+    ],
+    "baseline_first": "歧视",
+    "baseline_ms": 17.498958,
+    "before": "不是对弱者的帮助，而是因出身不同就排斥他们，这属于",
+    "candidates": [
+      "歧视",
+      "其实",
+      "骑士",
+      "其时",
+      "七十",
+      "气势",
+      "起始",
+      "骑师",
+      "七世",
+      "启示",
+      "岂是",
+      "起事"
+    ],
+    "category": "stress",
+    "expected": "歧视",
+    "expected_in_pool": true,
+    "id": "stress-9",
+    "pinyin": "qishi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "保鲜"
+    ],
+    "baseline_first": "保险",
+    "baseline_ms": 14.794500000000001,
+    "before": "并非购买赔偿服务，而是让食品不容易变质，也就是",
+    "candidates": [
+      "保险",
+      "保鲜"
+    ],
+    "category": "stress",
+    "expected": "保鲜",
+    "expected_in_pool": true,
+    "id": "stress-10",
+    "pinyin": "baoxian",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "静止"
+    ],
+    "baseline_first": "精致",
+    "baseline_ms": 16.260916,
+    "before": "让画面更漂亮不是当前目的，请让镜头前的物体保持",
+    "candidates": [
+      "精致",
+      "静止",
+      "景致",
+      "精制",
+      "径直",
+      "净值",
+      "竟至"
+    ],
+    "category": "stress",
+    "expected": "静止",
+    "expected_in_pool": true,
+    "id": "stress-11",
+    "pinyin": "jingzhi",
+    "split": "test"
+  },
+  {
+    "acceptable": [
+      "试用"
+    ],
+    "baseline_first": "使用",
+    "baseline_ms": 16.122292,
+    "before": "这个产品尚未正式购买，我们只申请了七天免费",
+    "candidates": [
+      "使用",
+      "适用",
+      "实用",
+      "食用",
+      "试用",
+      "施用"
+    ],
+    "category": "stress",
+    "expected": "试用",
+    "expected_in_pool": true,
+    "id": "stress-12",
+    "pinyin": "shiyong",
+    "split": "test"
+  }
+]

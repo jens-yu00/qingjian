@@ -1,0 +1,34 @@
+{
+  "stage": "post-hoc error audit after Sol run; frozen cases and raw scores retained",
+  "changes": [
+    {
+      "id": "zhuangshi-1",
+      "additional_acceptable": [
+        "妆饰"
+      ],
+      "reason": "词典释义包含布置或打扮，并有用于车辆布置的例子；大厅语境下属于较少用的合理表达。人工复核单列，不改写原始测试答案。",
+      "source": "https://www.zdic.net/hans/%E5%A6%86%E9%A5%B0"
+    },
+    {
+      "id": "shiyong-2",
+      "additional_acceptable": [
+        "使用"
+      ],
+      "reason": "尚未购买授权而免费使用也成立；试用更具体，但不能把使用标成确定错误。"
+    },
+    {
+      "id": "stress-12",
+      "additional_acceptable": [
+        "使用"
+      ],
+      "reason": "申请七天免费使用与申请七天免费试用均自然，保留偏好区别但不计误选。"
+    },
+    {
+      "id": "zhiding-formulate",
+      "additional_acceptable": [
+        "指定"
+      ],
+      "reason": "上文只到团队需要先，尚未给出宾语；后接指定负责人也自然，不能把未提供的下文当成模型可见证据。"
+    }
+  ]
+}
